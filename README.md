@@ -7,7 +7,7 @@
 1. Application should open, initialize, load content, draw content and update (Main class)
 2. Collision Management and Detection (Logic when collision happens)
 3. Behavior Management
-4. Input Management **Farhan**
+4. Input Management **(Farhan)**
 5. Entity Managers (Movement, creation, drawing, rendering, destruction of entities. . For example, think of the methods/functions that allow for the entity to be created, rendered, moved, or deleted)
 6. Screen/Scene Managers 
 7. Transitions between scenes, scenes include start screen, instruction screen, leaderboard, game play screen and overlays such as menus, scoreboards, etc
