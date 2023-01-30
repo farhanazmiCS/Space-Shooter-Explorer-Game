@@ -11,7 +11,18 @@
 6. Lifecycle Managers (Process the game, from the START to the END) - **Jacob**
     - Entities should be created, initialised, loaded, drawn, deleted (if required) and updated
 
-### Input Management [[Link to Article]](https://www.gamedev.net/blogs/entry/2250186-designing-a-robust-input-handling-system-for-games/)
+
+## IMPORTANT: For each person, do research on:
+
+1. Perform research on what your assigned manager does. (e.g. What the Entity manager does?)
+2. Think of how your manager works in this game. Will it be a:
+    - Class (Abstract? Or not?)
+    - Interface
+3. What methods or properties will it hold?
+
+We will discuss on Wednesday on the stuff that we have discussed, and integrate them in a UML system diagram. After planning the UML diagram, we can see what concepts we can apply (e.g. inheritence, aggregation etc.).
+
+## Input Management [[Link to Article]](https://www.gamedev.net/blogs/entry/2250186-designing-a-robust-input-handling-system-for-games/)
 
 We can divide the input system into three layers:
 
