@@ -5,12 +5,10 @@
 ### Requirements
 
 1. Application should open, initialize, load content, draw content and update (Main class)
-2. Collision Management and Detection (Logic when collision happens)
-3. Behavior Management
-4. Input Management - **Farhan**
-5. Entity Managers (Movement, creation, drawing, rendering, destruction of entities. . For example, think of the methods/functions that allow for the entity to be created, rendered, moved, or deleted)
-6. Screen/Scene Manager. (Transitions between scenes, scenes include start screen, instruction screen, leaderboard, game play screen and overlays such as menus, scoreboards, etc) - **Esther**
-8. Lifecycle Managers (Process the game, from the START to the END)
+2. Input Management - **Farhan**
+3. Entity (Player and NPC)/Collision and Detection Managers (Movement, creation, drawing, rendering, destruction of entities. . For example, think of the methods/functions that allow for the entity to be created, rendered, moved, or deleted) - **Afiq*
+4. Screen/Scene Manager. (Transitions between scenes, scenes include start screen, instruction screen, leaderboard, game play screen and overlays such as menus, scoreboards, etc) - **Esther**
+6. Lifecycle Managers (Process the game, from the START to the END) - **Jacob**
     - Entities should be created, initialised, loaded, drawn, deleted (if required) and updated
 
 ### Input Management [[Link to Article]](https://www.gamedev.net/blogs/entry/2250186-designing-a-robust-input-handling-system-for-games/)
