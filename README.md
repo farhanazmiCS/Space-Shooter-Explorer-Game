@@ -6,7 +6,7 @@
 
 1. Application should open, initialize, load content, draw content and update (Main class)
 2. Input Management - **Farhan**
-3. Entity (Player and NPC)/Collision and Detection Managers (Movement, creation, drawing, rendering, destruction of entities. . For example, think of the methods/functions that allow for the entity to be created, rendered, moved, or deleted) - **Afiq*
+3. Entity (Player and NPC)/Collision and Detection Managers (Movement, creation, drawing, rendering, destruction of entities. . For example, think of the methods/functions that allow for the entity to be created, rendered, moved, or deleted) - **Afiq**
 4. Screen/Scene Manager. (Transitions between scenes, scenes include start screen, instruction screen, leaderboard, game play screen and overlays such as menus, scoreboards, etc) - **Esther**
 6. Lifecycle Managers (Process the game, from the START to the END) - **Jacob**
     - Entities should be created, initialised, loaded, drawn, deleted (if required) and updated
