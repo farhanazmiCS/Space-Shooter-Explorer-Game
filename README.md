@@ -55,6 +55,15 @@ Input mapping and dispatch to the correct context/high-level handlers:
 - Each context has an input map
 - Take a type of hardware input (e.g., keyboard, gamepad, touch, etc.) and convert it to a type of input (action/state/range). 
 
+Current Main Menu Input (Mouse):
+
+`mouseHoverOver()`
+
+Uses a rectangle to detect whether the mouse is within the bounded limits. Here is a demonstration:
+
+![MouseHoverMainMenu](https://user-images.githubusercontent.com/68798786/216753307-314fc5d9-5fad-4045-a442-2b782484c984.gif)
+
+
 4. Dispatch methods
 
 Two types:
