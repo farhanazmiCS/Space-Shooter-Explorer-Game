@@ -3,15 +3,11 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
@@ -19,9 +15,8 @@ import com.badlogic.gdx.utils.TimeUtils;
 import java.util.Iterator;
 
 public class GameScreen implements Screen {
-    private LifeCycleManager game;
-    private Button quitButtonActive;
-    private Button quitButtonInactive;
+    private Main game;
+    private Button quitButton;
     private Rectangle quitBound;
     Texture dropImage;
     Texture bucketImage;
@@ -32,7 +27,7 @@ public class GameScreen implements Screen {
     int dropsGathered;
     CustomInputProcessor inputProcessor = new CustomInputProcessor();
 
-    public GameScreen(final LifeCycleManager game) {
+    public GameScreen(final Main game) {
         this.game = game;
         // this.world = new World(new Vector2(0, -9.81f), false);
         dropImage = new Texture(Gdx.files.internal("droplet.png"));
@@ -53,8 +48,7 @@ public class GameScreen implements Screen {
 
         // Quit button
         this.quitBound = new Rectangle(500, 165, 150, 150);
-        quitButtonActive = new Button(150, 150, 500, 165, "quit.png");
-        quitButtonInactive = new Button(150, 150, 500, 165, "quit.png");
+        quitButton = new Button(150, 150, 500, 165, "quit.png");
 
         // create the camera and the SpritegetBatch()
         camera = new OrthographicCamera();
@@ -93,6 +87,7 @@ public class GameScreen implements Screen {
         // begin a new getBatch() and draw the bucket and
         // all drops
         game.getBatch().begin();
+        quitButton.getBatch().begin();
         game.getFont().draw(game.getBatch(), "Drops Collected: " + dropsGathered, 10, 470);
         game.getBatch().draw(bucketImage, bucket.x, bucket.y, bucket.width, bucket.height);
         for (Rectangle raindrop : raindrops) {
@@ -110,15 +105,14 @@ public class GameScreen implements Screen {
             bucket.y -= 200 * Gdx.graphics.getDeltaTime();
 
         if (inputProcessor.mouseHoverOver(quitBound)) {
-            game.getBatch().setColor(Color.GRAY);
-            game.getBatch().draw(quitButtonActive, 500, 165);
+            quitButton.getBatch().setColor(Color.GRAY);
+            quitButton.getBatch().draw(quitButton, 500, 165);
             if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
-                game.setScreen(new MainMenuScreen(game));
-                dispose();
+                quit();
             }
         } else {
-            game.getBatch().setColor(Color.WHITE);
-            game.getBatch().draw(quitButtonInactive, 500, 165);
+            quitButton.getBatch().setColor(Color.WHITE);
+            quitButton.getBatch().draw(quitButton, 500, 165);
         }
 
         // make sure the bucket stays within the screen bounds
@@ -146,8 +140,8 @@ public class GameScreen implements Screen {
                 iter.remove();
             }
         }
+        quitButton.getBatch().end();
         game.getBatch().end();
-
     }
 
     @Override
@@ -168,6 +162,11 @@ public class GameScreen implements Screen {
     @Override
     public void hide() {
 
+    }
+
+    public void quit() {
+        game.setScreen(new MainMenuScreen(game));
+        dispose();
     }
 
     @Override

@@ -1,8 +1,10 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Button extends Texture {
+    private SpriteBatch batch;
     public int getWidth() {
         return width;
     }
@@ -47,12 +49,21 @@ public class Button extends Texture {
     private String imgPath;
     private float x, y;
 
+    public SpriteBatch getBatch() {
+        return batch;
+    }
+
+    public void setBatch(SpriteBatch batch) {
+        this.batch = batch;
+    }
+
     public Button(int width, int height, float x, float y, String imgPath) {
         super(imgPath);
         this.width = width;
         this.height = height;
         this.x = x;
         this.y = y;
+        this.batch = new SpriteBatch();
     }
 
 }

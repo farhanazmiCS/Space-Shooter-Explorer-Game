@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class LifeCycleManager extends Game {
+public class Main extends Game {
 	Texture img_test;
 
 	public SpriteBatch getBatch() {

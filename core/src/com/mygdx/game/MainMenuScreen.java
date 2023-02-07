@@ -2,30 +2,26 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class MainMenuScreen implements Screen {
     CustomInputProcessor inputProcessor = new CustomInputProcessor();
-    final LifeCycleManager game;
-    Button buttonInactive;
-    Button buttonActive;
+    final Main game;
+    Button startButton;
 
     OrthographicCamera camera;
     private Rectangle startBound;
 
-    public MainMenuScreen(final LifeCycleManager game) {
+    public MainMenuScreen(final Main game) {
         this.game = game;
 
-        buttonActive = new Button(150, 150, 325, 165, "start.png");
-        buttonInactive = new Button(150, 150, 325, 165, "start.png");
+        startButton = new Button(150, 150, 325, 165, "start.png");
 
-        startBound = new Rectangle(buttonActive.getX(), buttonActive.getY(), buttonActive.getWidth(), buttonActive.getHeight());
+        startBound = new Rectangle(startButton.getX(), startButton.getY(), startButton.getWidth(), startButton.getHeight());
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
@@ -44,6 +40,7 @@ public class MainMenuScreen implements Screen {
         game.getBatch().setProjectionMatrix(camera.combined);
 
         game.getBatch().begin(); // Anything after begin() will be displayed
+        startButton.getBatch().begin();
 
         //game.font.draw(game.getBatch(), "PLAY", 800/2, 480/2);
         //game.font.draw(game.getBatch(), "Tap anywhere to begin!", 100, 100);
@@ -51,20 +48,21 @@ public class MainMenuScreen implements Screen {
         inputProcessor.mouseClicked(Input.Buttons.RIGHT);
         //if (Gdx.input.getX() > 500/2 && Gdx.input.getX() < 400 && game.HEIGHT - Gdx.input.getY() > 400/2 && game.HEIGHT - Gdx.input.getY() < 350) {
         if (inputProcessor.mouseHoverOver(startBound)) {
-            game.getBatch().setColor(Color.GRAY);
-            game.getBatch().draw(buttonActive, 325, 165);
+            startButton.getBatch().setColor(Color.GRAY);
+            startButton.getBatch().draw(startButton, 325, 165);
             if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
                 game.setScreen(new com.mygdx.game.GameScreen(game));
                 dispose();
             }
         } else {
-            game.getBatch().setColor(Color.WHITE);
-            game.getBatch().draw(buttonInactive, 325, 165);
+            startButton.getBatch().setColor(Color.WHITE);
+            startButton.getBatch().draw(startButton, 325, 165);
         }
         if (Gdx.input.isTouched()) {
             System.out.println(Gdx.input.getX() + ", " + Gdx.input.getY() + "\n");
         }
         game.getBatch().setColor(Color.WHITE);
+        startButton.getBatch().end();
         game.getBatch().end(); // Anything after end() will NOT be displayed
     }
 
