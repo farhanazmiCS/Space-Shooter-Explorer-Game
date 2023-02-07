@@ -1,19 +1,72 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 
-public interface CustomInputProcessor {
-    public float getMouseX();
+public class CustomInputProcessor implements InputProcessor {
 
-    public float getMouseY();
+    public boolean mouseClicked(int mouseButton) {
+        if (Gdx.input.isButtonPressed(mouseButton)) {
+            System.out.println(mouseButton);
+            return true;
+        }
+        return false;
+    }
+    public boolean keyDown(int key) {
+        if (Gdx.input.isKeyPressed(key)) {
+            return true;
+        }
+        return false;
+    }
+    public boolean keyUp(int key) {
+        if (!Gdx.input.isKeyPressed(key)) {
+            return true;
+        }
+        return false;
+    }
 
-    void keyboardInput();
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
 
-    public boolean mouseClickDown(int screenX, int screenY, int button);
-    public boolean mouseClickUp(int screenX, int screenY, int button);
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
 
-    public <T>boolean mouseHoverOver(T bound);
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
 
-    public boolean scrolled(float amount);
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(float amountX, float amountY) {
+        return false;
+    }
+
+    /**
+     *
+     * @param bound A Rectangle object that acts as the bounded zone
+     * @return true if cursor (mouse) is hovering within the bound, false otherwise
+     */
+    public <T>boolean mouseHoverOver(T bound) {
+        if (bound instanceof Rectangle) {
+            if (((Rectangle) bound).contains(Gdx.input.getX(), Gdx.input.getY())) return true;
+        }
+        else if (((Circle) bound).contains(Gdx.input.getX(), Gdx.input.getY())) return true;
+        return false;
+    }
 }
