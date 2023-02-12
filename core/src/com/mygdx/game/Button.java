@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class Button extends Actor {
+    private Main game;
     public ShapeRenderer getShapeRenderer() {
         return shapeRenderer;
     }
@@ -14,58 +15,17 @@ public class Button extends Actor {
     }
 
     private ShapeRenderer shapeRenderer;
-    public float getWidth() {
-        return width;
-    }
 
-    public void setWidth(int width) {
-        this.width = width;
-    }
+    private Rectangle rectangle;
 
-    public float getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-
-    public float getX() {
-        return x;
-    }
-
-    public void setX(float x) {
-        this.x = x;
-    }
-
-    public float getY() {
-        return y;
-    }
-
-    public void setY(float y) {
-        this.y = y;
-    }
-
-    private int width, height;
-    private float x, y;
-
-    public Button(int width, int height, float x, float y) {
+    public Button(int width, int height, float x, float y, Main game) {
+        this.game = game;
+        this.rectangle = new Rectangle(x, game.HEIGHT - height - y, width, height);
         this.shapeRenderer = new ShapeRenderer();
-        this.width = width;
-        this.height = height;
-        this.x = x;
-        this.y = y;
     }
 
     public Rectangle getBound() {
-        Rectangle bound = new Rectangle(
-                this.x,
-                this.y,
-                this.width,
-                this.height
-        );
-        return bound;
+        return rectangle;
     }
 
 }

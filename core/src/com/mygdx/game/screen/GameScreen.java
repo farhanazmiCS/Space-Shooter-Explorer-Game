@@ -83,67 +83,7 @@ public class GameScreen implements Screen {
         // tell the camera to update its matrices.
         camera.update();
 
-        // tell the SpritegetBatch() to render in the
-        // coordinate system specified by the camera.
-        game.getBatch().setProjectionMatrix(camera.combined);
-
-        // begin a new getBatch() and draw the bucket and
-        // all drops
         game.getBatch().begin();
-        // quitButton.getBatch().begin();
-        game.getFont().draw(game.getBatch(), "Drops Collected: " + dropsGathered, 10, 470);
-        game.getBatch().draw(bucketImage, bucket.x, bucket.y, bucket.width, bucket.height);
-        for (Rectangle raindrop : raindrops) {
-            game.getBatch().draw(dropImage, raindrop.x, raindrop.y);
-        }
-
-        // process user input (THIS ONE SHOULD BE CONTROLLED VIA ENTITYMANAGER CLASS, under a Move() function)
-        if (inputProcessor.keyDown(Input.Keys.LEFT))
-            bucket.x -= 200 * Gdx.graphics.getDeltaTime();
-        if (inputProcessor.keyDown(Input.Keys.RIGHT))
-            bucket.x += 200 * Gdx.graphics.getDeltaTime();
-        if (inputProcessor.keyDown(Input.Keys.UP))
-            bucket.y += 200 * Gdx.graphics.getDeltaTime();
-        if (inputProcessor.keyDown(Input.Keys.DOWN))
-            bucket.y -= 200 * Gdx.graphics.getDeltaTime();
-
-        if (inputProcessor.mouseHoverOver(quitBound)) {
-            // quitButton.getBatch().setColor(Color.GRAY);
-            // quitButton.getBatch().draw(quitButton, 500, 165);
-            if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
-                quit();
-            }
-        } else {
-            // quitButton.getBatch().setColor(Color.WHITE);
-            // quitButton.getBatch().draw(quitButton, 500, 165);
-        }
-
-        // make sure the bucket stays within the screen bounds
-        if (bucket.x < 0)
-            bucket.x = 0;
-        if (bucket.x > 800 - 64)
-            bucket.x = 800 - 64;
-
-        // check if we need to create a new raindrop
-        if (TimeUtils.nanoTime() - lastDropTime > 1000000000)
-            spawnRaindrop();
-
-        // move the raindrops, remove any that are beneath the bottom edge of
-        // the screen or that hit the bucket. In the later case we increase the
-        // value our drops counter and add a sound effect.
-        Iterator<Rectangle> iter = raindrops.iterator();
-        while (iter.hasNext()) {
-            Rectangle raindrop = iter.next();
-            raindrop.y -= 200 * Gdx.graphics.getDeltaTime();
-            if (raindrop.y + 64 < 0)
-                iter.remove();
-            if (raindrop.overlaps(bucket)) {
-                dropsGathered++;
-                // dropSound.play();
-                iter.remove();
-            }
-        }
-        // quitButton.getBatch().end();
         game.getBatch().end();
     }
 
