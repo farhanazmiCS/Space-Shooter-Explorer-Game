@@ -54,7 +54,8 @@ public class MainMenuScreen implements Screen {
             startButton.getBatch().setColor(Color.GRAY);
             startButton.getBatch().draw(startButton, 325, 165);
             if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
-                game.setScreen(new GameScreen(game));
+//                game.setScreen(new GameScreen(game));
+                game.setScreen(new GameScreenTest(game));
                 dispose();
             }
         } else {

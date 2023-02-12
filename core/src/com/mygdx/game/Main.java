@@ -11,7 +11,7 @@ import com.mygdx.game.entity.Player;
 import com.mygdx.game.screen.MainMenuScreen;
 
 public class Main extends Game {
-	EntityManager entityManager;
+	public EntityManager entityManager;
 	Texture img_test;
 
 	public SpriteBatch getBatch() {
@@ -44,7 +44,7 @@ public class Main extends Game {
 		font = new BitmapFont(); // use libGDX's default Arial font
 		entityManager = new EntityManager();
 		entityManager.setPlayer(new CollidableEntity<Player>(
-				HEIGHT / 2 - 60 / 2,
+				WIDTH / 2 - 64 / 2,
 				20,
 				new Player(
 						"spaceship.png", //<a href="https://www.flaticon.com/free-icons/spaceship" title="spaceship icons">Spaceship icons created by Skyclick - Flaticon</a>
