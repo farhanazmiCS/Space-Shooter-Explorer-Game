@@ -1,10 +1,12 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.mygdx.game.entity.CollidableEntity;
 import com.mygdx.game.entity.EntityManager;
 import com.mygdx.game.entity.Player;
@@ -40,8 +42,14 @@ public class Main extends Game {
 	
 	@Override
 	public void create () {
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("COMICATE.TTF"));
+		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+		parameter.size = 12;
+		font = generator.generateFont(parameter);
+
 		batch = new SpriteBatch();
-		font = new BitmapFont(); // use libGDX's default Arial font
+		font = generator.generateFont(parameter); // use libGDX's default Arial font
+		font.getData().setScale(2.0f);
 		entityManager = new EntityManager();
 		entityManager.setPlayer(new CollidableEntity<Player>(
 				HEIGHT / 2 - 60 / 2,

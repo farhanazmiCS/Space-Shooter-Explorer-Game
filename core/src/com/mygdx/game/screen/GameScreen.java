@@ -50,8 +50,8 @@ public class GameScreen implements Screen {
         spawnRaindrop();
 
         // Quit button
-        this.quitBound = new Rectangle(500, 165, 150, 150);
-        quitButton = new Button(150, 150, 500, 165, "quit.png");
+        // this.quitBound = new Rectangle(500, 165, 150, 150);
+        // quitButton = new Button(150, 150, 500, 165, "quit.png");
 
         // create the camera and the SpritegetBatch()
         camera = new OrthographicCamera();
@@ -90,7 +90,7 @@ public class GameScreen implements Screen {
         // begin a new getBatch() and draw the bucket and
         // all drops
         game.getBatch().begin();
-        quitButton.getBatch().begin();
+        // quitButton.getBatch().begin();
         game.getFont().draw(game.getBatch(), "Drops Collected: " + dropsGathered, 10, 470);
         game.getBatch().draw(bucketImage, bucket.x, bucket.y, bucket.width, bucket.height);
         for (Rectangle raindrop : raindrops) {
@@ -108,14 +108,14 @@ public class GameScreen implements Screen {
             bucket.y -= 200 * Gdx.graphics.getDeltaTime();
 
         if (inputProcessor.mouseHoverOver(quitBound)) {
-            quitButton.getBatch().setColor(Color.GRAY);
-            quitButton.getBatch().draw(quitButton, 500, 165);
+            // quitButton.getBatch().setColor(Color.GRAY);
+            // quitButton.getBatch().draw(quitButton, 500, 165);
             if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
                 quit();
             }
         } else {
-            quitButton.getBatch().setColor(Color.WHITE);
-            quitButton.getBatch().draw(quitButton, 500, 165);
+            // quitButton.getBatch().setColor(Color.WHITE);
+            // quitButton.getBatch().draw(quitButton, 500, 165);
         }
 
         // make sure the bucket stays within the screen bounds
@@ -143,7 +143,7 @@ public class GameScreen implements Screen {
                 iter.remove();
             }
         }
-        quitButton.getBatch().end();
+        // quitButton.getBatch().end();
         game.getBatch().end();
     }
 

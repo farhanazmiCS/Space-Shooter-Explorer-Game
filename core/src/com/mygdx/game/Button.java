@@ -1,11 +1,20 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public class Button extends Texture {
-    private SpriteBatch batch;
-    public int getWidth() {
+public class Button extends Actor {
+    public ShapeRenderer getShapeRenderer() {
+        return shapeRenderer;
+    }
+
+    public void setShapeRenderer(ShapeRenderer shapeRenderer) {
+        this.shapeRenderer = shapeRenderer;
+    }
+
+    private ShapeRenderer shapeRenderer;
+    public float getWidth() {
         return width;
     }
 
@@ -13,7 +22,7 @@ public class Button extends Texture {
         this.width = width;
     }
 
-    public int getHeight() {
+    public float getHeight() {
         return height;
     }
 
@@ -21,13 +30,6 @@ public class Button extends Texture {
         this.height = height;
     }
 
-    public String getImgPath() {
-        return imgPath;
-    }
-
-    public void setImgPath(String imgPath) {
-        this.imgPath = imgPath;
-    }
 
     public float getX() {
         return x;
@@ -46,24 +48,24 @@ public class Button extends Texture {
     }
 
     private int width, height;
-    private String imgPath;
     private float x, y;
 
-    public SpriteBatch getBatch() {
-        return batch;
-    }
-
-    public void setBatch(SpriteBatch batch) {
-        this.batch = batch;
-    }
-
-    public Button(int width, int height, float x, float y, String imgPath) {
-        super(imgPath);
+    public Button(int width, int height, float x, float y) {
+        this.shapeRenderer = new ShapeRenderer();
         this.width = width;
         this.height = height;
         this.x = x;
         this.y = y;
-        this.batch = new SpriteBatch();
+    }
+
+    public Rectangle getBound() {
+        Rectangle bound = new Rectangle(
+                this.x,
+                this.y,
+                this.width,
+                this.height
+        );
+        return bound;
     }
 
 }
