@@ -95,6 +95,11 @@ public class MainMenuScreen implements Screen {
                 game.setScreen(new GameScreen(game));
             }
         }
+        if (inputProcessor.mouseHoverOver(buttons.get(2).getBound())) {
+            if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
+                quit();
+            }
+        }
     }
 
     @Override
@@ -107,7 +112,7 @@ public class MainMenuScreen implements Screen {
     }
 
     public void quit() {
-
+        Gdx.app.exit();
     }
 
     @Override
