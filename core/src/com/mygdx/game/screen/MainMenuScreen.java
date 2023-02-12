@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -7,6 +7,9 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.mygdx.game.Button;
+import com.mygdx.game.input.CustomInputProcessor;
+import com.mygdx.game.Main;
 
 public class MainMenuScreen implements Screen {
     CustomInputProcessor inputProcessor = new CustomInputProcessor();
@@ -51,7 +54,7 @@ public class MainMenuScreen implements Screen {
             startButton.getBatch().setColor(Color.GRAY);
             startButton.getBatch().draw(startButton, 325, 165);
             if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
-                game.setScreen(new com.mygdx.game.GameScreen(game));
+                game.setScreen(new GameScreen(game));
                 dispose();
             }
         } else {

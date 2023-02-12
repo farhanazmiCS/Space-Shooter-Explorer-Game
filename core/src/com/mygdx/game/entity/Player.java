@@ -9,8 +9,8 @@ public class Player {
     private float width;
     private float height;
     private float speed;
-    private int[] mainKeyboardInputs;
-    private int[] altKeyboardInputs;
+    private int[] mainKeyboardInputs; // Defines default player controls
+    private int[] altKeyboardInputs; // Defines alternate player controls
 
     public Player(String imgName, float speed, int[] mainKeyboardInputs, int[] altKeyboardInputs) {
         this.imgName = imgName;

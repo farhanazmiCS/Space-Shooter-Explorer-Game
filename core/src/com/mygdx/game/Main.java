@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.entity.CollidableEntity;
 import com.mygdx.game.entity.EntityManager;
 import com.mygdx.game.entity.Player;
+import com.mygdx.game.screen.MainMenuScreen;
 
 public class Main extends Game {
 	EntityManager entityManager;
