@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import java.util.ArrayList;
 
-public class Button extends Actor {
+public class Button {
     private Main game;
     public ShapeRenderer getShapeRenderer() {
         return shapeRenderer;

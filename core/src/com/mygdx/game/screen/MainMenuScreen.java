@@ -70,7 +70,7 @@ public class MainMenuScreen implements Screen {
         for (Button button : buttons) {
             ShapeRenderer renderer = button.getShapeRenderer();
             renderer.begin(ShapeRenderer.ShapeType.Filled);
-            renderer.rect(button.getBound().getX(), button.getBound().getY(), button.getBound().getWidth(), button.getBound().getHeight());
+            renderer.rect(button.getBound().getX(), game.HEIGHT - button.getBound().getHeight() - button.getBound().getY(), button.getBound().getWidth(), button.getBound().getHeight());
             renderer.end();
         }
         game.getBatch().end(); // Anything after end() will NOT be displayed
