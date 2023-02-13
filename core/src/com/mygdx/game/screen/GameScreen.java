@@ -95,7 +95,7 @@ public class GameScreen extends ScreenManager implements Screen {
         // begin a new getBatch() and draw the bucket and
         // all drops
         game.getBatch().begin();
-        game.getFont().draw(game.getBatch(), "Drops Collected: " + dropsGathered, 10, 470);
+        game.getFont().draw(game.getBatch(), "Drops Collected: " + this.game.entityManager.getPlayer().getObject().getScore(), 10, 470);
         //game.getBatch().draw(bucketImage, bucket.x, bucket.y, bucket.width, bucket.height);
         CollidableEntity<Player> player = this.game.entityManager.getPlayer();
         game.getBatch().draw(
@@ -190,10 +190,11 @@ public class GameScreen extends ScreenManager implements Screen {
             case 2:
                 //add 2 points and redirect to trivia quiz
                 //spawnRateMultiplier = 0.8f;
-                //spawnRate /= 10;
+                spawnRate /= 10;
                 break;
         }
-        dropsGathered += point;
+        this.game.entityManager.getPlayer().getObject().setScore(this.game.entityManager.getPlayer().getObject().getScore() + point);
+        //dropsGathered += point;
         game.getBatch().end();
     }
 

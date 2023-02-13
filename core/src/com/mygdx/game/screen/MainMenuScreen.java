@@ -8,6 +8,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.Button;
+import com.mygdx.game.entity.CollidableEntity;
+import com.mygdx.game.entity.EntityManager;
+import com.mygdx.game.entity.Player;
 import com.mygdx.game.input.CustomInputProcessor;
 import com.mygdx.game.Main;
 

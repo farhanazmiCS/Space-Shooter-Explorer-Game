@@ -8,6 +8,9 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.Button;
 import com.mygdx.game.Main;
+import com.mygdx.game.entity.CollidableEntity;
+import com.mygdx.game.entity.EntityManager;
+import com.mygdx.game.entity.Player;
 import com.mygdx.game.input.CustomInputProcessor;
 
 import java.util.ArrayList;
@@ -81,6 +84,17 @@ public class PauseScreen extends ScreenManager implements Screen {
     }
 
     public void quit() {
+        this.game.entityManager = new EntityManager();
+        this.game.entityManager.setPlayer(new CollidableEntity<Player>(
+                this.game.WIDTH / 2 - 64 / 2,
+                20,
+                new Player(
+                        "spaceship.png", //<a href="https://www.flaticon.com/free-icons/spaceship" title="spaceship icons">Spaceship icons created by Skyclick - Flaticon</a>
+                        200,
+                        new int[]{Input.Keys.LEFT, Input.Keys.RIGHT, Input.Keys.UP, Input.Keys.DOWN},
+                        new int[]{Input.Keys.A, Input.Keys.D, Input.Keys.W, Input.Keys.S},
+                        0)));
+        this.game.setGameScreen(new GameScreen(this.game));
         game.setScreen(game.getMainMenuScreen());
     }
 }

@@ -91,7 +91,8 @@ public class Main extends Game {
 						"spaceship.png", //<a href="https://www.flaticon.com/free-icons/spaceship" title="spaceship icons">Spaceship icons created by Skyclick - Flaticon</a>
 						200,
 						new int[]{Input.Keys.LEFT, Input.Keys.RIGHT, Input.Keys.UP, Input.Keys.DOWN},
-						new int[]{Input.Keys.A, Input.Keys.D, Input.Keys.W, Input.Keys.S})));
+						new int[]{Input.Keys.A, Input.Keys.D, Input.Keys.W, Input.Keys.S},
+						0)));
 		this.setScreen(new MainMenuScreen(this));
 		// Create game screen
 		gameScreen = new GameScreen(this);

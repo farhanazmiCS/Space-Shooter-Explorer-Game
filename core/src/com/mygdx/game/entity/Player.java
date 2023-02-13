@@ -11,8 +11,9 @@ public class Player {
     private float speed;
     private int[] mainKeyboardInputs; // Defines default player controls
     private int[] altKeyboardInputs; // Defines alternate player controls
+    private int score;
 
-    public Player(String imgName, float speed, int[] mainKeyboardInputs, int[] altKeyboardInputs) {
+    public Player(String imgName, float speed, int[] mainKeyboardInputs, int[] altKeyboardInputs, int score) {
         this.imgName = imgName;
         this.sprite = new Sprite(new Texture(imgName));
         this.width = sprite.getWidth();
@@ -20,6 +21,7 @@ public class Player {
         this.speed = speed;
         this.mainKeyboardInputs = mainKeyboardInputs;
         this.altKeyboardInputs = altKeyboardInputs;
+        this.score = score;
     }
 
     public String getImgName() {
@@ -76,5 +78,13 @@ public class Player {
 
     public void setAltKeyboardInputs(int[] altKeyboardInputs) {
         this.altKeyboardInputs = altKeyboardInputs;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 }
