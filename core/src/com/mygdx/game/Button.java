@@ -1,8 +1,11 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+
+import java.util.ArrayList;
 
 public class Button extends Actor {
     private Main game;
@@ -24,8 +27,17 @@ public class Button extends Actor {
         this.shapeRenderer = new ShapeRenderer();
     }
 
+    public void setButtonColor(Color color) {
+        this.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        this.shapeRenderer.setColor(color);
+        this.shapeRenderer.end();
+    }
+
+    public Color getButtonColor(Color color) {
+        return this.shapeRenderer.getColor();
+    }
+
     public Rectangle getBound() {
         return rectangle;
     }
-
 }

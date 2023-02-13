@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.Button;
 import com.mygdx.game.input.CustomInputProcessor;
@@ -33,10 +32,10 @@ public class MainMenuScreen implements Screen {
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
-        createButtons(3, buttons, 75);
+        createScreenButtons(3, buttons, 75);
     }
 
-    public void createButtons(int numberOfButtons, ArrayList<Button> buttons, float distance) {
+    public void createScreenButtons(int numberOfButtons, ArrayList<Button> buttons, float distance) {
         int i;
         Button button;
 
@@ -51,13 +50,6 @@ public class MainMenuScreen implements Screen {
             }
         }
     }
-
-    public void setButtonColor(ArrayList<Button> buttons, int button, Color color) {
-        buttons.get(button).getShapeRenderer().begin(ShapeRenderer.ShapeType.Filled);
-        buttons.get(button).getShapeRenderer().setColor(color);
-        buttons.get(button).getShapeRenderer().end();
-    }
-
 
     @Override
     public void show() {
@@ -83,9 +75,9 @@ public class MainMenuScreen implements Screen {
         }
         game.getBatch().end(); // Anything after end() will NOT be displayed
 
-        setButtonColor(buttons, 0, Color.RED);
-        setButtonColor(buttons, 1, Color.BLUE);
-        setButtonColor(buttons, 2, Color.GREEN);
+        buttons.get(0).setButtonColor(Color.RED);
+        buttons.get(1).setButtonColor(Color.BLUE);
+        buttons.get(2).setButtonColor(Color.GREEN);
 
         // System.out.println(buttons.get(0).getBound());
         // System.out.println(Gdx.input.getX() + ", " + Gdx.input.getY());
