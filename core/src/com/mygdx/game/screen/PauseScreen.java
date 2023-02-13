@@ -4,32 +4,23 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.Button;
-import com.mygdx.game.input.CustomInputProcessor;
 import com.mygdx.game.Main;
+import com.mygdx.game.input.CustomInputProcessor;
 
 import java.util.ArrayList;
 
-public class MainMenuScreen extends ScreenManager implements Screen {
+public class PauseScreen extends ScreenManager implements Screen {
     CustomInputProcessor inputProcessor = new CustomInputProcessor();
-    final Main game;
-
-    OrthographicCamera camera;
-    ArrayList<Button> buttons;
-
-    public MainMenuScreen(final Main game) {
+    private Main game;
+    private ArrayList<Button> buttons;
+    public PauseScreen(Main game) {
         super(game);
         this.game = game;
         buttons = new ArrayList<Button>();
-
-        // startBound = new Rectangle(startButton.getX(), startButton.getY(), startButton.getWidth(), startButton.getHeight());
-
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480);
-        createScreenButtons(3, buttons, 75);
+        createScreenButtons(2, buttons, 75);
     }
 
     @Override
@@ -41,35 +32,23 @@ public class MainMenuScreen extends ScreenManager implements Screen {
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0.2f, 1);
 
-        camera.update();
-        game.getBatch().setProjectionMatrix(camera.combined);
-
-        game.getBatch().begin(); // Anything after begin() will be displayed
-
-        // Render buttons
-        //System.out.println(buttons.size());
         for (Button button : buttons) {
             ShapeRenderer renderer = button.getShapeRenderer();
             renderer.begin(ShapeRenderer.ShapeType.Filled);
             renderer.rect(button.getBound().getX(), game.HEIGHT - button.getBound().getHeight() - button.getBound().getY(), button.getBound().getWidth(), button.getBound().getHeight());
             renderer.end();
         }
-        game.getBatch().end(); // Anything after end() will NOT be displayed
 
-        buttons.get(0).setButtonColor(Color.BLUE); // Play
-        buttons.get(1).setButtonColor(Color.YELLOW); // [Placeholder]
-        buttons.get(2).setButtonColor(Color.RED); // Quit
-
-        // System.out.println(buttons.get(0).getBound());
-        // System.out.println(Gdx.input.getX() + ", " + Gdx.input.getY());
+        buttons.get(0).setButtonColor(Color.BLUE); // Resume
+        buttons.get(1).setButtonColor(Color.ORANGE); // Quit to Main Menu
 
         if (inputProcessor.mouseHoverOver(buttons.get(0).getBound())) {
             if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
 //                game.setScreen(new GameScreen(game));
-                play();
+                  resume();
             }
         }
-        if (inputProcessor.mouseHoverOver(buttons.get(2).getBound())) {
+        if (inputProcessor.mouseHoverOver(buttons.get(1).getBound())) {
             if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
                 quit();
             }
@@ -81,14 +60,6 @@ public class MainMenuScreen extends ScreenManager implements Screen {
 
     }
 
-    public void play() {
-        game.setScreen(game.getGameScreen());
-    }
-
-    public void quit() {
-        Gdx.app.exit();
-    }
-
     @Override
     public void pause() {
 
@@ -96,7 +67,7 @@ public class MainMenuScreen extends ScreenManager implements Screen {
 
     @Override
     public void resume() {
-
+        game.setScreen(game.getGameScreen());
     }
 
     @Override
@@ -107,5 +78,9 @@ public class MainMenuScreen extends ScreenManager implements Screen {
     @Override
     public void dispose() {
 
+    }
+
+    public void quit() {
+        game.setScreen(game.getMainMenuScreen());
     }
 }

@@ -61,4 +61,20 @@ public class Player {
     public void setSpeed(float speed) {
         this.speed = speed;
     }
+
+    public int[] getMainKeyboardInputs() {
+        return mainKeyboardInputs;
+    }
+
+    public void setMainKeyboardInputs(int[] mainKeyboardInputs) {
+        this.mainKeyboardInputs = mainKeyboardInputs;
+    }
+
+    public int[] getAltKeyboardInputs() {
+        return altKeyboardInputs;
+    }
+
+    public void setAltKeyboardInputs(int[] altKeyboardInputs) {
+        this.altKeyboardInputs = altKeyboardInputs;
+    }
 }
