@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
-import javax.swing.ImageIcon;
-
 public class EntityManager {
     // This class contains the attributes and methods for handling all entities.
     // Example:
