@@ -12,14 +12,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
-public class EntityManager {
+public class EntityManager implements CollisionManager<CollidableEntity<Player>, CollidableEntity<FallingObject>, Integer> {
     // This class contains the attributes and methods for handling all entities.
     // Example:
     //  1. Creating entities
     //  2. Rendering (and drawing) entities
     //  3. Moving the entities
-    private ArrayList<CollidableEntity<FallingObject>> fallingObjects;
     private CollidableEntity<Player> player;
+    private ArrayList<CollidableEntity<FallingObject>> fallingObjects;
     private ArrayList<Texture> fallingObjectImages;
 
     //to be initialised at the life cycle manager
@@ -34,24 +34,8 @@ public class EntityManager {
         //<a href="https://www.flaticon.com/free-icons/shapes-and-symbols" title="shapes and symbols icons">Shapes and symbols icons created by Smashicons - Flaticon</a>
     }
 
-    public long spawnFallingObject(int screenWidth, int screenHeight)
-    {
-        //int index = (int) ((Math.random() * ((fallingObjectImages.size() - 1))) + 0);
-        int index = (new Random()).nextInt(3);
-        CollidableEntity<FallingObject> fallingObject =
-                new CollidableEntity<>(
-                        MathUtils.random(0, screenWidth - fallingObjectImages.get((int) index).getWidth()),
-                        screenHeight,
-                        new FallingObject(
-                                index,
-                                fallingObjectImages.get((int) index))
-                );
-        fallingObjects.add(fallingObject);
-        return TimeUtils.nanoTime();
-    }
-
-    public void limitPlayerMovement(int screenWidth, int screenHeight)
-    {
+    @Override
+    public void limitPlayerMovement(Integer screenWidth, Integer screenHeight) {
         if(player.getX() < 0)
             player.setX(0);
         if(player.getX() > screenWidth - player.getObject().getWidth())
@@ -78,40 +62,55 @@ public class EntityManager {
             player.setY(player.getY() - (200 * Gdx.graphics.getDeltaTime()));
     }
 
+    public long spawnFallingObject(int screenWidth, int screenHeight)
+    {
+        //int index = (int) ((Math.random() * ((fallingObjectImages.size() - 1))) + 0);
+        int index = (new Random()).nextInt(3);
+        CollidableEntity<FallingObject> fallingObject =
+                new CollidableEntity<>(
+                        MathUtils.random(0, screenWidth - fallingObjectImages.get((int) index).getWidth()),
+                        screenHeight,
+                        new FallingObject(
+                                index,
+                                fallingObjectImages.get((int) index))
+                );
+        fallingObjects.add(fallingObject);
+        return TimeUtils.nanoTime();
+    }
+
     public int moveFallingObject()
     {
-        int points = 0;
         Iterator<CollidableEntity<FallingObject>> iter = fallingObjects.iterator();
         while (iter.hasNext()) {
             CollidableEntity<FallingObject> fallingObject = iter.next();
-            //fallingObject.getObject().setImage(new Texture(new Image()));
             fallingObject.setY(fallingObject.getY() - 200 * Gdx.graphics.getDeltaTime());
             if (fallingObject.getY() + fallingObject.getObject().getWidth() < 0)
                 iter.remove();
-            Rectangle playerBoundary = new Rectangle(player.getX(), player.getY(), player.getObject().getWidth(), player.getObject().getHeight());
-            Rectangle fallingObjectBoundary = new Rectangle(fallingObject.getX(), fallingObject.getY(), fallingObject.getObject().getWidth(), fallingObject.getObject().getHeight());
-            if (fallingObjectBoundary.overlaps(playerBoundary)) {
+            if (checkFallingObjectCollision(player, fallingObject))
+            {
+                iter.remove();
                 switch (fallingObject.getObject().getType())
                 {
                     case 0:
                         // minus health
-                        points -= 1;
-                        break;
+                        return  -1;
                     case 1:
                         // gain points
-                        points += 1;
-                        break;
+                        return 1;
                     case 2:
                         // super power up, gain points and redirect to trivia quiz
-                        points += 2;
-                        break;
+                        return 2;
                 }
-                iter.remove();
-                //return fallingObject.getObject().getType();
             }
         }
-        //return -1;
-        return points;
+        return 0;
+    }
+
+    @Override
+    public boolean checkFallingObjectCollision(CollidableEntity<Player> player, CollidableEntity<FallingObject> fallingObject) {
+        Rectangle playerBoundary = new Rectangle(player.getX(), player.getY(), player.getObject().getWidth(), player.getObject().getHeight());
+        Rectangle fallingObjectBoundary = new Rectangle(fallingObject.getX(), fallingObject.getY(), fallingObject.getObject().getWidth(), fallingObject.getObject().getHeight());
+        return fallingObjectBoundary.overlaps(playerBoundary);
     }
 
     public ArrayList<CollidableEntity<FallingObject>> getFallingObjects() {

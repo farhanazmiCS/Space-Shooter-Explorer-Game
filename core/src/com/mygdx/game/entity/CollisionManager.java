@@ -1,7 +1,7 @@
 package com.mygdx.game.entity;
 
-public interface CollisionManager<T> {
+public interface CollisionManager<P, F, E> {
     // This class contains the methods to which the entities behave when a collision occurs.
-    boolean IsColliding(T entity);
-    void StopColliding(T entity);
+    void limitPlayerMovement(E screenWidth, E screenHeight);
+    boolean checkFallingObjectCollision(P player, F fallingObject);
 }

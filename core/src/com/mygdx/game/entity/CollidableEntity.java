@@ -1,6 +1,6 @@
 package com.mygdx.game.entity;
 
-public class CollidableEntity<T> extends Entity<T> implements CollisionManager<T> {
+public class CollidableEntity<T> extends Entity<T>{
     private float prevX;
     private float prevY;
 
@@ -24,15 +24,5 @@ public class CollidableEntity<T> extends Entity<T> implements CollisionManager<T
 
     public void setPrevY(float prevY) {
         this.prevY = prevY;
-    }
-
-    @Override
-    public boolean IsColliding(T entity) {
-        return false;
-    }
-
-    @Override
-    public void StopColliding(T entity) {
-
     }
 }
