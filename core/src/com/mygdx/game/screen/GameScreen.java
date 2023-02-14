@@ -6,8 +6,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.Button;
@@ -22,8 +20,6 @@ public class GameScreen extends ScreenManager implements Screen {
     private Button pauseButton;
     private boolean isPaused = false;
     OrthographicCamera camera;
-    Rectangle bucket;
-    Array<Rectangle> raindrops;
     long lastDropTime;
     CustomInputProcessor inputProcessor = new CustomInputProcessor();
     float spawnRate = 1000000000;
@@ -33,18 +29,6 @@ public class GameScreen extends ScreenManager implements Screen {
         super(game);
         this.game = game;
         // this.world = new World(new Vector2(0, -9.81f), false);
-
-        // create a Rectangle to logically represent the bucket
-        bucket = new Rectangle();
-        bucket.x = 800 / 2 - 64 / 2; // center the bucket horizontally
-        bucket.y = 20; // bottom left corner of the bucket is 20 pixels above
-
-        // the bottom screen edge
-        bucket.width = 64;
-        bucket.height = 64;
-
-        // create the raindrops array and spawn the first raindrop
-        raindrops = new Array<Rectangle>();
         //spawnRaindrop();
         this.game.entityManager.spawnFallingObject(this.game.WIDTH, this.game.HEIGHT);
 
@@ -71,11 +55,9 @@ public class GameScreen extends ScreenManager implements Screen {
         // coordinate system specified by the camera.
         game.getBatch().setProjectionMatrix(camera.combined);
 
-        // begin a new getBatch() and draw the bucket and
-        // all drops
+
         game.getBatch().begin();
         game.getFont().draw(game.getBatch(), "Items Collected: " + this.game.entityManager.getPlayer().getObject().getScore(), 10, 470);
-        //game.getBatch().draw(bucketImage, bucket.x, bucket.y, bucket.width, bucket.height);
         CollidableEntity<Player> player = this.game.entityManager.getPlayer();
         game.getBatch().draw(
                 player.getObject().getSprite(),
@@ -84,22 +66,11 @@ public class GameScreen extends ScreenManager implements Screen {
                 player.getObject().getWidth(),
                 player.getObject().getHeight()
         );
-//        for (Rectangle raindrop : raindrops) {
-//            game.getBatch().draw(dropImage, raindrop.x, raindrop.y);
-//        }
+
         for (CollidableEntity<FallingObject> fallingObject : this.game.entityManager.getFallingObjects()) {
             game.getBatch().draw(fallingObject.getObject().getImage(), fallingObject.getX(), fallingObject.getY());
         }
 
-        // process user input (THIS ONE SHOULD BE CONTROLLED VIA ENTITYMANAGER CLASS, under a Move() function)
-//        if (inputProcessor.keyDown(Input.Keys.LEFT))
-//            bucket.x -= 200 * Gdx.graphics.getDeltaTime();
-//        if (inputProcessor.keyDown(Input.Keys.RIGHT))
-//            bucket.x += 200 * Gdx.graphics.getDeltaTime();
-//        if (inputProcessor.keyDown(Input.Keys.UP))
-//            bucket.y += 200 * Gdx.graphics.getDeltaTime();
-//        if (inputProcessor.keyDown(Input.Keys.DOWN))
-//            bucket.y -= 200 * Gdx.graphics.getDeltaTime();
         this.game.entityManager.movePlayer(inputProcessor);
 
         // Pause button
@@ -130,11 +101,6 @@ public class GameScreen extends ScreenManager implements Screen {
             }
         }
 
-        // make sure the bucket stays within the screen bounds
-//        if (bucket.x < 0)
-//            bucket.x = 0;
-//        if (bucket.x > 800 - 64)
-//            bucket.x = 800 - 64;
         this.game.entityManager.limitPlayerMovement(this.game.WIDTH, this.game.HEIGHT);
 
         // check if we need to create a new raindrop
@@ -142,21 +108,6 @@ public class GameScreen extends ScreenManager implements Screen {
             lastDropTime = this.game.entityManager.spawnFallingObject(this.game.WIDTH, this.game.HEIGHT);
             //spawnRaindrop();
 
-        // move the raindrops, remove any that are beneath the bottom edge of
-        // the screen or that hit the bucket. In the later case we increase the
-        // value our drops counter and add a sound effect.
-//        Iterator<Rectangle> iter = raindrops.iterator();
-//        while (iter.hasNext()) {
-//            Rectangle raindrop = iter.next();
-//            raindrop.y -= 200 * Gdx.graphics.getDeltaTime();
-//            if (raindrop.y + 64 < 0)
-//                iter.remove();
-//            if (raindrop.overlaps(bucket)) {
-//                dropsGathered++;
-//                // dropSound.play();
-//                iter.remove();
-//            }
-//        }
         int point = this.game.entityManager.moveFallingObject();
         switch (point)
         {
