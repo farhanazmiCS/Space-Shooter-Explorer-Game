@@ -5,9 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -23,13 +21,10 @@ public class GameScreen extends ScreenManager implements Screen {
     private Main game;
     private Button pauseButton;
     private boolean isPaused = false;
-    Texture dropImage;
-    Texture bucketImage;
     OrthographicCamera camera;
     Rectangle bucket;
     Array<Rectangle> raindrops;
     long lastDropTime;
-    int dropsGathered;
     CustomInputProcessor inputProcessor = new CustomInputProcessor();
     float spawnRate = 1000000000;
     float spawnRateMultiplier = 1f;
@@ -38,8 +33,6 @@ public class GameScreen extends ScreenManager implements Screen {
         super(game);
         this.game = game;
         // this.world = new World(new Vector2(0, -9.81f), false);
-        dropImage = new Texture(Gdx.files.internal("droplet.png"));
-        bucketImage = new Texture(Gdx.files.internal("bucket.png"));
 
         // create a Rectangle to logically represent the bucket
         bucket = new Rectangle();
@@ -56,25 +49,11 @@ public class GameScreen extends ScreenManager implements Screen {
         this.game.entityManager.spawnFallingObject(this.game.WIDTH, this.game.HEIGHT);
 
         // Pause and resume button
-            pauseButton = new Button(150, 50, 640, 420, game); // Pause button
+        pauseButton = new Button(150, 50, 640, 420, game); // Pause button
 
         // create the camera and the SpritegetBatch()
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
-    }
-
-    /**
-     * Maybe for this function, can be for spawining different types of things?
-     * Example: Spawn environment, spawn player etc.
-     */
-    private void spawnRaindrop() {
-        Rectangle raindrop = new Rectangle();
-        raindrop.x = MathUtils.random(0, 800 - 64);
-        raindrop.y = 480;
-        raindrop.width = 64;
-        raindrop.height = 64;
-        raindrops.add(raindrop);
-        lastDropTime = TimeUtils.nanoTime();
     }
 
     @Override
@@ -95,7 +74,7 @@ public class GameScreen extends ScreenManager implements Screen {
         // begin a new getBatch() and draw the bucket and
         // all drops
         game.getBatch().begin();
-        game.getFont().draw(game.getBatch(), "Drops Collected: " + this.game.entityManager.getPlayer().getObject().getScore(), 10, 470);
+        game.getFont().draw(game.getBatch(), "Items Collected: " + this.game.entityManager.getPlayer().getObject().getScore(), 10, 470);
         //game.getBatch().draw(bucketImage, bucket.x, bucket.y, bucket.width, bucket.height);
         CollidableEntity<Player> player = this.game.entityManager.getPlayer();
         game.getBatch().draw(
