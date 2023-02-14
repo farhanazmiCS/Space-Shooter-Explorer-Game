@@ -2,8 +2,6 @@ package com.mygdx.game.entity;
 
 import com.badlogic.gdx.graphics.Texture;
 
-import java.awt.Rectangle;
-
 public class FallingObject {
     private int type;
     private Texture image;

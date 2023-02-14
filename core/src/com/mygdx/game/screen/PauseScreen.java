@@ -47,7 +47,6 @@ public class PauseScreen extends ScreenManager implements Screen {
 
         if (inputProcessor.mouseHoverOver(buttons.get(0).getBound())) {
             if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
-//                game.setScreen(new GameScreen(game));
                   resume();
             }
         }
