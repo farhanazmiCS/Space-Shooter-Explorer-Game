@@ -85,8 +85,11 @@ interface com.mygdx.game.entity.CollisionManager {
 }
 
 
-com.mygdx.game.entity.Entity <|-- com.mygdx.game.entity.NonCollidableEntity
-com.mygdx.game.entity.Cloneable <|.. com.mygdx.game.entity.Entity
-com.mygdx.game.entity.Entity <|-- com.mygdx.game.entity.CollidableEntity
-com.mygdx.game.entity.CollisionManager <|.. com.mygdx.game.entity.EntityManager
+com.mygdx.game.entity.Entity <|-- com.mygdx.game.entity.NonCollidableEntity : "extends"
+com.mygdx.game.entity.Cloneable <|.. com.mygdx.game.entity.Entity : "implements"
+com.mygdx.game.entity.Entity <|-- com.mygdx.game.entity.CollidableEntity : "extends"
+com.mygdx.game.entity.CollisionManager <|.. com.mygdx.game.entity.EntityManager : "implements"
+com.mygdx.game.entity.Player o--- com.mygdx.game.entity.CollidableEntity : "has generic typing"
+com.mygdx.game.entity.FallingObject o--- com.mygdx.game.entity.CollidableEntity : "has generic typing"
+com.mygdx.game.entity.CollidableEntity o--- com.mygdx.game.entity.EntityManager : "has many"
 @enduml
