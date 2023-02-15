@@ -18,7 +18,6 @@ import com.mygdx.game.input.CustomInputProcessor;
 public class GameScreen extends ScreenManager implements Screen {
     private Main game;
     private Button pauseButton;
-    private boolean isPaused = false;
     OrthographicCamera camera;
     long lastDropTime;
     CustomInputProcessor inputProcessor;
@@ -83,22 +82,9 @@ public class GameScreen extends ScreenManager implements Screen {
         pauseButton.setButtonColor(Color.WHITE);
 
         // Pause button logic
-        if (!isPaused) {
-            if (inputProcessor.mouseHoverOver(pauseButton.getBound())) {
-                if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
-//                game.setScreen(new GameScreen(game));
-                    pause();
-                    // dispose();
-                }
-            }
-        }
-        else {
-            if (inputProcessor.mouseHoverOver(pauseButton.getBound())) {
-                if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
-//                game.setScreen(new GameScreen(game));
-                    resume();
-                    // dispose();
-                }
+        if (inputProcessor.mouseHoverOver(pauseButton.getBound())) {
+            if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
+                pause();
             }
         }
 
@@ -135,15 +121,11 @@ public class GameScreen extends ScreenManager implements Screen {
 
     @Override
     public void pause() {
-        isPaused = true;
         game.setScreen(game.getPauseScreen());
-        pauseButton.setButtonColor(Color.CLEAR);
-        dispose();
     }
 
     @Override
     public void resume() {
-        isPaused = false;
     }
 
     @Override

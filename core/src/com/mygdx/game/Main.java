@@ -81,7 +81,7 @@ public class Main extends Game {
 		pauseScreen = new PauseScreen(this);
 
 		batch = new SpriteBatch();
-		font = generator.generateFont(parameter); // use libGDX's default Arial font
+		font = generator.generateFont(parameter); // use special font for text
 		font.getData().setScale(2.0f);
 		entityManager = new EntityManager();
 		entityManager.setPlayer(WIDTH);

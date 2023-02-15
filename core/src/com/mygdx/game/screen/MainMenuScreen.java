@@ -63,11 +63,13 @@ public class MainMenuScreen extends ScreenManager implements Screen {
         // System.out.println(Gdx.input.getX() + ", " + Gdx.input.getY());
 
         if (inputProcessor.mouseHoverOver(buttons.get(0).getBound())) {
+            buttons.get(0).setButtonColor(Color.SKY);
             if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
                 play();
             }
         }
         if (inputProcessor.mouseHoverOver(buttons.get(2).getBound())) {
+            buttons.get(2).setButtonColor(Color.PINK);
             if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
                 quit();
             }
