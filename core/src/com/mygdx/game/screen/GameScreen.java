@@ -119,8 +119,7 @@ public class GameScreen extends ScreenManager implements Screen {
                 break;
             case 2:
                 //add 2 points and redirect to trivia quiz
-                //spawnRateMultiplier = 0.8f;
-                spawnRate /= 10;
+                //spawnRate /= 10;
                 break;
         }
         this.game.entityManager.getPlayer().getObject().setScore(this.game.entityManager.getPlayer().getObject().getScore() + point);

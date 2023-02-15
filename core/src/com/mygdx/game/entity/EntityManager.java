@@ -32,6 +32,7 @@ public class EntityManager implements CollisionManager<CollidableEntity<Player>,
         //<a href="https://www.flaticon.com/free-icons/star" title="star icons">Star icons created by Freepik - Flaticon</a>
         fallingObjectImages.add(new Texture(Gdx.files.internal("rainbow_star.png")));
         //<a href="https://www.flaticon.com/free-icons/shapes-and-symbols" title="shapes and symbols icons">Shapes and symbols icons created by Smashicons - Flaticon</a>
+
     }
 
     @Override
@@ -125,8 +126,16 @@ public class EntityManager implements CollisionManager<CollidableEntity<Player>,
         return player;
     }
 
-    public void setPlayer(CollidableEntity<Player> player) {
-        this.player = player;
+    public void setPlayer(int WIDTH) {
+        this.player = new CollidableEntity<>(
+                WIDTH / 2 - 64 / 2,
+                20,
+                new Player(
+                        "spaceship.png", //<a href="https://www.flaticon.com/free-icons/spaceship" title="spaceship icons">Spaceship icons created by Skyclick - Flaticon</a>
+                        200,
+                        new int[]{Input.Keys.LEFT, Input.Keys.RIGHT, Input.Keys.UP, Input.Keys.DOWN},
+                        new int[]{Input.Keys.A, Input.Keys.D, Input.Keys.W, Input.Keys.S},
+                        0));
     }
 
     public ArrayList<Texture> getFallingObjectImages() {
@@ -135,5 +144,25 @@ public class EntityManager implements CollisionManager<CollidableEntity<Player>,
 
     public void setFallingObjectImages(ArrayList<Texture> fallingObjectImages) {
         this.fallingObjectImages = fallingObjectImages;
+    }
+
+    public void resetFailingObjects()
+    {
+        for (Texture image : fallingObjectImages)
+        {
+            image.dispose();
+        }
+        for (CollidableEntity<FallingObject> fallingObject : fallingObjects)
+        {
+            fallingObject.getObject().getImage().dispose();
+        }
+        fallingObjects = new ArrayList<>();
+        fallingObjectImages = new ArrayList<>();
+        fallingObjectImages.add(new Texture(Gdx.files.internal("ufo.png")));
+        //<a href="https://www.flaticon.com/free-icons/alien" title="alien icons">Alien icons created by Freepik - Flaticon</a>
+        fallingObjectImages.add(new Texture(Gdx.files.internal("star.png")));
+        //<a href="https://www.flaticon.com/free-icons/star" title="star icons">Star icons created by Freepik - Flaticon</a>
+        fallingObjectImages.add(new Texture(Gdx.files.internal("rainbow_star.png")));
+        //<a href="https://www.flaticon.com/free-icons/shapes-and-symbols" title="shapes and symbols icons">Shapes and symbols icons created by Smashicons - Flaticon</a>
     }
 }
