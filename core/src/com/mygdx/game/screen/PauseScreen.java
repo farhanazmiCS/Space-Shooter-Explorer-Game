@@ -45,11 +45,13 @@ public class PauseScreen extends ScreenManager implements Screen {
         buttons.get(1).setButtonColor(Color.ORANGE); // Quit to Main Menu
 
         if (inputProcessor.mouseHoverOver(buttons.get(0).getBound())) {
+            buttons.get(0).setButtonColor(Color.SKY);
             if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
                   resume();
             }
         }
         if (inputProcessor.mouseHoverOver(buttons.get(1).getBound())) {
+            buttons.get(1).setButtonColor(Color.RED);
             if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
                 quit();
             }

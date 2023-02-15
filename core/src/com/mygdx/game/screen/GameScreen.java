@@ -79,10 +79,11 @@ public class GameScreen extends ScreenManager implements Screen {
         renderer.rect(pauseButton.getBound().getX(), game.HEIGHT - pauseButton.getBound().getHeight() - pauseButton.getBound().getY(), pauseButton.getBound().getWidth(), pauseButton.getBound().getHeight());
         renderer.end();
 
-        pauseButton.setButtonColor(Color.WHITE);
+        pauseButton.setButtonColor(Color.YELLOW);
 
         // Pause button logic
         if (inputProcessor.mouseHoverOver(pauseButton.getBound())) {
+            pauseButton.setButtonColor(Color.ORANGE);
             if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
                 pause();
             }
