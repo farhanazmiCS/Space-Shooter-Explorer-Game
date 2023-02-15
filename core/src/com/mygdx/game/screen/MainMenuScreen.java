@@ -25,7 +25,6 @@ public class MainMenuScreen extends ScreenManager implements Screen {
         this.game = game;
         buttons = new ArrayList<Button>();
         this.inputProcessor = new CustomInputProcessor();
-        // startBound = new Rectangle(startButton.getX(), startButton.getY(), startButton.getWidth(), startButton.getHeight());
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);

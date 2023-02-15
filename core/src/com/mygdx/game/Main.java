@@ -85,7 +85,7 @@ public class Main extends Game {
 		font.getData().setScale(2.0f);
 		entityManager = new EntityManager();
 		entityManager.setPlayer(WIDTH);
-		this.setScreen(new MainMenuScreen(this));
+		this.setScreen(mainMenuScreen);
 		// Create game screen
 		gameScreen = new GameScreen(this);
 	}
