@@ -21,13 +21,14 @@ public class GameScreen extends ScreenManager implements Screen {
     private boolean isPaused = false;
     OrthographicCamera camera;
     long lastDropTime;
-    CustomInputProcessor inputProcessor = new CustomInputProcessor();
+    CustomInputProcessor inputProcessor;
     float spawnRate = 1000000000;
     float spawnRateMultiplier = 1f;
 
     public GameScreen(final Main game) {
         super(game);
         this.game = game;
+        this.inputProcessor = new CustomInputProcessor();
         // this.world = new World(new Vector2(0, -9.81f), false);
         //spawnRaindrop();
         this.game.entityManager.spawnFallingObject(this.game.WIDTH, this.game.HEIGHT);

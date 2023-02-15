@@ -14,7 +14,7 @@ import com.mygdx.game.Main;
 import java.util.ArrayList;
 
 public class MainMenuScreen extends ScreenManager implements Screen {
-    CustomInputProcessor inputProcessor = new CustomInputProcessor();
+    CustomInputProcessor inputProcessor;
     final Main game;
 
     OrthographicCamera camera;
@@ -24,7 +24,7 @@ public class MainMenuScreen extends ScreenManager implements Screen {
         super(game);
         this.game = game;
         buttons = new ArrayList<Button>();
-
+        this.inputProcessor = new CustomInputProcessor();
         // startBound = new Rectangle(startButton.getX(), startButton.getY(), startButton.getWidth(), startButton.getHeight());
 
         camera = new OrthographicCamera();
