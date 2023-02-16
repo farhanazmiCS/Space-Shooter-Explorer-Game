@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
-public class EntityManager implements CollisionManager<CollidableEntity<Player>, CollidableEntity<FallingObject>, Integer> {
+public class EntityManager implements CollisionManager<CollidableEntity<Player>, CollidableEntity<FallingObject>, Integer>, BehaviourManager<Integer> {
     // This class contains the attributes and methods for handling all entities.
     // Example:
     //  1. Creating entities
@@ -79,7 +79,7 @@ public class EntityManager implements CollisionManager<CollidableEntity<Player>,
         return TimeUtils.nanoTime();
     }
 
-    public int moveFallingObject()
+    public Integer moveFallingObject()
     {
         Iterator<CollidableEntity<FallingObject>> iter = fallingObjects.iterator();
         while (iter.hasNext()) {

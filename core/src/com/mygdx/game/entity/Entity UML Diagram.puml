@@ -1,6 +1,9 @@
 @startuml
 class com.mygdx.game.entity.NonCollidableEntity {
 }
+interface com.mygdx.game.entity.BehaviourManager {
+~ E moveFallingObject()
+}
 class com.mygdx.game.entity.Player {
 - String imgName
 - Sprite sprite
@@ -70,7 +73,7 @@ class com.mygdx.game.entity.EntityManager {
 + void limitPlayerMovement(Integer,Integer)
 + void movePlayer(CustomInputProcessor)
 + long spawnFallingObject(int,int)
-+ int moveFallingObject()
++ Integer moveFallingObject()
 + boolean checkFallingObjectCollision(CollidableEntity<Player>,CollidableEntity<FallingObject>)
 + ArrayList<CollidableEntity<FallingObject>> getFallingObjects()
 + void setFallingObjects(ArrayList<CollidableEntity<FallingObject>>)
@@ -90,6 +93,7 @@ com.mygdx.game.entity.Entity <|-- com.mygdx.game.entity.NonCollidableEntity : "e
 com.mygdx.game.entity.Cloneable <|.. com.mygdx.game.entity.Entity : "implements"
 com.mygdx.game.entity.Entity <|-- com.mygdx.game.entity.CollidableEntity : "extends"
 com.mygdx.game.entity.CollisionManager <|.. com.mygdx.game.entity.EntityManager : "implements"
+com.mygdx.game.entity.BehaviourManager <|.. com.mygdx.game.entity.EntityManager : "implements"
 com.mygdx.game.entity.Player o--- com.mygdx.game.entity.CollidableEntity : "has generic typing"
 com.mygdx.game.entity.FallingObject o--- com.mygdx.game.entity.CollidableEntity : "has generic typing"
 com.mygdx.game.entity.CollidableEntity *--- com.mygdx.game.entity.EntityManager : "has many"
