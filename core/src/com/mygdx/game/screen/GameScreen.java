@@ -50,10 +50,25 @@ public class GameScreen implements Screen {
         // tell the camera to update its matrices.
         camera.update();
 
+        // Pause button
+        ShapeRenderer renderer = pauseButton.getShapeRenderer();
+        renderer.begin(ShapeRenderer.ShapeType.Filled);
+        renderer.rect(pauseButton.getBound().getX(), game.HEIGHT - pauseButton.getBound().getHeight() - pauseButton.getBound().getY(), pauseButton.getBound().getWidth(), pauseButton.getBound().getHeight());
+        renderer.end();
+
+        pauseButton.setButtonColor(Color.YELLOW);
+
+        // Pause button logic
+        if (inputProcessor.mouseHoverOver(pauseButton.getBound())) {
+            pauseButton.setButtonColor(Color.ORANGE);
+            if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
+                pause();
+            }
+        }
+
         // tell the SpritegetBatch() to render in the
         // coordinate system specified by the camera.
         game.getBatch().setProjectionMatrix(camera.combined);
-
 
         game.getBatch().begin();
         game.getFont().draw(game.getBatch(), "Items Collected: " + this.game.entityManager.getPlayer().getObject().getScore(), 10, 470);
@@ -71,22 +86,6 @@ public class GameScreen implements Screen {
         }
 
         this.game.entityManager.movePlayer(inputProcessor);
-
-        // Pause button
-        ShapeRenderer renderer = pauseButton.getShapeRenderer();
-        renderer.begin(ShapeRenderer.ShapeType.Filled);
-        renderer.rect(pauseButton.getBound().getX(), game.HEIGHT - pauseButton.getBound().getHeight() - pauseButton.getBound().getY(), pauseButton.getBound().getWidth(), pauseButton.getBound().getHeight());
-        renderer.end();
-
-        pauseButton.setButtonColor(Color.YELLOW);
-
-        // Pause button logic
-        if (inputProcessor.mouseHoverOver(pauseButton.getBound())) {
-            pauseButton.setButtonColor(Color.ORANGE);
-            if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
-                pause();
-            }
-        }
 
         this.game.entityManager.limitPlayerMovement(this.game.WIDTH, this.game.HEIGHT);
 
