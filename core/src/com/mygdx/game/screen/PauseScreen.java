@@ -14,7 +14,23 @@ import com.mygdx.game.input.CustomInputProcessor;
 import java.util.ArrayList;
 
 public class PauseScreen extends ScreenManager implements Screen {
-    CustomInputProcessor inputProcessor;
+    public CustomInputProcessor getInputProcessor() {
+        return inputProcessor;
+    }
+
+    public void setInputProcessor(CustomInputProcessor inputProcessor) {
+        this.inputProcessor = inputProcessor;
+    }
+
+    public ArrayList<Button> getButtons() {
+        return buttons;
+    }
+
+    public void setButtons(ArrayList<Button> buttons) {
+        this.buttons = buttons;
+    }
+
+    private CustomInputProcessor inputProcessor;
     private Main game;
     private ArrayList<Button> buttons;
     public PauseScreen(Main game) {

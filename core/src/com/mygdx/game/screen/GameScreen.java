@@ -18,11 +18,44 @@ import com.mygdx.game.input.CustomInputProcessor;
 public class GameScreen implements Screen {
     private Main game;
     private Button pauseButton;
-    OrthographicCamera camera;
-    long lastDropTime;
-    CustomInputProcessor inputProcessor;
-    float spawnRate = 1000000000;
-    float spawnRateMultiplier = 1f;
+    private OrthographicCamera camera;
+    private long lastDropTime;
+    private CustomInputProcessor inputProcessor;
+
+    public Button getPauseButton() {
+        return pauseButton;
+    }
+
+    public void setPauseButton(Button pauseButton) {
+        this.pauseButton = pauseButton;
+    }
+
+    public long getLastDropTime() {
+        return lastDropTime;
+    }
+
+    public void setLastDropTime(long lastDropTime) {
+        this.lastDropTime = lastDropTime;
+    }
+
+    public CustomInputProcessor getInputProcessor() {
+        return inputProcessor;
+    }
+
+    public void setInputProcessor(CustomInputProcessor inputProcessor) {
+        this.inputProcessor = inputProcessor;
+    }
+
+    public float getSpawnRate() {
+        return spawnRate;
+    }
+
+    public float getSpawnRateMultiplier() {
+        return spawnRateMultiplier;
+    }
+
+    private final float spawnRate = 1000000000;
+    private final float spawnRateMultiplier = 1f;
 
     public GameScreen(final Main game) {
         this.game = game;

@@ -14,11 +14,18 @@ import com.mygdx.game.Main;
 import java.util.ArrayList;
 
 public class MainMenuScreen extends ScreenManager implements Screen {
-    CustomInputProcessor inputProcessor;
-    final Main game;
+    public void setInputProcessor(CustomInputProcessor inputProcessor) {
+        this.inputProcessor = inputProcessor;
+    }
 
-    OrthographicCamera camera;
-    ArrayList<Button> buttons;
+    public void setButtons(ArrayList<Button> buttons) {
+        this.buttons = buttons;
+    }
+
+    private CustomInputProcessor inputProcessor;
+    private final Main game;
+    private OrthographicCamera camera;
+    private ArrayList<Button> buttons;
 
     public MainMenuScreen(final Main game) {
         super(game);
