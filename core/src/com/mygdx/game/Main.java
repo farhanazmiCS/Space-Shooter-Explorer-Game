@@ -71,18 +71,14 @@ public class Main extends Game {
 
 	@Override
 	public void create () {
-		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("COMICATE.TTF"));
-		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-		parameter.size = 12;
-		font = generator.generateFont(parameter);
+		font = new BitmapFont();
 
 		// Create Pause menu and main menu
 		mainMenuScreen = new MainMenuScreen(this);
 		pauseScreen = new PauseScreen(this);
 
 		batch = new SpriteBatch();
-		font = generator.generateFont(parameter); // use special font for text
-		font.getData().setScale(2.0f);
+		font.getData().setScale(1.5f);
 		entityManager = new EntityManager();
 		entityManager.setPlayer(WIDTH);
 		this.setScreen(mainMenuScreen);

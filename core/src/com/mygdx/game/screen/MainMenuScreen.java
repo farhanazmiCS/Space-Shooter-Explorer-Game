@@ -50,17 +50,30 @@ public class MainMenuScreen extends ScreenManager implements Screen {
         camera.update();
         game.getBatch().setProjectionMatrix(camera.combined);
 
-        game.getBatch().begin(); // Anything after begin() will be displayed
 
         // Render buttons
         //System.out.println(buttons.size());
         for (Button button : buttons) {
             ShapeRenderer renderer = button.getShapeRenderer();
-            renderer.begin(ShapeRenderer.ShapeType.Filled);
+            renderer.begin(ShapeRenderer.ShapeType.Line);
             renderer.rect(button.getBound().getX(), game.HEIGHT - button.getBound().getHeight() - button.getBound().getY(), button.getBound().getWidth(), button.getBound().getHeight());
+            if (buttons.get(0) == button) {
+                game.getBatch().begin(); // Anything after begin() will be displayed
+                game.getFont().draw(game.getBatch(), "New Game", button.getBound().getX() + 20, game.HEIGHT - button.getBound().getHeight() / 3 - button.getBound().getY());
+                game.getBatch().end(); // Anything after end() will NOT be displayed
+            }
+            else if (buttons.get(1) == button) {
+                game.getBatch().begin(); // Anything after begin() will be displayed
+                game.getFont().draw(game.getBatch(), "Score board", button.getBound().getX() + 15, game.HEIGHT - button.getBound().getHeight() / 3 - button.getBound().getY());
+                game.getBatch().end(); // Anything after end() will NOT be displayed
+            }
+            else {
+                game.getBatch().begin(); // Anything after begin() will be displayed
+                game.getFont().draw(game.getBatch(), "Quit", button.getBound().getX() + 50, game.HEIGHT - button.getBound().getHeight() / 3 - button.getBound().getY());
+                game.getBatch().end(); // Anything after end() will NOT be displayed
+            }
             renderer.end();
         }
-        game.getBatch().end(); // Anything after end() will NOT be displayed
 
         buttons.get(0).setButtonColor(Color.BLUE); // Play
         buttons.get(1).setButtonColor(Color.YELLOW); // [Placeholder]

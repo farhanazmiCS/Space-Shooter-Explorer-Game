@@ -85,9 +85,12 @@ public class GameScreen implements Screen {
 
         // Pause button
         ShapeRenderer renderer = pauseButton.getShapeRenderer();
-        renderer.begin(ShapeRenderer.ShapeType.Filled);
+        renderer.begin(ShapeRenderer.ShapeType.Line);
         renderer.rect(pauseButton.getBound().getX(), game.HEIGHT - pauseButton.getBound().getHeight() - pauseButton.getBound().getY(), pauseButton.getBound().getWidth(), pauseButton.getBound().getHeight());
         renderer.end();
+        game.getBatch().begin(); // Anything after begin() will be displayed
+        game.getFont().draw(game.getBatch(), "Pause", pauseButton.getBound().getX() + 45, game.HEIGHT - pauseButton.getBound().getHeight() / 3 - pauseButton.getBound().getY());
+        game.getBatch().end(); // Anything after end() will NOT be displayed
 
         pauseButton.setButtonColor(Color.YELLOW);
 
