@@ -15,7 +15,7 @@ import com.mygdx.game.entity.FallingObject;
 import com.mygdx.game.entity.Player;
 import com.mygdx.game.input.CustomInputProcessor;
 
-public class GameScreen extends ScreenManager implements Screen {
+public class GameScreen implements Screen {
     private Main game;
     private Button pauseButton;
     OrthographicCamera camera;
@@ -25,7 +25,6 @@ public class GameScreen extends ScreenManager implements Screen {
     float spawnRateMultiplier = 1f;
 
     public GameScreen(final Main game) {
-        super(game);
         this.game = game;
         this.inputProcessor = new CustomInputProcessor();
         // this.world = new World(new Vector2(0, -9.81f), false);
