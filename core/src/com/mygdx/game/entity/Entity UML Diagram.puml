@@ -1,4 +1,5 @@
 @startuml
+skinparam lineType ortho
 class com.mygdx.game.entity.NonCollidableEntity {
 }
 interface com.mygdx.game.entity.BehaviourManager {
