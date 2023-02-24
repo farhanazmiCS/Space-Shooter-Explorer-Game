@@ -3,6 +3,8 @@ package com.mygdx.game.entity;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
+import java.util.ArrayList;
+
 public class Player {
     private String imgName;
     private Sprite sprite;
@@ -12,6 +14,7 @@ public class Player {
     private int[] mainKeyboardInputs; // Defines default player controls
     private int[] altKeyboardInputs; // Defines alternate player controls
     private int score;
+    private ArrayList<CollidableEntity<Laser>> lasers;
 
     public Player(String imgName, float speed, int[] mainKeyboardInputs, int[] altKeyboardInputs, int score) {
         this.imgName = imgName;
@@ -22,6 +25,7 @@ public class Player {
         this.mainKeyboardInputs = mainKeyboardInputs;
         this.altKeyboardInputs = altKeyboardInputs;
         this.score = score;
+        lasers = new ArrayList<>();
     }
 
     public String getImgName() {
@@ -86,5 +90,13 @@ public class Player {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public ArrayList<CollidableEntity<Laser>> getLasers() {
+        return lasers;
+    }
+
+    public void setLasers(ArrayList<CollidableEntity<Laser>> lasers) {
+        this.lasers = lasers;
     }
 }

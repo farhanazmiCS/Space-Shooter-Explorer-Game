@@ -12,6 +12,7 @@ import com.mygdx.game.Button;
 import com.mygdx.game.Main;
 import com.mygdx.game.entity.CollidableEntity;
 import com.mygdx.game.entity.FallingObject;
+import com.mygdx.game.entity.Laser;
 import com.mygdx.game.entity.Player;
 import com.mygdx.game.input.CustomInputProcessor;
 
@@ -20,6 +21,7 @@ public class GameScreen implements Screen {
     private Button pauseButton;
     private OrthographicCamera camera;
     private long lastDropTime;
+    private long lastShootTime;
     private CustomInputProcessor inputProcessor;
 
     public Button getPauseButton() {
@@ -55,7 +57,7 @@ public class GameScreen implements Screen {
     }
 
     private final float spawnRate = 1000000000;
-    private final float spawnRateMultiplier = 1f;
+    private final float spawnRateMultiplier = 0.5f;
 
     public GameScreen(final Main game) {
         this.game = game;
@@ -107,6 +109,24 @@ public class GameScreen implements Screen {
         game.getBatch().setProjectionMatrix(camera.combined);
 
         game.getBatch().begin();
+
+        if (TimeUtils.nanoTime() - lastShootTime > spawnRate * spawnRateMultiplier)
+            lastShootTime = this.game.entityManager.spawnLasers(inputProcessor);
+        this.game.entityManager.moveLasers();
+
+        if (this.game.entityManager.getPlayer().getObject().getLasers().size() > 0)
+        {
+            for (CollidableEntity<Laser> laser : this.game.entityManager.getPlayer().getObject().getLasers()) {
+                game.getBatch().draw(
+                        laser.getObject().getSprite(),
+                        laser.getX(),
+                        laser.getY(),
+                        laser.getObject().getWidth(),
+                        laser.getObject().getHeight()
+                );
+            }
+        }
+
         game.getFont().draw(game.getBatch(), "Items Collected: " + this.game.entityManager.getPlayer().getObject().getScore(), 10, 470);
         CollidableEntity<Player> player = this.game.entityManager.getPlayer();
         game.getBatch().draw(
@@ -146,6 +166,7 @@ public class GameScreen implements Screen {
         }
         this.game.entityManager.getPlayer().getObject().setScore(this.game.entityManager.getPlayer().getObject().getScore() + point);
         //dropsGathered += point;
+
         game.getBatch().end();
     }
 

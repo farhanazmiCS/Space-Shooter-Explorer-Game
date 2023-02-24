@@ -51,16 +51,55 @@ public class EntityManager implements CollisionManager<CollidableEntity<Player>,
     {
         if (inputProcessor.keyDown(player.getObject().getMainKeyboardInputs()[0]) ||
                 inputProcessor.keyDown(player.getObject().getAltKeyboardInputs()[0]))
-            player.setX(player.getX() - (200 * Gdx.graphics.getDeltaTime()));
+            player.setX(player.getX() - (player.getObject().getSpeed() * Gdx.graphics.getDeltaTime()));
         if (inputProcessor.keyDown(player.getObject().getMainKeyboardInputs()[1]) ||
                 inputProcessor.keyDown(player.getObject().getAltKeyboardInputs()[1]))
-            player.setX(player.getX() + (200 * Gdx.graphics.getDeltaTime()));
+            player.setX(player.getX() + (player.getObject().getSpeed() * Gdx.graphics.getDeltaTime()));
         if (inputProcessor.keyDown(player.getObject().getMainKeyboardInputs()[2]) ||
                 inputProcessor.keyDown(player.getObject().getAltKeyboardInputs()[2]))
-            player.setY(player.getY() + (200 * Gdx.graphics.getDeltaTime()));
+            player.setY(player.getY() + (player.getObject().getSpeed() * Gdx.graphics.getDeltaTime()));
         if (inputProcessor.keyDown(player.getObject().getMainKeyboardInputs()[3]) ||
                 inputProcessor.keyDown(player.getObject().getAltKeyboardInputs()[3]))
-            player.setY(player.getY() - (200 * Gdx.graphics.getDeltaTime()));
+            player.setY(player.getY() - (player.getObject().getSpeed() * Gdx.graphics.getDeltaTime()));
+    }
+
+    public void moveLasers()
+    {
+        if (player.getObject().getLasers().size() > 0)
+        {
+            for (int i = 0; i < player.getObject().getLasers().size(); i++)
+            {
+                CollidableEntity<Laser> laser = player.getObject().getLasers().get(i);
+                laser.setY(laser.getY() + (laser.getObject().getSpeed() * Gdx.graphics.getDeltaTime()));
+                player.getObject().getLasers().set(i, laser);
+            }
+        }
+    }
+
+    public long spawnLasers(CustomInputProcessor inputProcessor)
+    {
+        if (inputProcessor.keyDown(Input.Keys.SPACE))
+        {
+            CollidableEntity<Laser> laser = new CollidableEntity<>(
+                    player.getX(),
+                    player.getY(),
+                    new Laser(
+                            "laser.png", //<a href="https://www.flaticon.com/free-icons/laser" title="laser icons">Laser icons created by Freepik - Flaticon</a>
+                            200));
+            player.getObject().getLasers().add(laser);
+            return TimeUtils.nanoTime();
+        }
+        if (inputProcessor.mouseClicked(Input.Buttons.LEFT))
+        {
+            CollidableEntity<Laser> laser = new CollidableEntity<>(
+                    player.getX(),
+                    player.getY(),
+                    new Laser(
+                            "laser.png", //<a href="https://www.flaticon.com/free-icons/laser" title="laser icons">Laser icons created by Freepik - Flaticon</a>
+                            200));
+            player.getObject().getLasers().add(laser);
+        }
+        return 0;
     }
 
     public long spawnFallingObject(int screenWidth, int screenHeight)
