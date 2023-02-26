@@ -98,6 +98,7 @@ public class EntityManager implements CollisionManager<CollidableEntity<Player>,
                             "laser.png", //<a href="https://www.flaticon.com/free-icons/laser" title="laser icons">Laser icons created by Freepik - Flaticon</a>
                             200));
             player.getObject().getLasers().add(laser);
+            return TimeUtils.nanoTime();
         }
         return 0;
     }
