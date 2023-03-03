@@ -28,7 +28,6 @@ public class ScoreboardScreen implements Screen{
     private Button button;
     private Main game;
     public ScoreboardScreen(Main game) {
-        //super(game);
         this.game = game;
         this.inputProcessor = new CustomInputProcessor();
     }
