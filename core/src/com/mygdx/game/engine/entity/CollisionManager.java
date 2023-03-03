@@ -1,4 +1,4 @@
-package com.mygdx.game.entity;
+package com.mygdx.game.engine.entity;
 
 public interface CollisionManager<P, F, E> {
     // This class contains the methods to which the entities behave when a collision occurs.

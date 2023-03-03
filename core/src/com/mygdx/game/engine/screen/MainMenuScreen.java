@@ -1,4 +1,4 @@
-package com.mygdx.game.screen;
+package com.mygdx.game.engine.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -7,9 +7,9 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.mygdx.game.Button;
-import com.mygdx.game.input.CustomInputProcessor;
-import com.mygdx.game.Main;
+import com.mygdx.game.engine.Button;
+import com.mygdx.game.engine.input.CustomInputProcessor;
+import com.mygdx.game.engine.Main;
 
 import java.util.ArrayList;
 
@@ -50,6 +50,9 @@ public class MainMenuScreen extends ScreenManager implements Screen {
         camera.update();
         game.getBatch().setProjectionMatrix(camera.combined);
 
+        game.getBatch().begin(); // Anything after begin() will be displayed
+        game.getFont().draw(game.getBatch(), "Spaes Invaederzzz", game.WIDTH / 2 - 100, 400);
+        game.getBatch().end(); // Anything after end() will NOT be displayed
 
         // Render buttons
         //System.out.println(buttons.size());

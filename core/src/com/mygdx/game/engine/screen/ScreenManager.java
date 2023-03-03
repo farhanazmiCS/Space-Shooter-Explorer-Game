@@ -1,7 +1,7 @@
-package com.mygdx.game.screen;
+package com.mygdx.game.engine.screen;
 
-import com.mygdx.game.Button;
-import com.mygdx.game.Main;
+import com.mygdx.game.engine.Button;
+import com.mygdx.game.engine.Main;
 
 import java.util.ArrayList;
 

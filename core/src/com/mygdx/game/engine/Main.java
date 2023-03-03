@@ -1,18 +1,13 @@
-package com.mygdx.game;
+package com.mygdx.game.engine;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.mygdx.game.entity.CollidableEntity;
-import com.mygdx.game.entity.EntityManager;
-import com.mygdx.game.entity.Player;
-import com.mygdx.game.screen.GameScreen;
-import com.mygdx.game.screen.MainMenuScreen;
-import com.mygdx.game.screen.PauseScreen;
+import com.mygdx.game.engine.entity.EntityManager;
+import com.mygdx.game.engine.screen.GameScreen;
+import com.mygdx.game.engine.screen.MainMenuScreen;
+import com.mygdx.game.engine.screen.PauseScreen;
 
 public class Main extends Game {
 	MainMenuScreen mainMenuScreen;

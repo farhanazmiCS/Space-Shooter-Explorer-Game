@@ -1,4 +1,4 @@
-package com.mygdx.game.screen;
+package com.mygdx.game.engine.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -6,10 +6,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.mygdx.game.Button;
-import com.mygdx.game.Main;
-import com.mygdx.game.entity.EntityManager;
-import com.mygdx.game.input.CustomInputProcessor;
+import com.mygdx.game.engine.Button;
+import com.mygdx.game.engine.Main;
+import com.mygdx.game.engine.entity.EntityManager;
+import com.mygdx.game.engine.input.CustomInputProcessor;
 
 import java.util.ArrayList;
 

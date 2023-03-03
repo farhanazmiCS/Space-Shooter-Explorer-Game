@@ -1,4 +1,4 @@
-package com.mygdx.game.entity;
+package com.mygdx.game.engine.entity;
 
 public class CollidableEntity<T> extends Entity<T>{
     private float prevX;

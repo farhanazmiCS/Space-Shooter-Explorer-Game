@@ -1,4 +1,4 @@
-package com.mygdx.game.screen;
+package com.mygdx.game.engine.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -8,13 +8,13 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.mygdx.game.Button;
-import com.mygdx.game.Main;
-import com.mygdx.game.entity.CollidableEntity;
-import com.mygdx.game.entity.FallingObject;
-import com.mygdx.game.entity.Laser;
-import com.mygdx.game.entity.Player;
-import com.mygdx.game.input.CustomInputProcessor;
+import com.mygdx.game.engine.Button;
+import com.mygdx.game.engine.Main;
+import com.mygdx.game.engine.entity.CollidableEntity;
+import com.mygdx.game.engine.entity.FallingObject;
+import com.mygdx.game.engine.entity.Laser;
+import com.mygdx.game.engine.entity.Player;
+import com.mygdx.game.engine.input.CustomInputProcessor;
 
 public class GameScreen implements Screen {
     private Main game;

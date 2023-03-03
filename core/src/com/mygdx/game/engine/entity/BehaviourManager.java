@@ -1,4 +1,4 @@
-package com.mygdx.game.entity;
+package com.mygdx.game.engine.entity;
 
 public interface BehaviourManager<E> {
     E moveFallingObject();

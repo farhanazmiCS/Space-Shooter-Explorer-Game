@@ -1,4 +1,4 @@
-package com.mygdx.game.entity;
+package com.mygdx.game.engine.entity;
 
 public class NonCollidableEntity<T> extends Entity<T>{
     public NonCollidableEntity(float x, float y, T object) {
