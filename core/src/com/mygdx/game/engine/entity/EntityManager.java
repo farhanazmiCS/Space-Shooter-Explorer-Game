@@ -186,7 +186,8 @@ public class EntityManager implements CollisionManager<CollidableEntity<Player>,
                         200,
                         new int[]{Input.Keys.LEFT, Input.Keys.RIGHT, Input.Keys.UP, Input.Keys.DOWN},
                         new int[]{Input.Keys.A, Input.Keys.D, Input.Keys.W, Input.Keys.S},
-                        0));
+                        0,
+                        10));
     }
 
     public ArrayList<Texture> getFallingObjectImages() {

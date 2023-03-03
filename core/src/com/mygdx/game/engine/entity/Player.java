@@ -15,8 +15,9 @@ public class Player {
     private int[] altKeyboardInputs; // Defines alternate player controls
     private int score;
     private ArrayList<CollidableEntity<Laser>> lasers;
+    private int health;
 
-    public Player(String imgName, float speed, int[] mainKeyboardInputs, int[] altKeyboardInputs, int score) {
+    public Player(String imgName, float speed, int[] mainKeyboardInputs, int[] altKeyboardInputs, int score, int health) {
         this.imgName = imgName;
         this.sprite = new Sprite(new Texture(imgName));
         this.width = sprite.getWidth();
@@ -98,5 +99,13 @@ public class Player {
 
     public void setLasers(ArrayList<CollidableEntity<Laser>> lasers) {
         this.lasers = lasers;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
     }
 }
