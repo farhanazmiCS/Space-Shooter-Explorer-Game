@@ -8,12 +8,13 @@ import com.mygdx.game.engine.entity.EntityManager;
 import com.mygdx.game.engine.screen.GameScreen;
 import com.mygdx.game.engine.screen.MainMenuScreen;
 import com.mygdx.game.engine.screen.PauseScreen;
+import com.mygdx.game.engine.screen.ScoreboardScreen;
 
 public class Main extends Game {
 	MainMenuScreen mainMenuScreen;
 	GameScreen gameScreen;
 	PauseScreen pauseScreen;
-	Scoreboard scoreboardScreen;
+	ScoreboardScreen scoreboardScreen;
 	public EntityManager entityManager;
 	Texture img_test;
 
