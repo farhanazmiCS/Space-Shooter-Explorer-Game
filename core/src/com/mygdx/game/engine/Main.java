@@ -13,6 +13,7 @@ public class Main extends Game {
 	MainMenuScreen mainMenuScreen;
 	GameScreen gameScreen;
 	PauseScreen pauseScreen;
+	Scoreboard scoreboardScreen;
 	public EntityManager entityManager;
 	Texture img_test;
 
@@ -71,6 +72,7 @@ public class Main extends Game {
 		// Create Pause menu and main menu
 		mainMenuScreen = new MainMenuScreen(this);
 		pauseScreen = new PauseScreen(this);
+		scoreboardScreen = new ScoreboardScreen(this);
 
 		batch = new SpriteBatch();
 		font.getData().setScale(1.5f);
