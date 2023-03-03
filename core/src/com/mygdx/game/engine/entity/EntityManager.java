@@ -106,7 +106,18 @@ public class EntityManager implements CollisionManager<CollidableEntity<Player>,
     public long spawnFallingObject(int screenWidth, int screenHeight)
     {
         //int index = (int) ((Math.random() * ((fallingObjectImages.size() - 1))) + 0);
-        int index = (new Random()).nextInt(3);
+        int index = 0;
+        int chance = (new Random()).nextInt(100) + 1;
+
+        if (chance <= 10)
+        {
+            index = 2;
+        }
+        else if (chance > 11 & chance <= 40)
+        {
+            index = 1;
+        }
+
         CollidableEntity<FallingObject> fallingObject =
                 new CollidableEntity<>(
                         MathUtils.random(0, screenWidth - fallingObjectImages.get((int) index).getWidth()),
