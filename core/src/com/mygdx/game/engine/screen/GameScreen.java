@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.engine.Button;
 import com.mygdx.game.engine.Main;
-import com.mygdx.game.engine.entity.CollidableEntity;
+import com.mygdx.game.engine.collision.CollidableEntity;
 import com.mygdx.game.engine.entity.FallingObject;
 import com.mygdx.game.engine.entity.Laser;
 import com.mygdx.game.engine.entity.Player;

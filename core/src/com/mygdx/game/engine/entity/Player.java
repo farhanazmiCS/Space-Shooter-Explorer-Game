@@ -2,6 +2,7 @@ package com.mygdx.game.engine.entity;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.mygdx.game.engine.collision.CollidableEntity;
 
 import java.util.ArrayList;
 

@@ -1,6 +1,8 @@
-package com.mygdx.game.engine.entity;
+package com.mygdx.game.engine.collision;
 
-public class CollidableEntity<T> extends Entity<T>{
+import com.mygdx.game.engine.entity.Entity;
+
+public class CollidableEntity<T> extends Entity<T> {
     private float prevX;
     private float prevY;
 
