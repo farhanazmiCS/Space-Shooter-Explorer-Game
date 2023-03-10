@@ -3,6 +3,7 @@ package com.mygdx.game.engine;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.game.engine.lifecycle.Main;
 
 public class Button {
     private Main game;

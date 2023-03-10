@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.engine.behavior.BehaviourManager;
 import com.mygdx.game.engine.collision.CollidableEntity;
-import com.mygdx.game.engine.entity.Laser;
 
 import java.util.ArrayList;
 
@@ -48,26 +47,26 @@ public class UFO implements BehaviourManager<CollidableEntity> {
 
 
     @Override
-    public void moveUFO(CollidableEntity ufo) {
+    public void moveUFO(CollidableEntity ufo, CollidableEntity player, int speed) {
         if (dir == "left") {
-            moveLeft(ufo);
+            moveLeft(ufo, player);
         }
         if (dir == "right") {
-            moveRight(ufo);
+            moveRight(ufo, player);
         }
         if (ufo.getX() <= 0) {
             dir = "right";
         }
-        if (ufo.getX() >= 700) {
+        if (ufo.getX() >= 300) {
             dir = "left";
         }
     }
 
-    public void moveLeft(CollidableEntity ufo) {
+    public void moveLeft(CollidableEntity ufo, CollidableEntity player) {
         ufo.setX(ufo.getX() - this.speed * Gdx.graphics.getDeltaTime());
     }
 
-    public void moveRight(CollidableEntity ufo) {
+    public void moveRight(CollidableEntity ufo, CollidableEntity player) {
         ufo.setX(ufo.getX() + this.speed * Gdx.graphics.getDeltaTime());
     }
 

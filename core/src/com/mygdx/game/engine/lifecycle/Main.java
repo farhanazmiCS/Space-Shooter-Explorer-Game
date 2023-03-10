@@ -1,9 +1,10 @@
-package com.mygdx.game.engine;
+package com.mygdx.game.engine.lifecycle;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.engine.TestEntity;
 import com.mygdx.game.engine.entity.EntityManager;
 import com.mygdx.game.engine.screen.GameScreen;
 import com.mygdx.game.engine.screen.MainMenuScreen;

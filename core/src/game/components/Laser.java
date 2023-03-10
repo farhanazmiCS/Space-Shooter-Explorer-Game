@@ -1,4 +1,4 @@
-package com.mygdx.game.engine.entity;
+package game.components;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;

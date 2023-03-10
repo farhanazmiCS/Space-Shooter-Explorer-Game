@@ -14,6 +14,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
+import game.components.FallingObject;
+import game.components.Laser;
+import game.components.Player;
 import game.components.UFO;
 
 public class EntityManager implements CollisionManager<CollidableEntity<Player>, CollidableEntity<FallingObject>, CollidableEntity<UFO>, Integer> {

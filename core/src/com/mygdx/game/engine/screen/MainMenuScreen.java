@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.engine.Button;
 import com.mygdx.game.engine.input.CustomInputProcessor;
-import com.mygdx.game.engine.Main;
+import com.mygdx.game.engine.lifecycle.Main;
 
 import java.util.ArrayList;
 

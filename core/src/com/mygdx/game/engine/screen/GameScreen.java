@@ -9,11 +9,11 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.engine.Button;
-import com.mygdx.game.engine.Main;
+import com.mygdx.game.engine.lifecycle.Main;
 import com.mygdx.game.engine.collision.CollidableEntity;
-import com.mygdx.game.engine.entity.FallingObject;
-import com.mygdx.game.engine.entity.Laser;
-import com.mygdx.game.engine.entity.Player;
+import game.components.FallingObject;
+import game.components.Laser;
+import game.components.Player;
 import com.mygdx.game.engine.input.CustomInputProcessor;
 
 import game.components.UFO;
@@ -156,7 +156,7 @@ public class GameScreen implements Screen {
 
         this.game.entityManager.getPlayer().getObject().movePlayer(this.game.entityManager.getPlayer(), inputProcessor);
 
-        this.game.entityManager.getUFOs().get(0).getObject().moveUFO(this.game.entityManager.getUFOs().get(0));
+        this.game.entityManager.getUFOs().get(0).getObject().moveUFO(this.game.entityManager.getUFOs().get(0), this.game.entityManager.getPlayer(), 150);
 
         this.game.entityManager.getPlayer().getObject().limitPlayerMovement(this.game.entityManager.getPlayer(), this.game.WIDTH, this.game.HEIGHT);
 
