@@ -39,13 +39,10 @@ public class ScoreboardScreen implements Screen{
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0.2f, 1);
 
+        button.getBatch().begin();
+        button.getBatch().draw(button.getTexture(), game.HEIGHT - button.getBound().getHeight() - button.getBound().getY(), button.getBound().getWidth());
 
-        ShapeRenderer renderer = button.getShapeRenderer();
-        renderer.begin(ShapeRenderer.ShapeType.Line);
-
-        renderer.end();
-
-        button.setButtonColor(Color.YELLOW); // Quit to Main Menu
+        button.getBatch().end();
 
         if (inputProcessor.mouseHoverOver(button.getBound())) {
             button.setButtonColor(Color.ORANGE);

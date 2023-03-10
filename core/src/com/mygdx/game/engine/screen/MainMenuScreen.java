@@ -27,15 +27,23 @@ public class MainMenuScreen extends ScreenManager implements Screen {
     private OrthographicCamera camera;
     private ArrayList<Button> buttons;
 
+    private ArrayList<String> buttonImagePath;
+
     public MainMenuScreen(final Main game) {
         super(game);
         this.game = game;
         buttons = new ArrayList<Button>();
+        buttonImagePath = new ArrayList<String>();
         this.inputProcessor = new CustomInputProcessor();
+
+        buttonImagePath.add("play_button.png");
+        buttonImagePath.add("leaderboard_button.png");
+        buttonImagePath.add("quit_button.png");
+
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
-        createScreenButtons(3, buttons, 75);
+        createScreenButtons(3, buttons, 75, buttonImagePath);
     }
 
     @Override
@@ -51,60 +59,43 @@ public class MainMenuScreen extends ScreenManager implements Screen {
         game.getBatch().setProjectionMatrix(camera.combined);
 
         game.getBatch().begin(); // Anything after begin() will be displayed
-        game.getFont().draw(game.getBatch(), "Spaes Invaederzzz", game.WIDTH / 2 - 100, 400);
+        game.getFont().draw(game.getBatch(), "BEYOND US", game.WIDTH / 2 - 70, 400);
         game.getBatch().end(); // Anything after end() will NOT be displayed
 
         // Render buttons
         //System.out.println(buttons.size());
         for (Button button : buttons) {
-            ShapeRenderer renderer = button.getShapeRenderer();
-            renderer.begin(ShapeRenderer.ShapeType.Line);
-            renderer.rect(button.getBound().getX(), game.HEIGHT - button.getBound().getHeight() - button.getBound().getY(), button.getBound().getWidth(), button.getBound().getHeight());
-            if (buttons.get(0) == button) {
-                game.getBatch().begin(); // Anything after begin() will be displayed
-                game.getFont().draw(game.getBatch(), "New Game", button.getBound().getX() + 20, game.HEIGHT - button.getBound().getHeight() / 3 - button.getBound().getY());
-                game.getBatch().end(); // Anything after end() will NOT be displayed
-            }
-            else if (buttons.get(1) == button) {
-                game.getBatch().begin(); // Anything after begin() will be displayed
-                game.getFont().draw(game.getBatch(), "Score board", button.getBound().getX() + 15, game.HEIGHT - button.getBound().getHeight() / 3 - button.getBound().getY());
-                game.getBatch().end(); // Anything after end() will NOT be displayed
-            }
-            else {
-                game.getBatch().begin(); // Anything after begin() will be displayed
-                game.getFont().draw(game.getBatch(), "Quit", button.getBound().getX() + 50, game.HEIGHT - button.getBound().getHeight() / 3 - button.getBound().getY());
-                game.getBatch().end(); // Anything after end() will NOT be displayed
-            }
-            renderer.end();
+            button.getBatch().begin();
+            button.getBatch().draw(button.getTexture(), button.getBound().getX(), game.HEIGHT - button.getBound().getHeight() - button.getBound().getY());
+            button.getBatch().end();
         }
 
-        buttons.get(0).setButtonColor(Color.BLUE); // Play
-        buttons.get(1).setButtonColor(Color.YELLOW); // [Placeholder]
-        buttons.get(2).setButtonColor(Color.RED); // Quit
+        buttons.get(0).setButtonColor(Color.WHITE);
+        buttons.get(1).setButtonColor(Color.WHITE);
+        buttons.get(2).setButtonColor(Color.WHITE);
 
         // System.out.println(buttons.get(0).getBound());
         // System.out.println(Gdx.input.getX() + ", " + Gdx.input.getY());
 
         if (inputProcessor.mouseHoverOver(buttons.get(0).getBound())) {
-            buttons.get(0).setButtonColor(Color.SKY);
+            buttons.get(0).setButtonColor(Color.LIGHT_GRAY);
             if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
                 play();
             }
         }
-        if (inputProcessor.mouseHoverOver(buttons.get(0).getBound())) {
-            buttons.get(1).setButtonColor(Color.ORANGE);
+        if (inputProcessor.mouseHoverOver(buttons.get(1).getBound())) {
+            buttons.get(1).setButtonColor(Color.LIGHT_GRAY);
             if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
-                play();
+                // Todo
             }
         }
         if (inputProcessor.mouseHoverOver(buttons.get(2).getBound())) {
-            buttons.get(2).setButtonColor(Color.PINK);
+            buttons.get(2).setButtonColor(Color.LIGHT_GRAY);
             if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
                 quit();
             }
         }
     }
-
     @Override
     public void resize(int width, int height) {
 

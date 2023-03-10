@@ -73,7 +73,7 @@ public class GameScreen implements Screen {
         this.game.entityManager.spawnUFO(1); // For now, only generate 1 UFO
 
         // Pause and resume button
-        pauseButton = new Button(150, 50, 640, 420, game); // Pause button
+        pauseButton = new Button(150, 66, 640, 420, "pause_button.png", game); // Pause button
 
         // create the camera and the SpritegetBatch()
         camera = new OrthographicCamera();
@@ -92,19 +92,17 @@ public class GameScreen implements Screen {
         camera.update();
 
         // Pause button
-        ShapeRenderer renderer = pauseButton.getShapeRenderer();
-        renderer.begin(ShapeRenderer.ShapeType.Line);
-        renderer.rect(pauseButton.getBound().getX(), game.HEIGHT - pauseButton.getBound().getHeight() - pauseButton.getBound().getY(), pauseButton.getBound().getWidth(), pauseButton.getBound().getHeight());
-        renderer.end();
-        game.getBatch().begin(); // Anything after begin() will be displayed
-        game.getFont().draw(game.getBatch(), "Pause", pauseButton.getBound().getX() + 45, game.HEIGHT - pauseButton.getBound().getHeight() / 3 - pauseButton.getBound().getY());
-        game.getBatch().end(); // Anything after end() will NOT be displayed
 
-        pauseButton.setButtonColor(Color.YELLOW);
+        pauseButton.getBatch().begin();
+        pauseButton.getBatch().draw(pauseButton.getTexture(), 640, 420);
+
+        pauseButton.getBatch().end();
+
+        pauseButton.setButtonColor(Color.WHITE);
 
         // Pause button logic
         if (inputProcessor.mouseHoverOver(pauseButton.getBound())) {
-            pauseButton.setButtonColor(Color.ORANGE);
+            pauseButton.setButtonColor(Color.LIGHT_GRAY);
             if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
                 pause();
             }

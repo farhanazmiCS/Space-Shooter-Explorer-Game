@@ -33,12 +33,16 @@ public class PauseScreen extends ScreenManager implements Screen {
     private CustomInputProcessor inputProcessor;
     private Main game;
     private ArrayList<Button> buttons;
+    private ArrayList<String> buttonPath;
     public PauseScreen(Main game) {
         super(game);
         this.game = game;
         this.inputProcessor = new CustomInputProcessor();
         buttons = new ArrayList<Button>();
-        createScreenButtons(2, buttons, 75);
+        buttonPath = new ArrayList<String>();
+        buttonPath.add("resume_button.png");
+        buttonPath.add("quit_button.png");
+        createScreenButtons(2, buttons, 75, buttonPath);
     }
 
     @Override
@@ -51,33 +55,22 @@ public class PauseScreen extends ScreenManager implements Screen {
         ScreenUtils.clear(0, 0, 0.2f, 1);
 
         for (Button button : buttons) {
-            ShapeRenderer renderer = button.getShapeRenderer();
-            renderer.begin(ShapeRenderer.ShapeType.Line);
-            renderer.rect(button.getBound().getX(), game.HEIGHT - button.getBound().getHeight() - button.getBound().getY(), button.getBound().getWidth(), button.getBound().getHeight());
-            if (buttons.get(0) == button) {
-                game.getBatch().begin(); // Anything after begin() will be displayed
-                game.getFont().draw(game.getBatch(), "Resume", button.getBound().getX() + 35, game.HEIGHT - button.getBound().getHeight() / 3 - button.getBound().getY());
-                game.getBatch().end(); // Anything after end() will NOT be displayed
-            }
-            else {
-                game.getBatch().begin(); // Anything after begin() will be displayed
-                game.getFont().draw(game.getBatch(), "End Game", button.getBound().getX() + 25, game.HEIGHT - button.getBound().getHeight() / 3 - button.getBound().getY());
-                game.getBatch().end(); // Anything after end() will NOT be displayed
-            }
-            renderer.end();
+                button.getBatch().begin();
+                button.getBatch().draw(button.getTexture(), button.getBound().getX(), game.HEIGHT - button.getBound().getHeight() - button.getBound().getY());
+                button.getBatch().end();
         }
 
-        buttons.get(0).setButtonColor(Color.BLUE); // Resume
-        buttons.get(1).setButtonColor(Color.ORANGE); // Quit to Main Menu
+        buttons.get(0).setButtonColor(Color.WHITE);
+        buttons.get(1).setButtonColor(Color.WHITE);
 
         if (inputProcessor.mouseHoverOver(buttons.get(0).getBound())) {
-            buttons.get(0).setButtonColor(Color.SKY);
+            buttons.get(0).setButtonColor(Color.LIGHT_GRAY);
             if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
                   resume();
             }
         }
         if (inputProcessor.mouseHoverOver(buttons.get(1).getBound())) {
-            buttons.get(1).setButtonColor(Color.RED);
+            buttons.get(1).setButtonColor(Color.LIGHT_GRAY);
             if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
                 quit();
             }
