@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.mygdx.game.engine.behavior.BehaviourManager;
 import com.mygdx.game.engine.collision.CollidableEntity;
 import com.mygdx.game.engine.collision.CollisionManager;
 import com.mygdx.game.engine.input.CustomInputProcessor;
@@ -15,7 +14,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
-public class EntityManager implements CollisionManager<CollidableEntity<Player>, CollidableEntity<FallingObject>, Integer>, BehaviourManager<Integer> {
+import game.components.UFO;
+
+public class EntityManager implements CollisionManager<CollidableEntity<Player>, CollidableEntity<FallingObject>, CollidableEntity<UFO>, Integer> {
     // This class contains the attributes and methods for handling all entities.
     // Example:
     //  1. Creating entities
@@ -23,11 +24,13 @@ public class EntityManager implements CollisionManager<CollidableEntity<Player>,
     //  3. Moving the entities
     private CollidableEntity<Player> player;
     private ArrayList<CollidableEntity<FallingObject>> fallingObjects;
+    private ArrayList<CollidableEntity<UFO>> UFOs;
     private ArrayList<Texture> fallingObjectImages;
 
     //to be initialised at the life cycle manager
     public EntityManager() {
         fallingObjects = new ArrayList<>();
+        UFOs = new ArrayList<CollidableEntity<UFO>>();
         fallingObjectImages = new ArrayList<>();
         fallingObjectImages.add(new Texture(Gdx.files.internal("ufo.png")));
         //<a href="https://www.flaticon.com/free-icons/alien" title="alien icons">Alien icons created by Freepik - Flaticon</a>
@@ -51,20 +54,22 @@ public class EntityManager implements CollisionManager<CollidableEntity<Player>,
         }
     }
 
-    public long spawnLasers(CustomInputProcessor inputProcessor)
+    public void moveLasers(CollidableEntity<UFO> ufo)
     {
-        if (inputProcessor.keyDown(Input.Keys.SPACE))
+        if (ufo.getObject().getLasers().size() > 0)
         {
-            CollidableEntity<Laser> laser = new CollidableEntity<>(
-                    player.getX(),
-                    player.getY(),
-                    new Laser(
-                            "laser.png", //<a href="https://www.flaticon.com/free-icons/laser" title="laser icons">Laser icons created by Freepik - Flaticon</a>
-                            200));
-            player.getObject().getLasers().add(laser);
-            return TimeUtils.nanoTime();
+            for (int i = 0; i < ufo.getObject().getLasers().size(); i++)
+            {
+                CollidableEntity<Laser> laser = ufo.getObject().getLasers().get(i);
+                laser.setY(laser.getY() + (laser.getObject().getSpeed() * Gdx.graphics.getDeltaTime()));
+                ufo.getObject().getLasers().set(i, laser);
+            }
         }
-        if (inputProcessor.mouseClicked(Input.Buttons.LEFT))
+    }
+
+    public long spawnLasers(CustomInputProcessor inputProcessor, CollidableEntity<Player> player) // Used by player
+    {
+        if (inputProcessor.keyDown(Input.Keys.SPACE) || inputProcessor.mouseClicked(Input.Buttons.LEFT))
         {
             CollidableEntity<Laser> laser = new CollidableEntity<>(
                     player.getX(),
@@ -77,6 +82,20 @@ public class EntityManager implements CollisionManager<CollidableEntity<Player>,
         }
         return 0;
     }
+
+    public long spawnLasers(CollidableEntity<UFO> ufo) // Showcasing Polymorphism (spawnLaser for alien)
+    {
+        CollidableEntity<Laser> laser = new CollidableEntity<>(
+                ufo.getX(),
+                ufo.getY(),
+                new Laser(
+                        "laser.png", //<a href="https://www.flaticon.com/free-icons/laser" title="laser icons">Laser icons created by Freepik - Flaticon</a>
+                        200));
+            ufo.getObject().getLasers().add(laser);
+            return TimeUtils.nanoTime();
+    }
+
+
 
     public long spawnFallingObject(int screenWidth, int screenHeight)
     {
@@ -105,7 +124,7 @@ public class EntityManager implements CollisionManager<CollidableEntity<Player>,
         return TimeUtils.nanoTime();
     }
 
-    public Integer moveFallingObject()
+    public Integer moveFallingObject() // This should also be part of the "Asteroid" class now (Part of Game component, not engine)
     {
         Iterator<CollidableEntity<FallingObject>> iter = fallingObjects.iterator();
         while (iter.hasNext()) {
@@ -174,6 +193,10 @@ public class EntityManager implements CollisionManager<CollidableEntity<Player>,
         return fallingObjectImages;
     }
 
+    public ArrayList<CollidableEntity<UFO>> getUFOs() {
+        return this.UFOs;
+    }
+
     public void setFallingObjectImages(ArrayList<Texture> fallingObjectImages) {
         this.fallingObjectImages = fallingObjectImages;
     }
@@ -196,5 +219,13 @@ public class EntityManager implements CollisionManager<CollidableEntity<Player>,
         //<a href="https://www.flaticon.com/free-icons/star" title="star icons">Star icons created by Freepik - Flaticon</a>
         fallingObjectImages.add(new Texture(Gdx.files.internal("rainbow_star.png")));
         //<a href="https://www.flaticon.com/free-icons/shapes-and-symbols" title="shapes and symbols icons">Shapes and symbols icons created by Smashicons - Flaticon</a>
+    }
+
+    // Factory method to add UFO
+    public void spawnUFO(int numUFO) {
+        for (int i = 0; i < numUFO; i++) {
+            CollidableEntity<UFO> ufo = new CollidableEntity<UFO>(400, 350, new UFO("alien.png"));
+            UFOs.add(ufo);
+        }
     }
 }

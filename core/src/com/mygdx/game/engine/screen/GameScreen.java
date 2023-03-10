@@ -16,6 +16,8 @@ import com.mygdx.game.engine.entity.Laser;
 import com.mygdx.game.engine.entity.Player;
 import com.mygdx.game.engine.input.CustomInputProcessor;
 
+import game.components.UFO;
+
 public class GameScreen implements Screen {
     private Main game;
     private Button pauseButton;
@@ -59,12 +61,16 @@ public class GameScreen implements Screen {
     private final float spawnRate = 1000000000;
     private final float spawnRateMultiplier = 0.5f;
 
+    private int distance = 0;
+
     public GameScreen(final Main game) {
         this.game = game;
         this.inputProcessor = new CustomInputProcessor();
         // this.world = new World(new Vector2(0, -9.81f), false);
         //spawnRaindrop();
         this.game.entityManager.spawnFallingObject(this.game.WIDTH, this.game.HEIGHT);
+
+        this.game.entityManager.spawnUFO(1); // For now, only generate 1 UFO
 
         // Pause and resume button
         pauseButton = new Button(150, 50, 640, 420, game); // Pause button
@@ -111,7 +117,8 @@ public class GameScreen implements Screen {
         game.getBatch().begin();
 
         if (TimeUtils.nanoTime() - lastShootTime > spawnRate * spawnRateMultiplier)
-            lastShootTime = this.game.entityManager.spawnLasers(inputProcessor);
+            lastShootTime = this.game.entityManager.spawnLasers(inputProcessor, this.game.entityManager.getPlayer());
+
         this.game.entityManager.moveLasers();
 
         if (this.game.entityManager.getPlayer().getObject().getLasers().size() > 0)
@@ -127,7 +134,9 @@ public class GameScreen implements Screen {
             }
         }
 
-        game.getFont().draw(game.getBatch(), "Items Collected: " + this.game.entityManager.getPlayer().getObject().getScore(), 10, 470);
+        distance += 1;
+
+        game.getFont().draw(game.getBatch(), "Distance Travelled: " + distance + " km", 10, 470);
         CollidableEntity<Player> player = this.game.entityManager.getPlayer();
         game.getBatch().draw(
                 player.getObject().getSprite(),
@@ -137,11 +146,17 @@ public class GameScreen implements Screen {
                 player.getObject().getHeight()
         );
 
+        for (CollidableEntity<UFO> ufo : this.game.entityManager.getUFOs()) {
+            game.getBatch().draw(ufo.getObject().getTexture(), ufo.getX(), ufo.getY());
+        }
+
         for (CollidableEntity<FallingObject> fallingObject : this.game.entityManager.getFallingObjects()) {
             game.getBatch().draw(fallingObject.getObject().getImage(), fallingObject.getX(), fallingObject.getY());
         }
 
         this.game.entityManager.getPlayer().getObject().movePlayer(this.game.entityManager.getPlayer(), inputProcessor);
+
+        this.game.entityManager.getUFOs().get(0).getObject().moveUFO(this.game.entityManager.getUFOs().get(0));
 
         this.game.entityManager.getPlayer().getObject().limitPlayerMovement(this.game.entityManager.getPlayer(), this.game.WIDTH, this.game.HEIGHT);
 
@@ -164,7 +179,7 @@ public class GameScreen implements Screen {
                 //spawnRate /= 10;
                 break;
         }
-        this.game.entityManager.getPlayer().getObject().setScore(this.game.entityManager.getPlayer().getObject().getScore() + point);
+        this.game.entityManager.getPlayer().getObject().setScore((int) distance);
         //dropsGathered += point;
 
         game.getBatch().end();
