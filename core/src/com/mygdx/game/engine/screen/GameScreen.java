@@ -141,9 +141,9 @@ public class GameScreen implements Screen {
             game.getBatch().draw(fallingObject.getObject().getImage(), fallingObject.getX(), fallingObject.getY());
         }
 
-        this.game.entityManager.movePlayer(inputProcessor);
+        this.game.entityManager.getPlayer().getObject().movePlayer(this.game.entityManager.getPlayer(), inputProcessor);
 
-        this.game.entityManager.limitPlayerMovement(this.game.WIDTH, this.game.HEIGHT);
+        this.game.entityManager.getPlayer().getObject().limitPlayerMovement(this.game.entityManager.getPlayer(), this.game.WIDTH, this.game.HEIGHT);
 
         // check if we need to create a new raindrop
         if (TimeUtils.nanoTime() - lastDropTime > spawnRate * spawnRateMultiplier)

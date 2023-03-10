@@ -38,34 +38,6 @@ public class EntityManager implements CollisionManager<CollidableEntity<Player>,
 
     }
 
-    @Override
-    public void limitPlayerMovement(Integer screenWidth, Integer screenHeight) {
-        if(player.getX() < 0)
-            player.setX(0);
-        if(player.getX() > screenWidth - player.getObject().getWidth())
-            player.setX(screenWidth - player.getObject().getWidth());
-        if(player.getY() < 0)
-            player.setY(0);
-        if(player.getY() > screenHeight - player.getObject().getHeight())
-            player.setY(screenHeight - player.getObject().getHeight());
-    }
-
-    public void movePlayer(CustomInputProcessor inputProcessor)
-    {
-        if (inputProcessor.keyDown(player.getObject().getMainKeyboardInputs()[0]) ||
-                inputProcessor.keyDown(player.getObject().getAltKeyboardInputs()[0]))
-            player.setX(player.getX() - (player.getObject().getSpeed() * Gdx.graphics.getDeltaTime()));
-        if (inputProcessor.keyDown(player.getObject().getMainKeyboardInputs()[1]) ||
-                inputProcessor.keyDown(player.getObject().getAltKeyboardInputs()[1]))
-            player.setX(player.getX() + (player.getObject().getSpeed() * Gdx.graphics.getDeltaTime()));
-        if (inputProcessor.keyDown(player.getObject().getMainKeyboardInputs()[2]) ||
-                inputProcessor.keyDown(player.getObject().getAltKeyboardInputs()[2]))
-            player.setY(player.getY() + (player.getObject().getSpeed() * Gdx.graphics.getDeltaTime()));
-        if (inputProcessor.keyDown(player.getObject().getMainKeyboardInputs()[3]) ||
-                inputProcessor.keyDown(player.getObject().getAltKeyboardInputs()[3]))
-            player.setY(player.getY() - (player.getObject().getSpeed() * Gdx.graphics.getDeltaTime()));
-    }
-
     public void moveLasers()
     {
         if (player.getObject().getLasers().size() > 0)
@@ -160,6 +132,11 @@ public class EntityManager implements CollisionManager<CollidableEntity<Player>,
         }
         return 0;
     }
+
+    // @Override
+    // public void limitPlayerMovement(Integer screenWidth, Integer screenHeight) {
+
+    // }
 
     @Override
     public boolean checkFallingObjectCollision(CollidableEntity<Player> player, CollidableEntity<FallingObject> fallingObject) {
