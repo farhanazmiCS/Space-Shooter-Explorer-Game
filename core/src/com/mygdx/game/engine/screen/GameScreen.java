@@ -5,18 +5,17 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.mygdx.game.engine.Button;
+import game.components.menu.Button;
 import com.mygdx.game.engine.lifecycle.Main;
 import com.mygdx.game.engine.collision.CollidableEntity;
-import game.components.FallingObject;
-import game.components.Laser;
-import game.components.Player;
+import game.components.game.FallingObject;
+import game.components.game.Laser;
+import game.components.game.Player;
 import com.mygdx.game.engine.input.CustomInputProcessor;
 
-import game.components.UFO;
+import game.components.game.UFO;
 
 public class GameScreen implements Screen {
     private Main game;

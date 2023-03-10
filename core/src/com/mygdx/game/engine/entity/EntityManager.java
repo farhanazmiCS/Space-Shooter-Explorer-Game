@@ -14,10 +14,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
-import game.components.FallingObject;
-import game.components.Laser;
-import game.components.Player;
-import game.components.UFO;
+import game.components.game.FallingObject;
+import game.components.game.Laser;
+import game.components.game.Player;
+import game.components.game.UFO;
 
 public class EntityManager implements CollisionManager<CollidableEntity<Player>, CollidableEntity<FallingObject>, CollidableEntity<UFO>, Integer> {
     // This class contains the attributes and methods for handling all entities.

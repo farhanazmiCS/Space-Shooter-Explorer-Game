@@ -1,6 +1,6 @@
 package com.mygdx.game.engine.screen;
 
-import com.mygdx.game.engine.Button;
+import game.components.menu.Button;
 import com.mygdx.game.engine.lifecycle.Main;
 
 import java.util.ArrayList;

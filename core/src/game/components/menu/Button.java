@@ -1,4 +1,4 @@
-package com.mygdx.game.engine;
+package game.components.menu;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;

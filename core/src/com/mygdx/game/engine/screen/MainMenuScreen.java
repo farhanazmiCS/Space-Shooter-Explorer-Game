@@ -5,9 +5,11 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.mygdx.game.engine.Button;
+import game.components.menu.Button;
 import com.mygdx.game.engine.input.CustomInputProcessor;
 import com.mygdx.game.engine.lifecycle.Main;
 
@@ -27,11 +29,18 @@ public class MainMenuScreen extends ScreenManager implements Screen {
     private OrthographicCamera camera;
     private ArrayList<Button> buttons;
 
+    private SpriteBatch batch;
+    private Texture texture;
+
     private ArrayList<String> buttonImagePath;
 
     public MainMenuScreen(final Main game) {
         super(game);
         this.game = game;
+
+        texture = new Texture("main_menu_background_resized.png");
+        batch = new SpriteBatch();
+
         buttons = new ArrayList<Button>();
         buttonImagePath = new ArrayList<String>();
         this.inputProcessor = new CustomInputProcessor();
@@ -39,7 +48,6 @@ public class MainMenuScreen extends ScreenManager implements Screen {
         buttonImagePath.add("play_button.png");
         buttonImagePath.add("leaderboard_button.png");
         buttonImagePath.add("quit_button.png");
-
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
@@ -54,6 +62,9 @@ public class MainMenuScreen extends ScreenManager implements Screen {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0.2f, 1);
+        this.batch.begin();
+        this.batch.draw(this.texture, 0, 0);
+        this.batch.end();
 
         camera.update();
         game.getBatch().setProjectionMatrix(camera.combined);
