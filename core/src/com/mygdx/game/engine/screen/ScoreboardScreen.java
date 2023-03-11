@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.ScreenUtils;
 import game.components.menu.Button;
 
-import com.mygdx.game.engine.SoundManager;
+import com.mygdx.game.engine.sound.SoundManager;
 import com.mygdx.game.engine.lifecycle.Main;
 
 import com.mygdx.game.engine.input.CustomInputProcessor;

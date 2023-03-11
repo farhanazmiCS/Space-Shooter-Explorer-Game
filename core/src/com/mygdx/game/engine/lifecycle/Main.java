@@ -4,7 +4,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.engine.TestEntity;
 import com.mygdx.game.engine.entity.EntityManager;
 import com.mygdx.game.engine.screen.ControlScreen;
 import com.mygdx.game.engine.screen.GameScreen;
@@ -14,7 +13,6 @@ import com.mygdx.game.engine.screen.ScoreboardScreen;
 import com.mygdx.game.engine.screen.ScreenManager;
 import com.mygdx.game.engine.screen.storyboard.StoryboardScreen;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Main extends Game {

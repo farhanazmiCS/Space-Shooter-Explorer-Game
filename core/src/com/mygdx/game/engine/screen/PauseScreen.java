@@ -9,11 +9,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import game.components.menu.Button;
 
-import com.mygdx.game.engine.SoundManager;
+import com.mygdx.game.engine.sound.SoundManager;
 import com.mygdx.game.engine.lifecycle.Main;
 import com.mygdx.game.engine.entity.EntityManager;
 import com.mygdx.game.engine.input.CustomInputProcessor;
-import com.mygdx.game.engine.screen.storyboard.StoryboardScreen;
 
 import java.util.ArrayList;
 
