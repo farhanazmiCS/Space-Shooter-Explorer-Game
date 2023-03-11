@@ -90,7 +90,7 @@ public class GameScreen implements Screen {
         camera.setToOrtho(false, 800, 480);
 
         viewport = new StretchViewport(game.WIDTH, game.HEIGHT, camera);
-        background = new Texture("background_game.png");
+        background = new Texture("background_game.jpg");
         backgroundOffset = 0;
 
         batch = new SpriteBatch();
@@ -142,6 +142,7 @@ public class GameScreen implements Screen {
         if (TimeUtils.nanoTime() - lastShootTime > spawnRate * spawnRateMultiplier)
             lastShootTime = this.game.entityManager.spawnLasers(inputProcessor, this.game.entityManager.getPlayer());
 
+
         this.game.entityManager.moveLasers();
 
         if (this.game.entityManager.getPlayer().getObject().getLasers().size() > 0)
@@ -169,6 +170,13 @@ public class GameScreen implements Screen {
                 player.getObject().getHeight()
         );
 
+        // Draw afterburner
+        if (player.getObject().getAfterburner().getVisibility()) {
+            player.getObject().getAfterburner().getBatch().begin();
+            player.getObject().getAfterburner().getBatch().draw(player.getObject().getAfterburner().getTexture(), player.getObject().getAfterburner().getX(), player.getObject().getAfterburner().getY());
+            player.getObject().getAfterburner().getBatch().end();
+        }
+
         for (CollidableEntity<UFO> ufo : this.game.entityManager.getUFOs()) {
             game.getBatch().draw(ufo.getObject().getTexture(), ufo.getX(), ufo.getY());
         }
@@ -178,8 +186,19 @@ public class GameScreen implements Screen {
         }
 
         this.game.entityManager.getPlayer().getObject().movePlayer(this.game.entityManager.getPlayer(), inputProcessor);
+        if (this.game.entityManager.getPlayer().getObject().movePlayer(this.game.entityManager.getPlayer(), inputProcessor) == 2) {
+            this.game.entityManager.getPlayer().getObject().getAfterburner().setVisibility(true);
+        }
+        else {
+            this.game.entityManager.getPlayer().getObject().getAfterburner().setVisibility(false);
+        }
 
-        this.game.entityManager.getUFOs().get(0).getObject().moveUFO(this.game.entityManager.getUFOs().get(0), this.game.entityManager.getPlayer(), 150);
+
+        this.game.entityManager.getPlayer().getObject().getAfterburner().setX(this.game.entityManager.getPlayer().getX());
+        this.game.entityManager.getPlayer().getObject().getAfterburner().setY(this.game.entityManager.getPlayer().getY() - 50);
+
+
+        this.game.entityManager.getUFOs().get(0).getObject().moveUFO(this.game.entityManager.getUFOs().get(0), 150);
 
         this.game.entityManager.getPlayer().getObject().limitPlayerMovement(this.game.entityManager.getPlayer(), this.game.WIDTH, this.game.HEIGHT);
 
