@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.physics.bullet.collision._btMprSupport_t;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.engine.collision.CollidableEntity;
 import com.mygdx.game.engine.collision.CollisionManager;
@@ -222,9 +223,22 @@ public class EntityManager implements CollisionManager<CollidableEntity<Player>,
     }
 
     // Factory method to add UFO
-    public void spawnUFO(int numUFO) {
+    public void spawnUFO(int numUFO, int screenWidth, int screenHeight) {
+        Random random = new Random();
         for (int i = 0; i < numUFO; i++) {
-            CollidableEntity<UFO> ufo = new CollidableEntity<UFO>(400, 350, new UFO("alien.png"));
+            UFO ufoObject = new UFO("alien.png");
+//            int x = (int) ((Math.random()) * ((screenWidth - ufoObject.getTexture().getWidth() - (screenWidth / 2)) + (screenWidth / 2)));
+//            int y = (int) ((Math.random()) * ((screenHeight - ufoObject.getTexture().getHeight() - (screenHeight / 2)) + (screenHeight / 2)));
+            int x = random.nextInt((screenWidth - ufoObject.getTexture().getWidth()) - (screenWidth / 2)) + (screenWidth / 2);
+            int y = random.nextInt((screenHeight - ufoObject.getTexture().getHeight()) - (screenHeight / 2)) + (screenHeight / 2);
+            CollidableEntity<UFO> ufo = new CollidableEntity<UFO>(
+//                    screenWidth - ufoObject.getTexture().getWidth(),
+//                    screenHeight - ufoObject.getTexture().getHeight(),
+                    x,
+                    y,
+                    ufoObject);
+//            ufo.setX(x);
+//            ufo.setY(y);
             UFOs.add(ufo);
         }
     }

@@ -83,7 +83,7 @@ public class GameScreen implements Screen {
         //spawnRaindrop();
         this.game.entityManager.spawnFallingObject(this.game.WIDTH, this.game.HEIGHT);
 
-        this.game.entityManager.spawnUFO(1); // For now, only generate 1 UFO
+        this.game.entityManager.spawnUFO(5, this.game.WIDTH, this.game.HEIGHT); // For now, only generate 1 UFO
 
         // Pause and resume button
         pauseButton = new Button(150, 66, 640, 420, "pause_button.png", game); // Pause button
@@ -242,7 +242,12 @@ public class GameScreen implements Screen {
             player.getObject().getAfterburner().setX(player.getX());
             player.getObject().getAfterburner().setY(player.getY() - 50);
 
-            this.game.entityManager.getUFOs().get(0).getObject().moveUFO(this.game.entityManager.getUFOs().get(0), 150, this.game.WIDTH);
+            for (CollidableEntity<UFO> ufo : this.game.entityManager.getUFOs())
+            {
+                ufo.getObject().moveUFO(ufo, 150, this.game.WIDTH);
+            }
+
+//            this.game.entityManager.getUFOs().get(0).getObject().moveUFO(this.game.entityManager.getUFOs().get(0), 150, this.game.WIDTH);
 
             player.getObject().limitPlayerMovement(player, this.game.WIDTH, this.game.HEIGHT);
 

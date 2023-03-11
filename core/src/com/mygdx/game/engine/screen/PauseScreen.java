@@ -132,19 +132,30 @@ public class PauseScreen extends ScreenManager implements Screen {
                         new int[]{Input.Keys.A, Input.Keys.D, Input.Keys.W, Input.Keys.S},
                         0,
                         10));
-//        CollidableEntity<Player> player1= new CollidableEntity<>(
-//                this.game.WIDTH / 2 - 64 / 2,
+//        CollidableEntity<Player> player1 = new CollidableEntity<>(
+//                (this.game.WIDTH / 2 - 64 / 2) + 64,
 //                20,
 //                new Player(
 //                        "spaceship.png", //<a href="https://www.flaticon.com/free-icons/spaceship" title="spaceship icons">Spaceship icons created by Skyclick - Flaticon</a>
 //                        200,
 //                        new int[]{Input.Keys.LEFT, Input.Keys.RIGHT, Input.Keys.UP, Input.Keys.DOWN},
-//                        new int[]{Input.Keys.J, Input.Keys.L, Input.Keys.I, Input.Keys.K},
+//                        new int[]{Input.Keys.A, Input.Keys.D, Input.Keys.W, Input.Keys.S},
+//                        0,
+//                        10));
+//        CollidableEntity<Player> player2 = new CollidableEntity<>(
+//                (this.game.WIDTH / 2 - 64 / 2) - 64,
+//                20,
+//                new Player(
+//                        "spaceship.png", //<a href="https://www.flaticon.com/free-icons/spaceship" title="spaceship icons">Spaceship icons created by Skyclick - Flaticon</a>
+//                        200,
+//                        new int[]{Input.Keys.LEFT, Input.Keys.RIGHT, Input.Keys.UP, Input.Keys.DOWN},
+//                        new int[]{Input.Keys.A, Input.Keys.D, Input.Keys.W, Input.Keys.S},
 //                        0,
 //                        10));
         this.game.entityManager.setPlayers(new ArrayList<CollidableEntity<Player>>());
         this.game.entityManager.getPlayers().add(player);
 //        this.game.entityManager.getPlayers().add(player1);
+//        this.game.entityManager.getPlayers().add(player2);
 //        this.game.entityManager.setPlayer(player);
         this.game.entityManager.resetFailingObjects();
         this.game.setGameScreen(new GameScreen(this.game));
