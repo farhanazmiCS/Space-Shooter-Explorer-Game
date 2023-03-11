@@ -6,6 +6,8 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.ScreenUtils;
 import game.components.menu.Button;
+
+import com.mygdx.game.engine.SoundManager;
 import com.mygdx.game.engine.lifecycle.Main;
 
 import com.mygdx.game.engine.input.CustomInputProcessor;
@@ -32,6 +34,7 @@ public class ScoreboardScreen implements Screen{
     @Override
     public void show() {
         Gdx.input.setInputProcessor(inputProcessor);
+        SoundManager.playMusic(SoundManager.ScreenType.SCORE);
     }
 
     @Override
@@ -69,7 +72,7 @@ public class ScoreboardScreen implements Screen{
 
     @Override
     public void hide() {
-
+        SoundManager.stopMusic();
     }
 
     @Override

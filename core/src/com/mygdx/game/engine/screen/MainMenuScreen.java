@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import game.components.menu.Button;
+
+import com.mygdx.game.engine.SoundManager;
 import com.mygdx.game.engine.input.CustomInputProcessor;
 import com.mygdx.game.engine.lifecycle.Main;
 
@@ -57,6 +59,7 @@ public class MainMenuScreen extends ScreenManager implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(inputProcessor);
+        SoundManager.playMusic(SoundManager.ScreenType.MAIN_MENU);
     }
 
     @Override
@@ -132,7 +135,7 @@ public class MainMenuScreen extends ScreenManager implements Screen {
 
     @Override
     public void hide() {
-
+        SoundManager.stopMusic();
     }
 
     @Override

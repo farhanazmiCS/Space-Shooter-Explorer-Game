@@ -13,6 +13,7 @@ import game.components.menu.Button;
 
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.engine.SoundManager;
 import com.mygdx.game.engine.lifecycle.Main;
 import com.mygdx.game.engine.collision.CollidableEntity;
 import game.components.game.Asteroid;
@@ -99,6 +100,7 @@ public class GameScreen implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(inputProcessor);
+        SoundManager.playMusic(SoundManager.ScreenType.GAME);
     }
 
     @Override
@@ -222,7 +224,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void hide() {
-
+        SoundManager.stopMusic();
     }
 
     public void quit() {
