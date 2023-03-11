@@ -1,9 +1,11 @@
 package com.mygdx.game.engine.lifecycle;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.engine.collision.CollidableEntity;
 import com.mygdx.game.engine.entity.EntityManager;
 import com.mygdx.game.engine.screen.ControlScreen;
 import com.mygdx.game.engine.screen.GameScreen;
@@ -14,6 +16,8 @@ import com.mygdx.game.engine.screen.ScreenManager;
 import com.mygdx.game.engine.screen.storyboard.StoryboardScreen;
 
 import java.util.ArrayList;
+
+import game.components.game.Player;
 
 public class Main extends Game {
 	public ScreenManager getScreenManager() {
@@ -143,7 +147,30 @@ public class Main extends Game {
 		batch = new SpriteBatch();
 		font.getData().setScale(1.5f);
 		entityManager = new EntityManager();
-		entityManager.setPlayer(WIDTH);
+		CollidableEntity<Player> player = new CollidableEntity<>(
+				WIDTH / 2 - 64 / 2,
+				20,
+				new Player(
+						"spaceship.png", //<a href="https://www.flaticon.com/free-icons/spaceship" title="spaceship icons">Spaceship icons created by Skyclick - Flaticon</a>
+						200,
+						new int[]{Input.Keys.LEFT, Input.Keys.RIGHT, Input.Keys.UP, Input.Keys.DOWN},
+						new int[]{Input.Keys.A, Input.Keys.D, Input.Keys.W, Input.Keys.S},
+						0,
+						10));
+//		CollidableEntity<Player> player1= new CollidableEntity<>(
+//				WIDTH / 2 - 64 / 2,
+//				20,
+//				new Player(
+//						"spaceship.png", //<a href="https://www.flaticon.com/free-icons/spaceship" title="spaceship icons">Spaceship icons created by Skyclick - Flaticon</a>
+//						200,
+//						new int[]{Input.Keys.LEFT, Input.Keys.RIGHT, Input.Keys.UP, Input.Keys.DOWN},
+//						new int[]{Input.Keys.J, Input.Keys.L, Input.Keys.I, Input.Keys.K},
+//						0,
+//						10));
+		entityManager.setPlayers(new ArrayList<CollidableEntity<Player>>());
+		entityManager.getPlayers().add(player);
+//		entityManager.getPlayers().add(player1);
+		//entityManager.setPlayer(player);
 		this.setScreen(mainMenuScreen);
 		// Create game screen
 		gameScreen = new GameScreen(this);

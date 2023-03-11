@@ -7,8 +7,11 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+
+import game.components.game.Player;
 import game.components.menu.Button;
 
+import com.mygdx.game.engine.collision.CollidableEntity;
 import com.mygdx.game.engine.sound.SoundManager;
 import com.mygdx.game.engine.lifecycle.Main;
 import com.mygdx.game.engine.entity.EntityManager;
@@ -119,7 +122,30 @@ public class PauseScreen extends ScreenManager implements Screen {
 
     public void quit() {
         this.game.entityManager = new EntityManager();
-        this.game.entityManager.setPlayer(this.game.WIDTH);
+        CollidableEntity<Player> player = new CollidableEntity<>(
+                this.game.WIDTH / 2 - 64 / 2,
+                20,
+                new Player(
+                        "spaceship.png", //<a href="https://www.flaticon.com/free-icons/spaceship" title="spaceship icons">Spaceship icons created by Skyclick - Flaticon</a>
+                        200,
+                        new int[]{Input.Keys.LEFT, Input.Keys.RIGHT, Input.Keys.UP, Input.Keys.DOWN},
+                        new int[]{Input.Keys.A, Input.Keys.D, Input.Keys.W, Input.Keys.S},
+                        0,
+                        10));
+//        CollidableEntity<Player> player1= new CollidableEntity<>(
+//                this.game.WIDTH / 2 - 64 / 2,
+//                20,
+//                new Player(
+//                        "spaceship.png", //<a href="https://www.flaticon.com/free-icons/spaceship" title="spaceship icons">Spaceship icons created by Skyclick - Flaticon</a>
+//                        200,
+//                        new int[]{Input.Keys.LEFT, Input.Keys.RIGHT, Input.Keys.UP, Input.Keys.DOWN},
+//                        new int[]{Input.Keys.J, Input.Keys.L, Input.Keys.I, Input.Keys.K},
+//                        0,
+//                        10));
+        this.game.entityManager.setPlayers(new ArrayList<CollidableEntity<Player>>());
+        this.game.entityManager.getPlayers().add(player);
+//        this.game.entityManager.getPlayers().add(player1);
+//        this.game.entityManager.setPlayer(player);
         this.game.entityManager.resetFailingObjects();
         this.game.setGameScreen(new GameScreen(this.game));
         this.game.setStoryboards(this.game.getScreenManager().generateStoryboards(this.game.getStoryboardImgPath()));

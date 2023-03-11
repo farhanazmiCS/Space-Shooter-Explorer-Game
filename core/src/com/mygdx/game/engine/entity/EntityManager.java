@@ -25,7 +25,7 @@ public class EntityManager implements CollisionManager<CollidableEntity<Player>,
     //  1. Creating entities
     //  2. Rendering (and drawing) entities
     //  3. Moving the entities
-    private CollidableEntity<Player> player;
+    private ArrayList<CollidableEntity<Player>> players;
     private ArrayList<CollidableEntity<Asteroid>> fallingObjects;
     private ArrayList<CollidableEntity<UFO>> UFOs;
     private ArrayList<Texture> fallingObjectImages;
@@ -35,7 +35,7 @@ public class EntityManager implements CollisionManager<CollidableEntity<Player>,
         fallingObjects = new ArrayList<>();
         UFOs = new ArrayList<CollidableEntity<UFO>>();
         fallingObjectImages = new ArrayList<>();
-        fallingObjectImages.add(new Texture(Gdx.files.internal("ufo.png")));
+        fallingObjectImages.add(new Texture(Gdx.files.internal("asteroid.png")));
         //<a href="https://www.flaticon.com/free-icons/alien" title="alien icons">Alien icons created by Freepik - Flaticon</a>
         fallingObjectImages.add(new Texture(Gdx.files.internal("star.png")));
         //<a href="https://www.flaticon.com/free-icons/star" title="star icons">Star icons created by Freepik - Flaticon</a>
@@ -46,13 +46,16 @@ public class EntityManager implements CollisionManager<CollidableEntity<Player>,
 
     public void moveLasers()
     {
-        if (player.getObject().getLasers().size() > 0)
+        for (CollidableEntity<Player> player : players)
         {
-            for (int i = 0; i < player.getObject().getLasers().size(); i++)
+            if (player.getObject().getLasers().size() > 0)
             {
-                CollidableEntity<Laser> laser = player.getObject().getLasers().get(i);
-                laser.setY(laser.getY() + (laser.getObject().getSpeed() * Gdx.graphics.getDeltaTime()));
-                player.getObject().getLasers().set(i, laser);
+                for (int i = 0; i < player.getObject().getLasers().size(); i++)
+                {
+                    CollidableEntity<Laser> laser = player.getObject().getLasers().get(i);
+                    laser.setY(laser.getY() + (laser.getObject().getSpeed() * Gdx.graphics.getDeltaTime()));
+                    player.getObject().getLasers().set(i, laser);
+                }
             }
         }
     }
@@ -106,11 +109,11 @@ public class EntityManager implements CollisionManager<CollidableEntity<Player>,
         int index = 0;
         int chance = (new Random()).nextInt(100) + 1;
 
-        if (chance <= 10)
+        if (chance <= 5)
         {
             index = 2;
         }
-        else if (chance > 11 & chance <= 40)
+        else if (chance > 6 & chance <= 20)
         {
             index = 1;
         }
@@ -135,20 +138,23 @@ public class EntityManager implements CollisionManager<CollidableEntity<Player>,
             fallingObject.setY(fallingObject.getY() - 200 * Gdx.graphics.getDeltaTime());
             if (fallingObject.getY() + fallingObject.getObject().getWidth() < 0)
                 iter.remove();
-            if (asteroidCollision(player, fallingObject))
+            for (CollidableEntity<Player> player : players)
             {
-                iter.remove();
-                switch (fallingObject.getObject().getType())
+                if (asteroidCollision(player, fallingObject))
                 {
-                    case 0:
-                        // minus health
-                        return  -1;
-                    case 1:
-                        // gain points
-                        return 1;
-                    case 2:
-                        // super power up, gain points and redirect to trivia quiz
-                        return 2;
+                    iter.remove();
+                    switch (fallingObject.getObject().getType())
+                    {
+                        case 0:
+                            // minus health
+                            return  -1;
+                        case 1:
+                            // gain points
+                            return 1;
+                        case 2:
+                            // super power up, gain points and redirect to trivia quiz
+                            return 2;
+                    }
                 }
             }
         }
@@ -168,22 +174,20 @@ public class EntityManager implements CollisionManager<CollidableEntity<Player>,
         this.fallingObjects = fallingObjects;
     }
 
-    public CollidableEntity<Player> getPlayer() {
-        return player;
+    public ArrayList<CollidableEntity<Player>> getPlayers() {
+        return players;
     }
 
-    public void setPlayer(int WIDTH) {
-        this.player = new CollidableEntity<>(
-                WIDTH / 2 - 64 / 2,
-                20,
-                new Player(
-                        "spaceship.png", //<a href="https://www.flaticon.com/free-icons/spaceship" title="spaceship icons">Spaceship icons created by Skyclick - Flaticon</a>
-                        200,
-                        new int[]{Input.Keys.LEFT, Input.Keys.RIGHT, Input.Keys.UP, Input.Keys.DOWN},
-                        new int[]{Input.Keys.A, Input.Keys.D, Input.Keys.W, Input.Keys.S},
-                        0,
-                        10));
+    public void setPlayers(ArrayList<CollidableEntity<Player>> players) {
+        this.players = players;
     }
+//    public CollidableEntity<Player> getPlayer() {
+//        return player;
+//    }
+//
+//    public void setPlayer(CollidableEntity<Player> player) {
+//        this.player = player;
+//    }
 
     public ArrayList<Texture> getFallingObjectImages() {
         return fallingObjectImages;
