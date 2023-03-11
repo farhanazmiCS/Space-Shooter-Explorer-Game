@@ -53,12 +53,12 @@ public class UFO implements BehaviourManager<CollidableEntity> {
 
 
     @Override
-    public void moveUFO(CollidableEntity ufo, CollidableEntity player, int speed) {
+    public void moveUFO(CollidableEntity ufo, int speed) {
         if (dir == "left") {
-            moveLeft(ufo, player);
+            moveLeft(ufo);
         }
         if (dir == "right") {
-            moveRight(ufo, player);
+            moveRight(ufo);
         }
         if (ufo.getX() <= 0) {
             dir = "right";
@@ -68,11 +68,11 @@ public class UFO implements BehaviourManager<CollidableEntity> {
         }
     }
 
-    public void moveLeft(CollidableEntity ufo, CollidableEntity player) {
+    public void moveLeft(CollidableEntity ufo) {
         ufo.setX(ufo.getX() - this.speed * Gdx.graphics.getDeltaTime());
     }
 
-    public void moveRight(CollidableEntity ufo, CollidableEntity player) {
+    public void moveRight(CollidableEntity ufo) {
         ufo.setX(ufo.getX() + this.speed * Gdx.graphics.getDeltaTime());
     }
 

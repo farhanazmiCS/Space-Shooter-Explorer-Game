@@ -64,7 +64,7 @@ public class EntityManager implements CollisionManager<CollidableEntity<Player>,
             for (int i = 0; i < ufo.getObject().getLasers().size(); i++)
             {
                 CollidableEntity<Laser> laser = ufo.getObject().getLasers().get(i);
-                laser.setY(laser.getY() + (laser.getObject().getSpeed() * Gdx.graphics.getDeltaTime()));
+                laser.setY(laser.getY() - (laser.getObject().getSpeed() * Gdx.graphics.getDeltaTime()));
                 ufo.getObject().getLasers().set(i, laser);
             }
         }

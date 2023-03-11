@@ -9,7 +9,6 @@ public class CustomInputProcessor implements InputProcessor {
 
     public boolean mouseClicked(int mouseButton) {
         if (Gdx.input.isButtonPressed(mouseButton)) {
-            System.out.println(mouseButton);
             return true;
         }
         return false;

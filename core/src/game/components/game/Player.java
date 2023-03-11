@@ -20,6 +20,16 @@ public class Player {
     private ArrayList<CollidableEntity<Laser>> lasers;
     private int health;
 
+    public Afterburner getAfterburner() {
+        return afterburner;
+    }
+
+    public void setAfterburner(Afterburner afterburner) {
+        this.afterburner = afterburner;
+    }
+
+    private Afterburner afterburner;
+
     public Player(String imgName, float speed, int[] mainKeyboardInputs, int[] altKeyboardInputs, int score, int health) {
         this.imgName = imgName;
         this.sprite = new Sprite(new Texture(imgName));
@@ -30,6 +40,7 @@ public class Player {
         this.altKeyboardInputs = altKeyboardInputs;
         this.score = score;
         lasers = new ArrayList<>();
+        this.afterburner = new Afterburner("afterburner.png");
     }
 
     public String getImgName() {
@@ -123,20 +134,27 @@ public class Player {
             player.setY(screenHeight/2 - player.getObject().getHeight());
     }
 
-    public void movePlayer(CollidableEntity<Player> player, CustomInputProcessor inputProcessor)
-    {
+    public int movePlayer(CollidableEntity<Player> player, CustomInputProcessor inputProcessor) {
         if (inputProcessor.keyDown(player.getObject().getMainKeyboardInputs()[0]) ||
-                inputProcessor.keyDown(player.getObject().getAltKeyboardInputs()[0]))
+                inputProcessor.keyDown(player.getObject().getAltKeyboardInputs()[0])) {
             player.setX(player.getX() - (player.getObject().getSpeed() * Gdx.graphics.getDeltaTime()));
+            return 0;
+        }
         if (inputProcessor.keyDown(player.getObject().getMainKeyboardInputs()[1]) ||
-                inputProcessor.keyDown(player.getObject().getAltKeyboardInputs()[1]))
+                inputProcessor.keyDown(player.getObject().getAltKeyboardInputs()[1])) {
             player.setX(player.getX() + (player.getObject().getSpeed() * Gdx.graphics.getDeltaTime()));
+            return 1;
+        }
         if (inputProcessor.keyDown(player.getObject().getMainKeyboardInputs()[2]) ||
-                inputProcessor.keyDown(player.getObject().getAltKeyboardInputs()[2]))
+                inputProcessor.keyDown(player.getObject().getAltKeyboardInputs()[2])) {
             player.setY(player.getY() + (player.getObject().getSpeed() * Gdx.graphics.getDeltaTime()));
+            return 2;
+        }
         if (inputProcessor.keyDown(player.getObject().getMainKeyboardInputs()[3]) ||
-                inputProcessor.keyDown(player.getObject().getAltKeyboardInputs()[3]))
+                inputProcessor.keyDown(player.getObject().getAltKeyboardInputs()[3])) {
             player.setY(player.getY() - (player.getObject().getSpeed() * Gdx.graphics.getDeltaTime()));
+            return 3;
+        }
+        return -1;
     }
-
 }
