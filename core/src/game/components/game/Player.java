@@ -135,26 +135,27 @@ public class Player {
     }
 
     public int movePlayer(CollidableEntity<Player> player, CustomInputProcessor inputProcessor) {
+        int move_result = -1;
         if (inputProcessor.keyDown(player.getObject().getMainKeyboardInputs()[0]) ||
                 inputProcessor.keyDown(player.getObject().getAltKeyboardInputs()[0])) {
             player.setX(player.getX() - (player.getObject().getSpeed() * Gdx.graphics.getDeltaTime()));
-            return 0;
+            move_result = 0;
         }
         if (inputProcessor.keyDown(player.getObject().getMainKeyboardInputs()[1]) ||
                 inputProcessor.keyDown(player.getObject().getAltKeyboardInputs()[1])) {
             player.setX(player.getX() + (player.getObject().getSpeed() * Gdx.graphics.getDeltaTime()));
-            return 1;
+            move_result = 1;
         }
         if (inputProcessor.keyDown(player.getObject().getMainKeyboardInputs()[2]) ||
                 inputProcessor.keyDown(player.getObject().getAltKeyboardInputs()[2])) {
             player.setY(player.getY() + (player.getObject().getSpeed() * Gdx.graphics.getDeltaTime()));
-            return 2;
+            move_result = 2;
         }
         if (inputProcessor.keyDown(player.getObject().getMainKeyboardInputs()[3]) ||
                 inputProcessor.keyDown(player.getObject().getAltKeyboardInputs()[3])) {
             player.setY(player.getY() - (player.getObject().getSpeed() * Gdx.graphics.getDeltaTime()));
-            return 3;
+            move_result = 3;
         }
-        return -1;
+        return move_result;
     }
 }

@@ -81,7 +81,7 @@ public class Main extends Game {
 	private SpriteBatch batch;
 	private BitmapFont font;
 
-	TestEntity test;
+//	TestEntity test;
 
 	public final int HEIGHT = 480;
 	public final int WIDTH = 800;

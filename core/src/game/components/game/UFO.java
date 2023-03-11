@@ -53,7 +53,7 @@ public class UFO implements BehaviourManager<CollidableEntity> {
 
 
     @Override
-    public void moveUFO(CollidableEntity ufo, int speed) {
+    public void moveUFO(CollidableEntity ufo, int speed, int width) {
         if (dir == "left") {
             moveLeft(ufo);
         }
@@ -63,7 +63,7 @@ public class UFO implements BehaviourManager<CollidableEntity> {
         if (ufo.getX() <= 0) {
             dir = "right";
         }
-        if (ufo.getX() >= 300) {
+        if (ufo.getX() >= width - this.texture.getWidth()) {
             dir = "left";
         }
     }

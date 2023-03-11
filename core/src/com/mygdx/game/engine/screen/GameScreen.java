@@ -187,20 +187,15 @@ public class GameScreen implements Screen {
             game.getBatch().draw(fallingObject.getObject().getImage(), fallingObject.getX(), fallingObject.getY());
         }
 
-        this.game.entityManager.getPlayer().getObject().movePlayer(this.game.entityManager.getPlayer(), inputProcessor);
-        if (this.game.entityManager.getPlayer().getObject().movePlayer(this.game.entityManager.getPlayer(), inputProcessor) == 2) {
-            this.game.entityManager.getPlayer().getObject().getAfterburner().setVisibility(true);
-        }
-        else {
-            this.game.entityManager.getPlayer().getObject().getAfterburner().setVisibility(false);
-        }
+        int move_result = this.game.entityManager.getPlayer().getObject().movePlayer(this.game.entityManager.getPlayer(), inputProcessor);
+        this.game.entityManager.getPlayer().getObject().getAfterburner().setVisibility(move_result == 2);
 
 
         this.game.entityManager.getPlayer().getObject().getAfterburner().setX(this.game.entityManager.getPlayer().getX());
         this.game.entityManager.getPlayer().getObject().getAfterburner().setY(this.game.entityManager.getPlayer().getY() - 50);
 
 
-        this.game.entityManager.getUFOs().get(0).getObject().moveUFO(this.game.entityManager.getUFOs().get(0), 150);
+        this.game.entityManager.getUFOs().get(0).getObject().moveUFO(this.game.entityManager.getUFOs().get(0), 150, this.game.WIDTH);
 
         this.game.entityManager.getPlayer().getObject().limitPlayerMovement(this.game.entityManager.getPlayer(), this.game.WIDTH, this.game.HEIGHT);
 
