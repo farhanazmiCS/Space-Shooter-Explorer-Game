@@ -4,11 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import game.components.menu.Button;
 import com.mygdx.game.engine.lifecycle.Main;
 import com.mygdx.game.engine.entity.EntityManager;
 import com.mygdx.game.engine.input.CustomInputProcessor;
+import com.mygdx.game.engine.screen.storyboard.StoryboardScreen;
 
 import java.util.ArrayList;
 
@@ -29,6 +32,9 @@ public class PauseScreen extends ScreenManager implements Screen {
         this.buttons = buttons;
     }
 
+    private SpriteBatch batch;
+    private Texture texture;
+
     private CustomInputProcessor inputProcessor;
     private Main game;
     private ArrayList<Button> buttons;
@@ -36,7 +42,12 @@ public class PauseScreen extends ScreenManager implements Screen {
     public PauseScreen(Main game) {
         super(game);
         this.game = game;
+
+        texture = new Texture("main_menu_background_resized.png");
+        batch = new SpriteBatch();
+
         this.inputProcessor = new CustomInputProcessor();
+
         buttons = new ArrayList<Button>();
         buttonPath = new ArrayList<String>();
         buttonPath.add("resume_button.png");
@@ -52,6 +63,9 @@ public class PauseScreen extends ScreenManager implements Screen {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0.2f, 1);
+        this.batch.begin();
+        this.batch.draw(this.texture, 0, 0);
+        this.batch.end();
 
         for (Button button : buttons) {
                 button.getBatch().begin();
@@ -106,6 +120,8 @@ public class PauseScreen extends ScreenManager implements Screen {
         this.game.entityManager.setPlayer(this.game.WIDTH);
         this.game.entityManager.resetFailingObjects();
         this.game.setGameScreen(new GameScreen(this.game));
+        this.game.setStoryboards(this.game.getScreenManager().generateStoryboards(this.game.getStoryboardImgPath()));
+        this.game.setControlScreen(new ControlScreen(this.game, "controls.jpg"));
         game.setScreen(game.getMainMenuScreen());
     }
 }

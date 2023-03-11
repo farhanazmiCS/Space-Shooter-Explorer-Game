@@ -43,6 +43,16 @@ public class Button {
         this.sprite = sprite;
     }
 
+    public boolean getVisibility() {
+        return visibility;
+    }
+
+    public void setVisibility(boolean visibility) {
+        this.visibility = visibility;
+    }
+
+    private boolean visibility;
+
     private Sprite sprite;
 
     public Button(int width, int height, float x, float y, String imgPath, Main game) {
@@ -51,6 +61,7 @@ public class Button {
         this.texture = new Texture(imgPath);
         this.sprite = new Sprite(this.texture);
         this.batch = new SpriteBatch();
+        this.visibility = false;
     }
 
     public void setButtonColor(Color color) {

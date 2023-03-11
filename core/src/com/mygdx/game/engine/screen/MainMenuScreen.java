@@ -113,7 +113,7 @@ public class MainMenuScreen extends ScreenManager implements Screen {
     }
 
     public void play() {
-        game.setScreen(game.getGameScreen());
+        game.setScreen(game.getStoryboards().get(0));
     }
 
     public void quit() {

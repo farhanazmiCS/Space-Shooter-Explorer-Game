@@ -2,6 +2,7 @@ package com.mygdx.game.engine.screen;
 
 import game.components.menu.Button;
 import com.mygdx.game.engine.lifecycle.Main;
+import com.mygdx.game.engine.screen.storyboard.StoryboardScreen;
 
 import java.util.ArrayList;
 
@@ -24,5 +25,14 @@ public class ScreenManager {
                 buttons.add(button);
             }
         }
+    }
+    public ArrayList<StoryboardScreen> generateStoryboards(ArrayList<String> imgPaths) {
+        ArrayList<StoryboardScreen> storyboards = new ArrayList<StoryboardScreen>();
+        for (int i = 0; i < imgPaths.size(); i++) {
+            StoryboardScreen storyboard = new StoryboardScreen(this.game, imgPaths.get(i));
+            storyboard.setCurrent(i);
+            storyboards.add(storyboard);
+        }
+        return storyboards;
     }
 }
