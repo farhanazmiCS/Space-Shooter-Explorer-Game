@@ -2,6 +2,7 @@ package game.components.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.engine.behavior.BehaviourManager;
 import com.mygdx.game.engine.collision.CollidableEntity;
@@ -34,10 +35,15 @@ public class UFO implements BehaviourManager<CollidableEntity> {
 
     private ArrayList<CollidableEntity<Laser>> lasers;
 
+    private Rectangle rectangle;
+
+    private int health;
+
     public UFO(String imgPath) {
         this.imgPath = imgPath;
         this.texture = new Texture(this.imgPath);
         this.speed = 200;
+        this.health = 100;
     }
 
     @Override

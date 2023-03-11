@@ -5,12 +5,17 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import game.components.menu.Button;
+
+import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.engine.lifecycle.Main;
 import com.mygdx.game.engine.collision.CollidableEntity;
-import game.components.game.FallingObject;
+import game.components.game.Asteroid;
 import game.components.game.Laser;
 import game.components.game.Player;
 import com.mygdx.game.engine.input.CustomInputProcessor;
@@ -24,6 +29,12 @@ public class GameScreen implements Screen {
     private long lastDropTime;
     private long lastShootTime;
     private CustomInputProcessor inputProcessor;
+
+    private Texture background;
+    private Viewport viewport;
+    private int backgroundOffset;
+
+    private SpriteBatch batch;
 
     public Button getPauseButton() {
         return pauseButton;
@@ -58,7 +69,7 @@ public class GameScreen implements Screen {
     }
 
     private final float spawnRate = 1000000000;
-    private final float spawnRateMultiplier = 0.5f;
+    private final float spawnRateMultiplier = 0.15f;
 
     private int distance = 0;
 
@@ -77,6 +88,12 @@ public class GameScreen implements Screen {
         // create the camera and the SpritegetBatch()
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
+
+        viewport = new StretchViewport(game.WIDTH, game.HEIGHT, camera);
+        background = new Texture("background_game.png");
+        backgroundOffset = 0;
+
+        batch = new SpriteBatch();
     }
 
     @Override
@@ -90,7 +107,16 @@ public class GameScreen implements Screen {
         // tell the camera to update its matrices.
         camera.update();
 
-        // Pause button
+        // background
+        batch.begin();
+        // Scrolling background
+        backgroundOffset += 4;
+        if (backgroundOffset % game.HEIGHT == 0) {
+            backgroundOffset = 0;
+        }
+        batch.draw(background, 0, -backgroundOffset+game.HEIGHT, game.WIDTH, game.HEIGHT);
+        batch.draw(background, 0, -backgroundOffset, game.WIDTH, game.HEIGHT);
+        batch.end();
 
         pauseButton.getBatch().begin();
         pauseButton.getBatch().draw(pauseButton.getTexture(), 640, 420);
@@ -147,7 +173,7 @@ public class GameScreen implements Screen {
             game.getBatch().draw(ufo.getObject().getTexture(), ufo.getX(), ufo.getY());
         }
 
-        for (CollidableEntity<FallingObject> fallingObject : this.game.entityManager.getFallingObjects()) {
+        for (CollidableEntity<Asteroid> fallingObject : this.game.entityManager.getFallingObjects()) {
             game.getBatch().draw(fallingObject.getObject().getImage(), fallingObject.getX(), fallingObject.getY());
         }
 
@@ -157,10 +183,7 @@ public class GameScreen implements Screen {
 
         this.game.entityManager.getPlayer().getObject().limitPlayerMovement(this.game.entityManager.getPlayer(), this.game.WIDTH, this.game.HEIGHT);
 
-        // check if we need to create a new raindrop
-        if (TimeUtils.nanoTime() - lastDropTime > spawnRate * spawnRateMultiplier)
-            lastDropTime = this.game.entityManager.spawnFallingObject(this.game.WIDTH, this.game.HEIGHT);
-            //spawnRaindrop();
+
 
         int point = this.game.entityManager.moveFallingObject();
         switch (point)
@@ -184,7 +207,8 @@ public class GameScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        viewport.update(width, height, true);
+        batch.setProjectionMatrix(camera.combined);
     }
 
     @Override

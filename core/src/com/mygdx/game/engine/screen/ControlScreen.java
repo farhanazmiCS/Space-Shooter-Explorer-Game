@@ -61,9 +61,11 @@ public class ControlScreen implements Screen {
         this.batch.draw(this.texture, 0, 0);
         this.batch.end();
 
-        playButton.getBatch().begin();
-        playButton.getBatch().draw(playButton.getTexture(), 640, 20);
-        playButton.getBatch().end();
+        if (playButton.getVisibility()) {
+            playButton.getBatch().begin();
+            playButton.getBatch().draw(playButton.getTexture(), 640, 20);
+            playButton.getBatch().end();
+        }
 
         playButton.setButtonColor(Color.WHITE);
 

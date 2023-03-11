@@ -14,19 +14,19 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
-import game.components.game.FallingObject;
+import game.components.game.Asteroid;
 import game.components.game.Laser;
 import game.components.game.Player;
 import game.components.game.UFO;
 
-public class EntityManager implements CollisionManager<CollidableEntity<Player>, CollidableEntity<FallingObject>, CollidableEntity<UFO>, Integer> {
+public class EntityManager implements CollisionManager<CollidableEntity<Player>, CollidableEntity<Asteroid>, CollidableEntity<UFO>, Integer> {
     // This class contains the attributes and methods for handling all entities.
     // Example:
     //  1. Creating entities
     //  2. Rendering (and drawing) entities
     //  3. Moving the entities
     private CollidableEntity<Player> player;
-    private ArrayList<CollidableEntity<FallingObject>> fallingObjects;
+    private ArrayList<CollidableEntity<Asteroid>> fallingObjects;
     private ArrayList<CollidableEntity<UFO>> UFOs;
     private ArrayList<Texture> fallingObjectImages;
 
@@ -75,11 +75,11 @@ public class EntityManager implements CollisionManager<CollidableEntity<Player>,
         if (inputProcessor.keyDown(Input.Keys.SPACE) || inputProcessor.mouseClicked(Input.Buttons.LEFT))
         {
             CollidableEntity<Laser> laser = new CollidableEntity<>(
-                    player.getX(),
+                    player.getX() + 15,
                     player.getY(),
                     new Laser(
-                            "laser.png", //<a href="https://www.flaticon.com/free-icons/laser" title="laser icons">Laser icons created by Freepik - Flaticon</a>
-                            200));
+                            "green_laser.png", //<a href="https://www.flaticon.com/free-icons/laser" title="laser icons">Laser icons created by Freepik - Flaticon</a>
+                            800));
             player.getObject().getLasers().add(laser);
             return TimeUtils.nanoTime();
         }
@@ -92,8 +92,8 @@ public class EntityManager implements CollisionManager<CollidableEntity<Player>,
                 ufo.getX(),
                 ufo.getY(),
                 new Laser(
-                        "laser.png", //<a href="https://www.flaticon.com/free-icons/laser" title="laser icons">Laser icons created by Freepik - Flaticon</a>
-                        200));
+                        "green_laser.png", //<a href="https://www.flaticon.com/free-icons/laser" title="laser icons">Laser icons created by Freepik - Flaticon</a>
+                        800));
             ufo.getObject().getLasers().add(laser);
             return TimeUtils.nanoTime();
     }
@@ -115,11 +115,11 @@ public class EntityManager implements CollisionManager<CollidableEntity<Player>,
             index = 1;
         }
 
-        CollidableEntity<FallingObject> fallingObject =
+        CollidableEntity<Asteroid> fallingObject =
                 new CollidableEntity<>(
                         MathUtils.random(0, screenWidth - fallingObjectImages.get((int) index).getWidth()),
                         screenHeight,
-                        new FallingObject(
+                        new Asteroid(
                                 index,
                                 fallingObjectImages.get((int) index))
                 );
@@ -129,13 +129,13 @@ public class EntityManager implements CollisionManager<CollidableEntity<Player>,
 
     public Integer moveFallingObject() // This should also be part of the "Asteroid" class now (Part of Game component, not engine)
     {
-        Iterator<CollidableEntity<FallingObject>> iter = fallingObjects.iterator();
+        Iterator<CollidableEntity<Asteroid>> iter = fallingObjects.iterator();
         while (iter.hasNext()) {
-            CollidableEntity<FallingObject> fallingObject = iter.next();
+            CollidableEntity<Asteroid> fallingObject = iter.next();
             fallingObject.setY(fallingObject.getY() - 200 * Gdx.graphics.getDeltaTime());
             if (fallingObject.getY() + fallingObject.getObject().getWidth() < 0)
                 iter.remove();
-            if (checkFallingObjectCollision(player, fallingObject))
+            if (asteroidCollision(player, fallingObject))
             {
                 iter.remove();
                 switch (fallingObject.getObject().getType())
@@ -160,18 +160,11 @@ public class EntityManager implements CollisionManager<CollidableEntity<Player>,
 
     // }
 
-    @Override
-    public boolean checkFallingObjectCollision(CollidableEntity<Player> player, CollidableEntity<FallingObject> fallingObject) {
-        Rectangle playerBoundary = new Rectangle(player.getX(), player.getY(), player.getObject().getWidth(), player.getObject().getHeight());
-        Rectangle fallingObjectBoundary = new Rectangle(fallingObject.getX(), fallingObject.getY(), fallingObject.getObject().getWidth(), fallingObject.getObject().getHeight());
-        return fallingObjectBoundary.overlaps(playerBoundary);
-    }
-
-    public ArrayList<CollidableEntity<FallingObject>> getFallingObjects() {
+    public ArrayList<CollidableEntity<Asteroid>> getFallingObjects() {
         return fallingObjects;
     }
 
-    public void setFallingObjects(ArrayList<CollidableEntity<FallingObject>> fallingObjects) {
+    public void setFallingObjects(ArrayList<CollidableEntity<Asteroid>> fallingObjects) {
         this.fallingObjects = fallingObjects;
     }
 
@@ -210,7 +203,7 @@ public class EntityManager implements CollisionManager<CollidableEntity<Player>,
         {
             image.dispose();
         }
-        for (CollidableEntity<FallingObject> fallingObject : fallingObjects)
+        for (CollidableEntity<Asteroid> fallingObject : fallingObjects)
         {
             fallingObject.getObject().getImage().dispose();
         }
@@ -230,5 +223,12 @@ public class EntityManager implements CollisionManager<CollidableEntity<Player>,
             CollidableEntity<UFO> ufo = new CollidableEntity<UFO>(400, 350, new UFO("alien.png"));
             UFOs.add(ufo);
         }
+    }
+
+    @Override
+    public boolean asteroidCollision(CollidableEntity<Player> player, CollidableEntity<Asteroid> asteroid) {
+        Rectangle playerBoundary = new Rectangle(player.getX(), player.getY(), player.getObject().getWidth(), player.getObject().getHeight());
+        Rectangle fallingObjectBoundary = new Rectangle(asteroid.getX(), asteroid.getY(), asteroid.getObject().getWidth(), asteroid.getObject().getHeight());
+        return fallingObjectBoundary.overlaps(playerBoundary);
     }
 }

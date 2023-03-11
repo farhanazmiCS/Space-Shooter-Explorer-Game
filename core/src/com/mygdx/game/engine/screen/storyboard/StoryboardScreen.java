@@ -76,9 +76,11 @@ public class StoryboardScreen implements Screen {
         this.batch.draw(this.texture, 0, 0);
         this.batch.end();
 
-        nextButton.getBatch().begin();
-        nextButton.getBatch().draw(nextButton.getTexture(), 640, 20);
-        nextButton.getBatch().end();
+        if (nextButton.getVisibility()) {
+            nextButton.getBatch().begin();
+            nextButton.getBatch().draw(nextButton.getTexture(), 640, 20);
+            nextButton.getBatch().end();
+        }
 
         nextButton.setButtonColor(Color.WHITE);
 

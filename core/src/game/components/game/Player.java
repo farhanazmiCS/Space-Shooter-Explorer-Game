@@ -119,8 +119,8 @@ public class Player {
             player.setX(screenWidth - player.getObject().getWidth());
         if(player.getY() < 0)
             player.setY(0);
-        if(player.getY() > screenHeight - player.getObject().getHeight())
-            player.setY(screenHeight - player.getObject().getHeight());
+        if(player.getY() > screenHeight/2 - player.getObject().getHeight())
+            player.setY(screenHeight/2 - player.getObject().getHeight());
     }
 
     public void movePlayer(CollidableEntity<Player> player, CustomInputProcessor inputProcessor)

@@ -2,13 +2,13 @@ package game.components.game;
 
 import com.badlogic.gdx.graphics.Texture;
 
-public class FallingObject {
+public class Asteroid {
     private int type;
     private Texture image;
     private float width;
     private float height;
 
-    public FallingObject(int type, Texture image) {
+    public Asteroid(int type, Texture image) {
         this.type = type;
         this.image = image;
         this.width = image.getWidth();
