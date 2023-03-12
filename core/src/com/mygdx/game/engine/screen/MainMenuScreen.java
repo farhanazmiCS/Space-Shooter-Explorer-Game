@@ -92,7 +92,9 @@ public class MainMenuScreen extends ScreenManager implements Screen {
 
         if (inputProcessor.mouseHoverOver(buttons.get(0).getBound())) {
             buttons.get(0).setButtonColor(Color.LIGHT_GRAY);
+//            SoundManager.playButtonHover();
             if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
+//                SoundManager.playButtonClick();
                 play();
             }
         }

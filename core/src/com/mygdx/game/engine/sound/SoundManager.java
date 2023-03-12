@@ -2,6 +2,7 @@ package com.mygdx.game.engine.sound;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 
 public class SoundManager {
 
@@ -11,6 +12,9 @@ public class SoundManager {
     private static Music controlMusic;
     private static Music scoreMusic;
     private static Music pauseMusic;
+    private static Music storyMusic;
+    private static Sound buttonHover;
+    private static Sound buttonClick;
 
     // Whether or not the music is currently playing
     private static boolean isPlaying = false;
@@ -57,6 +61,13 @@ public class SoundManager {
                 }
                 pauseMusic.play();
                 break;
+            case STORY:
+                if (storyMusic == null) {
+                    storyMusic = Gdx.audio.newMusic(Gdx.files.internal("game.wav"));
+                    storyMusic.setLooping(true);
+                }
+                storyMusic.play();
+                break;
         }
 
         // Set isPlaying to true
@@ -80,6 +91,9 @@ public class SoundManager {
         if (pauseMusic != null) {
             pauseMusic.stop();
         }
+        if (storyMusic != null) {
+            storyMusic.stop();
+        }
 
         // Set isPlaying to false
         isPlaying = false;
@@ -92,6 +106,25 @@ public class SoundManager {
 
     // Enum for different screen types
     public enum ScreenType {
-        MAIN_MENU, GAME, CONTROL, SCORE, PAUSE
+        MAIN_MENU, GAME, CONTROL, SCORE, PAUSE, STORY
     }
-}
+        public SoundManager() {
+            // Load sounds from assets folder
+            buttonHover = Gdx.audio.newSound(Gdx.files.internal("blip.wav"));
+            buttonClick = Gdx.audio.newSound(Gdx.files.internal("hover.wav"));
+        }
+
+        public static void playButtonHover() {
+            buttonHover.play();
+        }
+
+        public static void playButtonClick() {
+            buttonClick.play();
+        }
+
+        public void dispose() {
+            // Dispose sounds to free memory
+            buttonHover.dispose();
+            buttonClick.dispose();
+        }
+    }

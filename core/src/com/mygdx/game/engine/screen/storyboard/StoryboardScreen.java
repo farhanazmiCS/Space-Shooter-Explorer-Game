@@ -12,6 +12,7 @@ import com.mygdx.game.engine.lifecycle.Main;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.engine.sound.SoundManager;
 
 import java.sql.Time;
 
@@ -66,6 +67,7 @@ public class StoryboardScreen implements Screen {
     public void show() {
         Gdx.input.setInputProcessor(inputProcessor);
         Timer.schedule(buttonShowTask, buttonShowDelay);
+        SoundManager.playMusic(SoundManager.ScreenType.STORY);
     }
 
     @Override
@@ -111,7 +113,7 @@ public class StoryboardScreen implements Screen {
 
     @Override
     public void hide() {
-
+        SoundManager.stopMusic();
     }
 
     @Override
