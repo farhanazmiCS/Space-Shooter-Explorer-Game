@@ -1,25 +1,24 @@
 package com.mygdx.game.engine.screen;
 
-import  com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.mygdx.game.engine.collision.CollidableEntity;
+import com.mygdx.game.engine.entity.EntityManager;
+import com.mygdx.game.engine.input.CustomInputProcessor;
+import com.mygdx.game.engine.lifecycle.Main;
+import com.mygdx.game.engine.sound.SoundManager;
+
+import java.util.ArrayList;
 
 import game.components.game.Player;
 import game.components.menu.Button;
 
-import com.mygdx.game.engine.collision.CollidableEntity;
-import com.mygdx.game.engine.sound.SoundManager;
-import com.mygdx.game.engine.lifecycle.Main;
-import com.mygdx.game.engine.entity.EntityManager;
-import com.mygdx.game.engine.input.CustomInputProcessor;
-
-import java.util.ArrayList;
-
-public class PauseScreen extends ScreenManager implements Screen {
+public class GameOverScreen extends ScreenManager implements Screen {
     public CustomInputProcessor getInputProcessor() {
         return inputProcessor;
     }
@@ -43,7 +42,7 @@ public class PauseScreen extends ScreenManager implements Screen {
     private Main game;
     private ArrayList<Button> buttons;
     private ArrayList<String> buttonPath;
-    public PauseScreen(Main game) {
+    public GameOverScreen(Main game) {
         super(game);
         this.game = game;
 
@@ -54,9 +53,8 @@ public class PauseScreen extends ScreenManager implements Screen {
 
         buttons = new ArrayList<Button>();
         buttonPath = new ArrayList<String>();
-        buttonPath.add("resume_button.png");
         buttonPath.add("quit_button.png");
-        createScreenButtons(2, buttons, 75, buttonPath);
+        createScreenButtons(1, buttons, 75, buttonPath);
     }
 
     @Override
@@ -68,6 +66,7 @@ public class PauseScreen extends ScreenManager implements Screen {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0.2f, 1);
+
         this.batch.begin();
         this.batch.draw(this.texture, 0, 0);
         this.batch.end();
@@ -79,20 +78,17 @@ public class PauseScreen extends ScreenManager implements Screen {
         }
 
         buttons.get(0).setButtonColor(Color.WHITE);
-        buttons.get(1).setButtonColor(Color.WHITE);
 
         if (inputProcessor.mouseHoverOver(buttons.get(0).getBound())) {
             buttons.get(0).setButtonColor(Color.LIGHT_GRAY);
             if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
-                  resume();
-            }
-        }
-        if (inputProcessor.mouseHoverOver(buttons.get(1).getBound())) {
-            buttons.get(1).setButtonColor(Color.LIGHT_GRAY);
-            if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
                 quit();
             }
         }
+
+        game.getBatch().begin(); // Anything after begin() will be displayed
+        game.getFont().draw(game.getBatch(), "GAME OVER", game.WIDTH / 2 - 70, 400);
+        game.getBatch().end(); // Anything after end() will NOT be displayed
     }
 
     @Override

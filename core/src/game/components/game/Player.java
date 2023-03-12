@@ -18,7 +18,8 @@ public class Player {
     private int[] altKeyboardInputs; // Defines alternate player controls
     private int score;
     private ArrayList<CollidableEntity<Laser>> lasers;
-    private int health;
+    private int maxHealth;
+    private int currentHealth;
 
     public Afterburner getAfterburner() {
         return afterburner;
@@ -41,6 +42,8 @@ public class Player {
         this.score = score;
         lasers = new ArrayList<>();
         this.afterburner = new Afterburner("afterburner.png");
+        this.maxHealth = health;
+        this.currentHealth = health;
     }
 
     public String getImgName() {
@@ -115,12 +118,20 @@ public class Player {
         this.lasers = lasers;
     }
 
-    public int getHealth() {
-        return health;
+    public int getMaxHealth() {
+        return maxHealth;
     }
 
-    public void setHealth(int health) {
-        this.health = health;
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
+    }
+
+    public int getCurrentHealth() {
+        return currentHealth;
+    }
+
+    public void setCurrentHealth(int currentHealth) {
+        this.currentHealth = currentHealth;
     }
 
     public void limitPlayerMovement(CollidableEntity<Player> player, Integer screenWidth, Integer screenHeight) {

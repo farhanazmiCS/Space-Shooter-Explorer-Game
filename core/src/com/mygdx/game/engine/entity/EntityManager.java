@@ -30,6 +30,7 @@ public class EntityManager implements CollisionManager<CollidableEntity<Player>,
     private ArrayList<CollidableEntity<Asteroid>> fallingObjects;
     private ArrayList<CollidableEntity<UFO>> UFOs;
     private ArrayList<Texture> fallingObjectImages;
+    public int noOfPlayers = 1;
 
     //to be initialised at the life cycle manager
     public EntityManager() {

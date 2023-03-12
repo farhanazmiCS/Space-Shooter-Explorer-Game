@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.engine.collision.CollidableEntity;
 import com.mygdx.game.engine.entity.EntityManager;
 import com.mygdx.game.engine.screen.ControlScreen;
+import com.mygdx.game.engine.screen.GameOverScreen;
 import com.mygdx.game.engine.screen.GameScreen;
 import com.mygdx.game.engine.screen.MainMenuScreen;
 import com.mygdx.game.engine.screen.PauseScreen;
@@ -32,6 +33,7 @@ public class Main extends Game {
 	MainMenuScreen mainMenuScreen;
 	GameScreen gameScreen;
 	PauseScreen pauseScreen;
+	GameOverScreen gameOverScreen;
 	ScoreboardScreen scoreboardScreen;
 
 	public ControlScreen getControlScreen() {
@@ -102,6 +104,14 @@ public class Main extends Game {
 		return pauseScreen;
 	}
 
+	public GameOverScreen getGameOverScreen() {
+		return gameOverScreen;
+	}
+
+	public void setGameOverScreen(GameOverScreen gameOverScreen) {
+		this.gameOverScreen = gameOverScreen;
+	}
+
 	public void setPauseScreen(PauseScreen pauseScreen) {
 		this.pauseScreen = pauseScreen;
 	}
@@ -132,6 +142,7 @@ public class Main extends Game {
 		// Create Pause menu, main menu and scoreboard menu
 		mainMenuScreen = new MainMenuScreen(this);
 		pauseScreen = new PauseScreen(this);
+		gameOverScreen = new GameOverScreen(this);
 		scoreboardScreen = new ScoreboardScreen(this);
 
 		storyboardImgPath = new ArrayList<String>();
@@ -147,40 +158,21 @@ public class Main extends Game {
 		batch = new SpriteBatch();
 		font.getData().setScale(1.5f);
 		entityManager = new EntityManager();
-		CollidableEntity<Player> player = new CollidableEntity<>(
-				WIDTH / 2 - 64 / 2,
-				20,
-				new Player(
-						"spaceship.png", //<a href="https://www.flaticon.com/free-icons/spaceship" title="spaceship icons">Spaceship icons created by Skyclick - Flaticon</a>
-						200,
-						new int[]{Input.Keys.LEFT, Input.Keys.RIGHT, Input.Keys.UP, Input.Keys.DOWN},
-						new int[]{Input.Keys.A, Input.Keys.D, Input.Keys.W, Input.Keys.S},
-						0,
-						10));
-//		CollidableEntity<Player> player1 = new CollidableEntity<>(
-//				(WIDTH / 2 - 64 / 2) + 64,
-//				20,
-//				new Player(
-//						"spaceship.png", //<a href="https://www.flaticon.com/free-icons/spaceship" title="spaceship icons">Spaceship icons created by Skyclick - Flaticon</a>
-//						200,
-//						new int[]{Input.Keys.LEFT, Input.Keys.RIGHT, Input.Keys.UP, Input.Keys.DOWN},
-//						new int[]{Input.Keys.A, Input.Keys.D, Input.Keys.W, Input.Keys.S},
-//						0,
-//						10));
-//		CollidableEntity<Player> player2 = new CollidableEntity<>(
-//				(WIDTH / 2 - 64 / 2) - 64,
-//				20,
-//				new Player(
-//						"spaceship.png", //<a href="https://www.flaticon.com/free-icons/spaceship" title="spaceship icons">Spaceship icons created by Skyclick - Flaticon</a>
-//						200,
-//						new int[]{Input.Keys.LEFT, Input.Keys.RIGHT, Input.Keys.UP, Input.Keys.DOWN},
-//						new int[]{Input.Keys.A, Input.Keys.D, Input.Keys.W, Input.Keys.S},
-//						0,
-//						10));
 		entityManager.setPlayers(new ArrayList<CollidableEntity<Player>>());
-		entityManager.getPlayers().add(player);
-//		entityManager.getPlayers().add(player1);
-//		entityManager.getPlayers().add(player2);
+		for (int i = 0; i < entityManager.noOfPlayers; i++)
+		{
+			CollidableEntity<Player> player = new CollidableEntity<>(
+					WIDTH / 2 - 64 / 2 + (i * 64),
+					20,
+					new Player(
+							"spaceship.png", //<a href="https://www.flaticon.com/free-icons/spaceship" title="spaceship icons">Spaceship icons created by Skyclick - Flaticon</a>
+							200,
+							new int[]{Input.Keys.LEFT, Input.Keys.RIGHT, Input.Keys.UP, Input.Keys.DOWN},
+							new int[]{Input.Keys.A, Input.Keys.D, Input.Keys.W, Input.Keys.S},
+							0,
+							10));
+			entityManager.getPlayers().add(player);
+		}
 		//entityManager.setPlayer(player);
 		this.setScreen(mainMenuScreen);
 		// Create game screen

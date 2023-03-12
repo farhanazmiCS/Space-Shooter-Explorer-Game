@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import game.components.menu.Button;
@@ -20,8 +21,6 @@ import game.components.game.Asteroid;
 import game.components.game.Laser;
 import game.components.game.Player;
 import com.mygdx.game.engine.input.CustomInputProcessor;
-
-import java.util.Random;
 
 import game.components.game.UFO;
 
@@ -38,6 +37,7 @@ public class GameScreen implements Screen {
     private int backgroundOffset;
 
     private SpriteBatch batch;
+    private ShapeRenderer shapeRenderer;
 
     public Button getPauseButton() {
         return pauseButton;
@@ -97,6 +97,7 @@ public class GameScreen implements Screen {
         backgroundOffset = 0;
 
         batch = new SpriteBatch();
+        shapeRenderer = new ShapeRenderer();
     }
 
     @Override
@@ -140,6 +141,21 @@ public class GameScreen implements Screen {
         // tell the SpritegetBatch() to render in the
         // coordinate system specified by the camera.
         game.getBatch().setProjectionMatrix(camera.combined);
+
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+
+        for (int i = 0; i < this.game.entityManager.getPlayers().size(); i++)
+        {
+            CollidableEntity<Player> player = this.game.entityManager.getPlayers().get(i);
+            shapeRenderer.setColor(Color.BLACK);
+            shapeRenderer.rect(0,410 - (i * 21),300,20);
+            shapeRenderer.setColor(Color.GREEN);
+            float current_health = player.getObject().getCurrentHealth();
+            float max_health = player.getObject().getMaxHealth();
+            shapeRenderer.rect(0,410 - (i * 21),(300 * ((current_health / max_health))),20);
+        }
+
+        shapeRenderer.end();
 
         game.getBatch().begin();
 
@@ -256,6 +272,19 @@ public class GameScreen implements Screen {
             {
                 case -1:
                     //minus health
+                    player.getObject().setCurrentHealth(player.getObject().getCurrentHealth() - 1);
+                    if (player.getObject().getCurrentHealth() == 0)
+                    {
+                        if (this.game.entityManager.getPlayers().size() == 1)
+                        {
+                            //game over screen
+                            game.setScreen(game.getGameOverScreen());
+                        }
+                        else
+                        {
+                            this.game.entityManager.getPlayers().remove(player);
+                        }
+                    }
                     break;
                 case 1:
                     //add 1 point
@@ -324,6 +353,6 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        shapeRenderer.dispose();
     }
 }
