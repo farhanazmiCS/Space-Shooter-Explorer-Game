@@ -80,7 +80,7 @@ public class Main extends Game {
 		return font;
 	}
 
-	public void setFont() {
+	public void setFont(BitmapFont font) {
 		this.font = font;
 	}
 

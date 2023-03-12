@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
+
+import game.components.game.HealthBar;
 import game.components.menu.Button;
 
 import com.badlogic.gdx.utils.viewport.StretchViewport;
@@ -37,7 +39,8 @@ public class GameScreen implements Screen {
     private int backgroundOffset;
 
     private SpriteBatch batch;
-    private ShapeRenderer shapeRenderer;
+//    private ShapeRenderer shapeRenderer;
+    private HealthBar healthBars;
 
     public Button getPauseButton() {
         return pauseButton;
@@ -97,7 +100,8 @@ public class GameScreen implements Screen {
         backgroundOffset = 0;
 
         batch = new SpriteBatch();
-        shapeRenderer = new ShapeRenderer();
+//        shapeRenderer = new ShapeRenderer();
+        healthBars = new HealthBar(0, 410, 300, 20);
     }
 
     @Override
@@ -142,32 +146,7 @@ public class GameScreen implements Screen {
         // coordinate system specified by the camera.
         game.getBatch().setProjectionMatrix(camera.combined);
 
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-
-        for (int i = 0; i < this.game.entityManager.getPlayers().size(); i++)
-        {
-            CollidableEntity<Player> player = this.game.entityManager.getPlayers().get(i);
-            shapeRenderer.setColor(Color.BLACK);
-            shapeRenderer.rect(0,410 - (i * 35),300,20);
-            float current_health = player.getObject().getCurrentHealth();
-            float max_health = player.getObject().getMaxHealth();
-            float health_percentage = (current_health / max_health);
-            if (current_health <= max_health && current_health > max_health / 2)
-            {
-                shapeRenderer.setColor(Color.GREEN);
-            }
-            else if (current_health <= max_health / 2 && current_health > max_health / 3)
-            {
-                shapeRenderer.setColor(Color.ORANGE);
-            }
-            else if (current_health <= max_health / 3)
-            {
-                shapeRenderer.setColor(Color.RED);
-            }
-            shapeRenderer.rect(0,410 - (i * 35),(300 * health_percentage),20);
-        }
-
-        shapeRenderer.end();
+        healthBars.drawHealthBars(this.game.entityManager.getPlayers());
 
         game.getBatch().begin();
 
@@ -365,6 +344,8 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-        shapeRenderer.dispose();
+        healthBars.getBatch().dispose();
+        healthBars.getShapeRenderer().dispose();
+        healthBars.getFont().dispose();
     }
 }
