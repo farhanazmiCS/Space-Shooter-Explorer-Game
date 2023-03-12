@@ -148,11 +148,23 @@ public class GameScreen implements Screen {
         {
             CollidableEntity<Player> player = this.game.entityManager.getPlayers().get(i);
             shapeRenderer.setColor(Color.BLACK);
-            shapeRenderer.rect(0,410 - (i * 21),300,20);
-            shapeRenderer.setColor(Color.GREEN);
+            shapeRenderer.rect(0,410 - (i * 35),300,20);
             float current_health = player.getObject().getCurrentHealth();
             float max_health = player.getObject().getMaxHealth();
-            shapeRenderer.rect(0,410 - (i * 21),(300 * ((current_health / max_health))),20);
+            float health_percentage = (current_health / max_health);
+            if (current_health <= max_health && current_health > max_health / 2)
+            {
+                shapeRenderer.setColor(Color.GREEN);
+            }
+            else if (current_health <= max_health / 2 && current_health > max_health / 3)
+            {
+                shapeRenderer.setColor(Color.ORANGE);
+            }
+            else if (current_health <= max_health / 3)
+            {
+                shapeRenderer.setColor(Color.RED);
+            }
+            shapeRenderer.rect(0,410 - (i * 35),(300 * health_percentage),20);
         }
 
         shapeRenderer.end();
