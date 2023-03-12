@@ -241,8 +241,9 @@ public class GameScreen implements Screen {
             game.getBatch().draw(ufo.getObject().getTexture(), ufo.getX(), ufo.getY());
         }
 
-        for (CollidableEntity<Player> player : this.game.entityManager.getPlayers())
+        for (int i = 0; i < this.game.entityManager.getPlayers().size(); i++)
         {
+            CollidableEntity<Player> player = this.game.entityManager.getPlayers().get(i);
             int move_result = player.getObject().movePlayer(player, inputProcessor);
             player.getObject().getAfterburner().setVisibility(move_result == 2);
 
@@ -288,6 +289,54 @@ public class GameScreen implements Screen {
             player.getObject().setScore((int) distance);
             //dropsGathered += point;
         }
+
+//        for (CollidableEntity<Player> player : this.game.entityManager.getPlayers())
+//        {
+//            int move_result = player.getObject().movePlayer(player, inputProcessor);
+//            player.getObject().getAfterburner().setVisibility(move_result == 2);
+//
+//            player.getObject().getAfterburner().setX(player.getX());
+//            player.getObject().getAfterburner().setY(player.getY() - 50);
+//
+//            for (CollidableEntity<UFO> ufo : this.game.entityManager.getUFOs())
+//            {
+//                ufo.getObject().moveUFO(ufo, 150, this.game.WIDTH);
+//            }
+//
+////            this.game.entityManager.getUFOs().get(0).getObject().moveUFO(this.game.entityManager.getUFOs().get(0), 150, this.game.WIDTH);
+//
+//            player.getObject().limitPlayerMovement(player, this.game.WIDTH, this.game.HEIGHT);
+//
+//            int point = this.game.entityManager.moveFallingObject();
+//            switch (point)
+//            {
+//                case -1:
+//                    //minus health
+//                    player.getObject().setCurrentHealth(player.getObject().getCurrentHealth() - 1);
+//                    if (player.getObject().getCurrentHealth() == 0)
+//                    {
+//                        if (this.game.entityManager.getPlayers().size() == 1)
+//                        {
+//                            //game over screen
+//                            game.setScreen(game.getGameOverScreen());
+//                        }
+//                        else
+//                        {
+//                            this.game.entityManager.getPlayers().remove(player);
+//                        }
+//                    }
+//                    break;
+//                case 1:
+//                    //add 1 point
+//                    break;
+//                case 2:
+//                    //add 2 points and redirect to trivia quiz
+//                    //spawnRate /= 10;
+//                    break;
+//            }
+//            player.getObject().setScore((int) distance);
+//            //dropsGathered += point;
+//        }
 
 //        int move_result = this.game.entityManager.getPlayer().getObject().movePlayer(this.game.entityManager.getPlayer(), inputProcessor);
 //        this.game.entityManager.getPlayer().getObject().getAfterburner().setVisibility(move_result == 2);

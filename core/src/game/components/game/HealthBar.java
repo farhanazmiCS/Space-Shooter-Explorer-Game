@@ -29,10 +29,14 @@ public class HealthBar {
 
     public void drawHealthBars(ArrayList<CollidableEntity<Player>> players)
     {
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+
 
         for (int i = 0; i < players.size(); i++)
         {
+            batch.begin();
+            font.draw(batch, "Player " + (i + 1), startingX, startingY - (i * (height + 15)));
+            batch.end();
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
             CollidableEntity<Player> player = players.get(i);
             shapeRenderer.setColor(Color.BLACK);
             shapeRenderer.rect(startingX,startingY - (i * (height + 15)),width,height);
@@ -52,9 +56,10 @@ public class HealthBar {
                 shapeRenderer.setColor(Color.RED);
             }
             shapeRenderer.rect(startingX,startingY - (i * (height + 15)),(width * health_percentage),height);
+            shapeRenderer.end();
         }
 
-        shapeRenderer.end();
+
     }
 
     public ShapeRenderer getShapeRenderer() {
