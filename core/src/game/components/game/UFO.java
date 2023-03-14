@@ -44,6 +44,7 @@ public class UFO implements BehaviourManager<CollidableEntity> {
         this.texture = new Texture(this.imgPath);
         this.speed = 200;
         this.health = 100;
+        this.lasers = new ArrayList<CollidableEntity<Laser>>();
     }
 
     @Override
@@ -54,18 +55,7 @@ public class UFO implements BehaviourManager<CollidableEntity> {
 
     @Override
     public void moveUFO(CollidableEntity ufo, int speed, int width) {
-        if (dir == "left") {
-            moveLeft(ufo);
-        }
-        if (dir == "right") {
-            moveRight(ufo);
-        }
-        if (ufo.getX() <= 0) {
-            dir = "right";
-        }
-        if (ufo.getX() >= width - this.texture.getWidth()) {
-            dir = "left";
-        }
+        moveDown(ufo);
     }
 
     public void moveLeft(CollidableEntity ufo) {
@@ -76,17 +66,40 @@ public class UFO implements BehaviourManager<CollidableEntity> {
         ufo.setX(ufo.getX() + this.speed * Gdx.graphics.getDeltaTime());
     }
 
+    public void moveDown(CollidableEntity ufo) {
+        ufo.setY(ufo.getY() - this.speed * Gdx.graphics.getDeltaTime());
+    }
+
+    private long lastShotTime = 0;
+    private long shotDelay = 500000000; // 1 second in nanoseconds
+
     @Override
     public long fireWeapon(CollidableEntity ufo) {
+        long currentTime = TimeUtils.nanoTime();
+        if (currentTime - lastShotTime > shotDelay) {
             CollidableEntity<Laser> laser = new CollidableEntity<Laser>(
-                    ufo.getX(),
+                    ufo.getX() + 35,
                     ufo.getY(),
                     new Laser(
-                            "laser.png", //<a href="https://www.flaticon.com/free-icons/laser" title="laser icons">Laser icons created by Freepik - Flaticon</a>
-                            200));
+                            "green_laser.png",
+                            1000));
             this.lasers.add(laser);
-            return TimeUtils.nanoTime();
+            lastShotTime = currentTime;
+        }
+        return currentTime;
     }
+
+    public void moveLasers() {
+        if (this.lasers.size() > 0) {
+            for (int i = 0; i < this.lasers.size(); i++)
+            {
+                CollidableEntity<Laser> l = this.lasers.get(i);
+                l.setY(l.getY() - (l.getObject().getSpeed() * Gdx.graphics.getDeltaTime()));
+                this.lasers.set(i, l);
+            }
+        }
+    }
+
 
     public ArrayList<CollidableEntity<Laser>> getLasers() {
         return lasers;

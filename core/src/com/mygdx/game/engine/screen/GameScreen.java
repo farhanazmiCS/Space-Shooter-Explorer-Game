@@ -32,6 +32,7 @@ public class GameScreen implements Screen {
     private OrthographicCamera camera;
     private long lastDropTime;
     private long lastShootTime;
+    private long lastShootTimeUFO;
     private CustomInputProcessor inputProcessor;
 
     private Texture background;
@@ -86,7 +87,7 @@ public class GameScreen implements Screen {
         //spawnRaindrop();
         this.game.entityManager.spawnFallingObject(this.game.WIDTH, this.game.HEIGHT);
 
-        this.game.entityManager.spawnUFO(5, this.game.WIDTH, this.game.HEIGHT); // For now, only generate 1 UFO
+        this.game.entityManager.spawnUFO(this.game.WIDTH, this.game.HEIGHT); // For now, only generate 1 UFO
 
         // Pause and resume button
         pauseButton = new Button(150, 66, 640, 420, "pause_button.png", game); // Pause button
@@ -162,9 +163,6 @@ public class GameScreen implements Screen {
             //lastShootTime = this.game.entityManager.spawnLasers(inputProcessor, this.game.entityManager.getPlayer());
         }
 
-
-
-
         this.game.entityManager.moveLasers();
 
         for (CollidableEntity<Player> player : this.game.entityManager.getPlayers())
@@ -183,6 +181,26 @@ public class GameScreen implements Screen {
                 }
             }
         }
+
+        for (CollidableEntity<UFO> ufo : this.game.entityManager.getUFOs())
+        {
+            if (ufo.getObject().getLasers().size() > 0)
+            {
+                for (CollidableEntity<Laser> laser : ufo.getObject().getLasers())
+                {
+                    game.getBatch().draw(
+                            laser.getObject().getSprite(),
+                            laser.getX(),
+                            laser.getY(),
+                            laser.getObject().getWidth(),
+                            laser.getObject().getHeight()
+                    );
+                }
+            }
+            ufo.getObject().moveLasers();
+        }
+
+
 
 //        if (this.game.entityManager.getPlayer().getObject().getLasers().size() > 0)
 //        {
@@ -250,10 +268,23 @@ public class GameScreen implements Screen {
             player.getObject().getAfterburner().setX(player.getX());
             player.getObject().getAfterburner().setY(player.getY() - 50);
 
+            // Spawning the ufo (Moving the ufo down beyond the screen)
             for (CollidableEntity<UFO> ufo : this.game.entityManager.getUFOs())
             {
-                ufo.getObject().moveUFO(ufo, 150, this.game.WIDTH);
+                if (ufo.getY() > 330) {
+                    ufo.getObject().moveUFO(ufo, 100, this.game.WIDTH);
+                }
             }
+
+            if (TimeUtils.nanoTime() - lastShootTimeUFO > spawnRate * spawnRateMultiplier)
+            {
+                for (CollidableEntity<UFO> ufo: this.game.entityManager.getUFOs())
+                {
+                    lastShootTimeUFO = ufo.getObject().fireWeapon(ufo);
+                }
+                //lastShootTime = this.game.entityManager.spawnLasers(inputProcessor, this.game.entityManager.getPlayer());
+            }
+
 
 //            this.game.entityManager.getUFOs().get(0).getObject().moveUFO(this.game.entityManager.getUFOs().get(0), 150, this.game.WIDTH);
 

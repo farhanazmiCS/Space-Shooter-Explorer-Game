@@ -6,12 +6,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.bullet.collision._btMprSupport_t;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.engine.collision.CollidableEntity;
 import com.mygdx.game.engine.collision.CollisionManager;
 import com.mygdx.game.engine.input.CustomInputProcessor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Random;
 
@@ -62,19 +64,6 @@ public class EntityManager implements CollisionManager<CollidableEntity<Player>,
         }
     }
 
-    public void moveLasers(CollidableEntity<UFO> ufo)
-    {
-        if (ufo.getObject().getLasers().size() > 0)
-        {
-            for (int i = 0; i < ufo.getObject().getLasers().size(); i++)
-            {
-                CollidableEntity<Laser> laser = ufo.getObject().getLasers().get(i);
-                laser.setY(laser.getY() - (laser.getObject().getSpeed() * Gdx.graphics.getDeltaTime()));
-                ufo.getObject().getLasers().set(i, laser);
-            }
-        }
-    }
-
     public long spawnLasers(CustomInputProcessor inputProcessor, CollidableEntity<Player> player) // Used by player
     {
         if (inputProcessor.keyDown(Input.Keys.SPACE) || inputProcessor.mouseClicked(Input.Buttons.LEFT))
@@ -90,20 +79,6 @@ public class EntityManager implements CollisionManager<CollidableEntity<Player>,
         }
         return 0;
     }
-
-    public long spawnLasers(CollidableEntity<UFO> ufo) // Showcasing Polymorphism (spawnLaser for alien)
-    {
-        CollidableEntity<Laser> laser = new CollidableEntity<>(
-                ufo.getX(),
-                ufo.getY(),
-                new Laser(
-                        "green_laser.png", //<a href="https://www.flaticon.com/free-icons/laser" title="laser icons">Laser icons created by Freepik - Flaticon</a>
-                        800));
-            ufo.getObject().getLasers().add(laser);
-            return TimeUtils.nanoTime();
-    }
-
-
 
     public long spawnFallingObject(int screenWidth, int screenHeight)
     {
@@ -224,14 +199,23 @@ public class EntityManager implements CollisionManager<CollidableEntity<Player>,
     }
 
     // Factory method to add UFO
-    public void spawnUFO(int numUFO, int screenWidth, int screenHeight) {
+    public void spawnUFO(int screenWidth, int screenHeight) {
+        int max = 5;
         Random random = new Random();
+        int numUFO = random.nextInt(max);
+        ArrayList<Integer> possibleX = new ArrayList<Integer>();
+        Integer[] elementsToAdd = {100, 200, 300, 400, 500, 600, 700};
+        possibleX.addAll(Arrays.asList(elementsToAdd));
         for (int i = 0; i < numUFO; i++) {
             UFO ufoObject = new UFO("alien.png");
 //            int x = (int) ((Math.random()) * ((screenWidth - ufoObject.getTexture().getWidth() - (screenWidth / 2)) + (screenWidth / 2)));
 //            int y = (int) ((Math.random()) * ((screenHeight - ufoObject.getTexture().getHeight() - (screenHeight / 2)) + (screenHeight / 2)));
-            int x = random.nextInt((screenWidth - ufoObject.getTexture().getWidth()) - (screenWidth / 2)) + (screenWidth / 2);
-            int y = random.nextInt((screenHeight - ufoObject.getTexture().getHeight()) - (screenHeight / 2)) + (screenHeight / 2);
+            int x = possibleX.get(random.nextInt(possibleX.size()));
+            if (possibleX.contains(x)) {
+                int index = possibleX.indexOf(x);
+                possibleX.remove(index);
+            }
+            int y = 460; // Put beyond the screen first
             CollidableEntity<UFO> ufo = new CollidableEntity<UFO>(
 //                    screenWidth - ufoObject.getTexture().getWidth(),
 //                    screenHeight - ufoObject.getTexture().getHeight(),
