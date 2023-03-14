@@ -5,126 +5,99 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.physics.bullet.collision._btMprSupport_t;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.engine.collision.CollidableEntity;
 import com.mygdx.game.engine.collision.CollisionManager;
 import com.mygdx.game.engine.input.CustomInputProcessor;
+import game.components.game.Asteroid;
+import game.components.game.Laser;
+import game.components.game.Player;
+import game.components.game.UFO;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Random;
 
-import game.components.game.Asteroid;
-import game.components.game.Laser;
-import game.components.game.Player;
-import game.components.game.UFO;
-
 public class EntityManager implements CollisionManager<CollidableEntity<Player>, CollidableEntity<Asteroid>, CollidableEntity<UFO>, Integer> {
-    // This class contains the attributes and methods for handling all entities.
-    // Example:
-    //  1. Creating entities
-    //  2. Rendering (and drawing) entities
-    //  3. Moving the entities
     private ArrayList<CollidableEntity<Player>> players;
     private ArrayList<CollidableEntity<Asteroid>> fallingObjects;
     private ArrayList<CollidableEntity<UFO>> UFOs;
     private ArrayList<Texture> fallingObjectImages;
     public int noOfPlayers = 1;
 
-    //to be initialised at the life cycle manager
     public EntityManager() {
         fallingObjects = new ArrayList<>();
         UFOs = new ArrayList<CollidableEntity<UFO>>();
         fallingObjectImages = new ArrayList<>();
         fallingObjectImages.add(new Texture(Gdx.files.internal("asteroid.png")));
-        //<a href="https://www.flaticon.com/free-icons/alien" title="alien icons">Alien icons created by Freepik - Flaticon</a>
         fallingObjectImages.add(new Texture(Gdx.files.internal("star.png")));
-        //<a href="https://www.flaticon.com/free-icons/star" title="star icons">Star icons created by Freepik - Flaticon</a>
         fallingObjectImages.add(new Texture(Gdx.files.internal("rainbow_star.png")));
-        //<a href="https://www.flaticon.com/free-icons/shapes-and-symbols" title="shapes and symbols icons">Shapes and symbols icons created by Smashicons - Flaticon</a>
-
     }
 
-    public void moveLasers()
-    {
-        for (CollidableEntity<Player> player : players)
-        {
-            if (player.getObject().getLasers().size() > 0)
-            {
-                for (int i = 0; i < player.getObject().getLasers().size(); i++)
-                {
-                    CollidableEntity<Laser> laser = player.getObject().getLasers().get(i);
-                    laser.setY(laser.getY() + (laser.getObject().getSpeed() * Gdx.graphics.getDeltaTime()));
-                    player.getObject().getLasers().set(i, laser);
-                }
+    public void moveLasers() {
+        for (CollidableEntity<Player> player : players) {
+            ArrayList<CollidableEntity<Laser>> lasers = player.getObject().getLasers();
+            for (int i = 0; i < lasers.size(); i++) {
+                CollidableEntity<Laser> laser = lasers.get(i);
+                laser.setY(laser.getY() + (laser.getObject().getSpeed() * Gdx.graphics.getDeltaTime()));
+                lasers.set(i, laser);
             }
         }
     }
 
-    public long spawnLasers(CustomInputProcessor inputProcessor, CollidableEntity<Player> player) // Used by player
-    {
-        if (inputProcessor.keyDown(Input.Keys.SPACE) || inputProcessor.mouseClicked(Input.Buttons.LEFT))
-        {
+    public long spawnLasers(CustomInputProcessor inputProcessor, CollidableEntity<Player> player) {
+        if (inputProcessor.keyDown(Input.Keys.SPACE) || inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
+            ArrayList<CollidableEntity<Laser>> lasers = player.getObject().getLasers();
             CollidableEntity<Laser> laser = new CollidableEntity<>(
                     player.getX() + 15,
                     player.getY(),
                     new Laser(
-                            "green_laser.png", //<a href="https://www.flaticon.com/free-icons/laser" title="laser icons">Laser icons created by Freepik - Flaticon</a>
+                            "green_laser.png",
                             800));
-            player.getObject().getLasers().add(laser);
+            lasers.add(laser);
             return TimeUtils.nanoTime();
         }
         return 0;
     }
 
-    public long spawnFallingObject(int screenWidth, int screenHeight)
-    {
-        //int index = (int) ((Math.random() * ((fallingObjectImages.size() - 1))) + 0);
+    public long spawnFallingObject(int screenWidth, int screenHeight) {
         int index = 0;
         int chance = (new Random()).nextInt(100) + 1;
 
-        if (chance <= 5)
-        {
+        if (chance <= 5) {
             index = 2;
-        }
-        else if (chance > 6 & chance <= 20)
-        {
+        } else if (chance > 6 & chance <= 20) {
             index = 1;
         }
 
         CollidableEntity<Asteroid> fallingObject =
                 new CollidableEntity<>(
-                        MathUtils.random(0, screenWidth - fallingObjectImages.get((int) index).getWidth()),
+                        MathUtils.random(0, screenWidth - fallingObjectImages.get(index).getWidth()),
                         screenHeight,
                         new Asteroid(
                                 index,
-                                fallingObjectImages.get((int) index))
+                                fallingObjectImages.get(index))
                 );
         fallingObjects.add(fallingObject);
         return TimeUtils.nanoTime();
     }
 
-    public Integer moveFallingObject() // This should also be part of the "Asteroid" class now (Part of Game component, not engine)
-    {
+    public Integer moveFallingObject() {
         Iterator<CollidableEntity<Asteroid>> iter = fallingObjects.iterator();
         while (iter.hasNext()) {
             CollidableEntity<Asteroid> fallingObject = iter.next();
             fallingObject.setY(fallingObject.getY() - 200 * Gdx.graphics.getDeltaTime());
-            if (fallingObject.getY() + fallingObject.getObject().getWidth() < 0)
+            if (fallingObject.getY() + fallingObject.getObject().getWidth() < 0) {
                 iter.remove();
-            for (CollidableEntity<Player> player : players)
-            {
-                if (asteroidCollision(player, fallingObject))
-                {
+            }
+            for (CollidableEntity<Player> player : players) {
+                if (asteroidCollision(player, fallingObject)) {
                     iter.remove();
-                    switch (fallingObject.getObject().getType())
-                    {
+                    switch (fallingObject.getObject().getType()) {
                         case 0:
                             // minus health
-                            return  -1;
+                            return -1;
                         case 1:
                             // gain points
                             return 1;
@@ -137,11 +110,6 @@ public class EntityManager implements CollisionManager<CollidableEntity<Player>,
         }
         return 0;
     }
-
-    // @Override
-    // public void limitPlayerMovement(Integer screenWidth, Integer screenHeight) {
-
-    // }
 
     public ArrayList<CollidableEntity<Asteroid>> getFallingObjects() {
         return fallingObjects;
@@ -158,13 +126,6 @@ public class EntityManager implements CollisionManager<CollidableEntity<Player>,
     public void setPlayers(ArrayList<CollidableEntity<Player>> players) {
         this.players = players;
     }
-//    public CollidableEntity<Player> getPlayer() {
-//        return player;
-//    }
-//
-//    public void setPlayer(CollidableEntity<Player> player) {
-//        this.player = player;
-//    }
 
     public ArrayList<Texture> getFallingObjectImages() {
         return fallingObjectImages;
@@ -191,15 +152,12 @@ public class EntityManager implements CollisionManager<CollidableEntity<Player>,
         fallingObjects = new ArrayList<>();
         fallingObjectImages = new ArrayList<>();
         fallingObjectImages.add(new Texture(Gdx.files.internal("ufo.png")));
-        //<a href="https://www.flaticon.com/free-icons/alien" title="alien icons">Alien icons created by Freepik - Flaticon</a>
         fallingObjectImages.add(new Texture(Gdx.files.internal("star.png")));
-        //<a href="https://www.flaticon.com/free-icons/star" title="star icons">Star icons created by Freepik - Flaticon</a>
         fallingObjectImages.add(new Texture(Gdx.files.internal("rainbow_star.png")));
-        //<a href="https://www.flaticon.com/free-icons/shapes-and-symbols" title="shapes and symbols icons">Shapes and symbols icons created by Smashicons - Flaticon</a>
     }
 
     // Factory method to add UFO
-    public void spawnUFO(int screenWidth, int screenHeight) {
+    public void spawnUFO() {
         int max = 5;
         Random random = new Random();
         int numUFO = random.nextInt(max);
@@ -208,8 +166,6 @@ public class EntityManager implements CollisionManager<CollidableEntity<Player>,
         possibleX.addAll(Arrays.asList(elementsToAdd));
         for (int i = 0; i < numUFO; i++) {
             UFO ufoObject = new UFO("alien.png");
-//            int x = (int) ((Math.random()) * ((screenWidth - ufoObject.getTexture().getWidth() - (screenWidth / 2)) + (screenWidth / 2)));
-//            int y = (int) ((Math.random()) * ((screenHeight - ufoObject.getTexture().getHeight() - (screenHeight / 2)) + (screenHeight / 2)));
             int x = possibleX.get(random.nextInt(possibleX.size()));
             if (possibleX.contains(x)) {
                 int index = possibleX.indexOf(x);
@@ -217,13 +173,9 @@ public class EntityManager implements CollisionManager<CollidableEntity<Player>,
             }
             int y = 460; // Put beyond the screen first
             CollidableEntity<UFO> ufo = new CollidableEntity<UFO>(
-//                    screenWidth - ufoObject.getTexture().getWidth(),
-//                    screenHeight - ufoObject.getTexture().getHeight(),
                     x,
                     y,
                     ufoObject);
-//            ufo.setX(x);
-//            ufo.setY(y);
             UFOs.add(ufo);
         }
     }

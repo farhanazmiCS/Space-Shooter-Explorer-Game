@@ -87,7 +87,7 @@ public class GameScreen implements Screen {
         //spawnRaindrop();
         this.game.entityManager.spawnFallingObject(this.game.WIDTH, this.game.HEIGHT);
 
-        this.game.entityManager.spawnUFO(this.game.WIDTH, this.game.HEIGHT); // For now, only generate 1 UFO
+        this.game.entityManager.spawnUFO(); // For now, only generate 1 UFO
 
         // Pause and resume button
         pauseButton = new Button(150, 66, 640, 420, "pause_button.png", game); // Pause button
@@ -101,7 +101,6 @@ public class GameScreen implements Screen {
         backgroundOffset = 0;
 
         batch = new SpriteBatch();
-//        shapeRenderer = new ShapeRenderer();
         healthBars = new HealthBar(0, 410, 300, 20);
     }
 
