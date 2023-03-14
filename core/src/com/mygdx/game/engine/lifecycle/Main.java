@@ -159,6 +159,8 @@ public class Main extends Game {
 		font.getData().setScale(1.5f);
 		entityManager = new EntityManager();
 		entityManager.setPlayers(new ArrayList<CollidableEntity<Player>>());
+
+		// THIS SHOULD BE IN ENTITY MANAGER!!!!
 		for (int i = 0; i < entityManager.noOfPlayers; i++)
 		{
 			CollidableEntity<Player> player = new CollidableEntity<>(
@@ -170,7 +172,7 @@ public class Main extends Game {
 							new int[]{Input.Keys.LEFT, Input.Keys.RIGHT, Input.Keys.UP, Input.Keys.DOWN},
 							new int[]{Input.Keys.A, Input.Keys.D, Input.Keys.W, Input.Keys.S},
 							0,
-							10));
+							100));
 			entityManager.getPlayers().add(player);
 		}
 		//entityManager.setPlayer(player);

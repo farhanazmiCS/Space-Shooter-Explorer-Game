@@ -83,8 +83,6 @@ public class GameScreen implements Screen {
     public GameScreen(final Main game) {
         this.game = game;
         this.inputProcessor = new CustomInputProcessor();
-        // this.world = new World(new Vector2(0, -9.81f), false);
-        //spawnRaindrop();
         this.game.entityManager.spawnFallingObject(this.game.WIDTH, this.game.HEIGHT);
 
         this.game.entityManager.spawnUFO(); // For now, only generate 1 UFO
@@ -92,7 +90,7 @@ public class GameScreen implements Screen {
         // Pause and resume button
         pauseButton = new Button(150, 66, 640, 420, "pause_button.png", game); // Pause button
 
-        // create the camera and the SpritegetBatch()
+        // create the camera
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
 
@@ -159,7 +157,6 @@ public class GameScreen implements Screen {
             {
                 lastShootTime = this.game.entityManager.spawnLasers(inputProcessor, player);
             }
-            //lastShootTime = this.game.entityManager.spawnLasers(inputProcessor, this.game.entityManager.getPlayer());
         }
 
         this.game.entityManager.moveLasers();
@@ -185,8 +182,7 @@ public class GameScreen implements Screen {
         {
             if (ufo.getObject().getLasers().size() > 0)
             {
-                for (CollidableEntity<Laser> laser : ufo.getObject().getLasers())
-                {
+                for (CollidableEntity<Laser> laser : ufo.getObject().getLasers()) {
                     game.getBatch().draw(
                             laser.getObject().getSprite(),
                             laser.getX(),
@@ -196,23 +192,8 @@ public class GameScreen implements Screen {
                     );
                 }
             }
-            ufo.getObject().moveLasers();
+            ufo.getObject().moveLasers(ufo);
         }
-
-
-
-//        if (this.game.entityManager.getPlayer().getObject().getLasers().size() > 0)
-//        {
-//            for (CollidableEntity<Laser> laser : this.game.entityManager.getPlayer().getObject().getLasers()) {
-//                game.getBatch().draw(
-//                        laser.getObject().getSprite(),
-//                        laser.getX(),
-//                        laser.getY(),
-//                        laser.getObject().getWidth(),
-//                        laser.getObject().getHeight()
-//                );
-//            }
-//        }
 
         distance += 1;
 
@@ -258,6 +239,7 @@ public class GameScreen implements Screen {
             game.getBatch().draw(ufo.getObject().getTexture(), ufo.getX(), ufo.getY());
         }
 
+        // Code for checking player's health and setting afterburner (NOTE: NEED TO CHANGE --> DOES NOT FULFILL SINGLE RESPONSIBILITY!)
         for (int i = 0; i < this.game.entityManager.getPlayers().size(); i++)
         {
             CollidableEntity<Player> player = this.game.entityManager.getPlayers().get(i);
@@ -280,6 +262,13 @@ public class GameScreen implements Screen {
                 for (CollidableEntity<UFO> ufo: this.game.entityManager.getUFOs())
                 {
                     lastShootTimeUFO = ufo.getObject().fireWeapon(ufo);
+                    if (this.game.entityManager.laserCollision(player, ufo.getObject().getLasers())) {
+                        // Check collision between player and UFO lasers
+                        player.getObject().setCurrentHealth(player.getObject().getCurrentHealth() - 1);
+                    }
+                    if (this.game.entityManager.laserCollision(ufo, player.getObject().getLasers())) {
+                        ufo.getObject().setHealth(ufo.getObject().getHealth() - 2);
+                    }
                 }
                 //lastShootTime = this.game.entityManager.spawnLasers(inputProcessor, this.game.entityManager.getPlayer());
             }
@@ -290,34 +279,32 @@ public class GameScreen implements Screen {
             player.getObject().limitPlayerMovement(player, this.game.WIDTH, this.game.HEIGHT);
 
             int point = this.game.entityManager.moveFallingObject();
-            switch (point)
+
+            if (this.game.entityManager.moveFallingObject() == 1) {
+                player.getObject().setCurrentHealth(player.getObject().getCurrentHealth() - 1);
+            }
+
+            if (player.getObject().getCurrentHealth() == 0)
             {
-                case -1:
-                    //minus health
-                    player.getObject().setCurrentHealth(player.getObject().getCurrentHealth() - 1);
-                    if (player.getObject().getCurrentHealth() == 0)
-                    {
-                        if (this.game.entityManager.getPlayers().size() == 1)
-                        {
-                            //game over screen
-                            game.setScreen(game.getGameOverScreen());
-                        }
-                        else
-                        {
-                            this.game.entityManager.getPlayers().remove(player);
-                        }
-                    }
-                    break;
-                case 1:
-                    //add 1 point
-                    break;
-                case 2:
-                    //add 2 points and redirect to trivia quiz
-                    //spawnRate /= 10;
-                    break;
+                if (this.game.entityManager.getPlayers().size() == 1)
+                {
+                    //game over screen
+                    game.setScreen(game.getGameOverScreen());
+                }
+                else
+                {
+                    this.game.entityManager.getPlayers().remove(player);
+                }
             }
             player.getObject().setScore((int) distance);
             //dropsGathered += point;
+
+            for (int u = 0; u < this.game.entityManager.getUFOs().size(); u++) {
+                if (this.game.entityManager.getUFOs().get(u).getObject().getHealth() == 0) {
+                    this.game.entityManager.getUFOs().remove(u);
+                    u--;
+                }
+            }
         }
 
 //        for (CollidableEntity<Player> player : this.game.entityManager.getPlayers())

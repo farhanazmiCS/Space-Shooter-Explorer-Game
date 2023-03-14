@@ -19,7 +19,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Random;
 
-public class EntityManager implements CollisionManager<CollidableEntity<Player>, CollidableEntity<Asteroid>, CollidableEntity<UFO>, Integer> {
+public class EntityManager implements CollisionManager {
     private ArrayList<CollidableEntity<Player>> players;
     private ArrayList<CollidableEntity<Asteroid>> fallingObjects;
     private ArrayList<CollidableEntity<UFO>> UFOs;
@@ -83,7 +83,7 @@ public class EntityManager implements CollisionManager<CollidableEntity<Player>,
         return TimeUtils.nanoTime();
     }
 
-    public Integer moveFallingObject() {
+    public int moveFallingObject() {
         Iterator<CollidableEntity<Asteroid>> iter = fallingObjects.iterator();
         while (iter.hasNext()) {
             CollidableEntity<Asteroid> fallingObject = iter.next();
@@ -182,8 +182,22 @@ public class EntityManager implements CollisionManager<CollidableEntity<Player>,
 
     @Override
     public boolean asteroidCollision(CollidableEntity<Player> player, CollidableEntity<Asteroid> asteroid) {
-        Rectangle playerBoundary = new Rectangle(player.getX(), player.getY(), player.getObject().getWidth(), player.getObject().getHeight());
-        Rectangle fallingObjectBoundary = new Rectangle(asteroid.getX(), asteroid.getY(), asteroid.getObject().getWidth(), asteroid.getObject().getHeight());
-        return fallingObjectBoundary.overlaps(playerBoundary);
+        player.setRectangle(new Rectangle(player.getX(), player.getY(), player.getObject().getWidth(), player.getObject().getHeight()));
+        asteroid.setRectangle(new Rectangle(asteroid.getX(), asteroid.getY(), asteroid.getObject().getWidth(), asteroid.getObject().getHeight()));
+        return player.getRectangle().overlaps(asteroid.getRectangle());
     }
+
+    @Override
+    public boolean laserCollision(CollidableEntity entity, ArrayList<CollidableEntity<Laser>> lasers) {
+            entity.setRectangle(new Rectangle(entity.getX(), entity.getY(), entity.getRectangle().getWidth(), entity.getRectangle().getHeight()));
+            for (int j = 0; j < lasers.size(); j++) {
+                lasers.get(j).setRectangle(new Rectangle(lasers.get(j).getX(), lasers.get(j).getY(), lasers.get(j).getObject().getWidth(), lasers.get(j).getObject().getHeight()));
+                if (entity.getRectangle().overlaps(lasers.get(j).getRectangle())) {
+                    System.out.println("Hit!\n");
+                    return true;
+                }
+            }
+        return false;
+    }
+
 }

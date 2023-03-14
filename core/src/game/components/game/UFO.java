@@ -1,6 +1,7 @@
 package game.components.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.TimeUtils;
@@ -37,13 +38,21 @@ public class UFO implements BehaviourManager<CollidableEntity> {
 
     private Rectangle rectangle;
 
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
     private int health;
 
     public UFO(String imgPath) {
         this.imgPath = imgPath;
         this.texture = new Texture(this.imgPath);
         this.speed = 200;
-        this.health = 100;
+        this.health = 10;
         this.lasers = new ArrayList<CollidableEntity<Laser>>();
     }
 
@@ -81,15 +90,15 @@ public class UFO implements BehaviourManager<CollidableEntity> {
                     ufo.getX() + 35,
                     ufo.getY(),
                     new Laser(
-                            "green_laser.png",
-                            1000));
+                            "purple_laser.png",
+                            500));
             this.lasers.add(laser);
             lastShotTime = currentTime;
         }
         return currentTime;
     }
 
-    public void moveLasers() {
+    public void moveLasers(CollidableEntity<UFO> ufo) {
         if (this.lasers.size() > 0) {
             for (int i = 0; i < this.lasers.size(); i++)
             {

@@ -7,6 +7,14 @@ public class CollidableEntity<T> extends Entity<T>{
     private float prevX;
     private float prevY;
 
+    public Rectangle getRectangle() {
+        return rectangle;
+    }
+
+    public void setRectangle(Rectangle rectangle) {
+        this.rectangle = rectangle;
+    }
+
     private Rectangle rectangle;
 
     public CollidableEntity(float x, float y, T object) {
@@ -14,6 +22,8 @@ public class CollidableEntity<T> extends Entity<T>{
         this.rectangle = new Rectangle();
         this.prevX = x;
         this.prevY = y;
+        this.rectangle.setWidth(50);
+        this.rectangle.setHeight(50);
     }
 
     public float getPrevX() {

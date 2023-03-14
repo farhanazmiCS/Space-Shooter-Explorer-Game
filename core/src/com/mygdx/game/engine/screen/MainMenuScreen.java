@@ -35,6 +35,8 @@ public class MainMenuScreen extends ScreenManager implements Screen {
 
     private ArrayList<String> buttonImagePath;
 
+    private boolean soundPlayed;
+
     public MainMenuScreen(final Main game) {
         super(game);
         this.game = game;
@@ -63,6 +65,7 @@ public class MainMenuScreen extends ScreenManager implements Screen {
 
     @Override
     public void render(float delta) {
+        soundPlayed = false;
         ScreenUtils.clear(0, 0, 0.2f, 1);
         this.batch.begin();
         this.batch.draw(this.texture, 0, 0);
@@ -91,6 +94,7 @@ public class MainMenuScreen extends ScreenManager implements Screen {
         // System.out.println(Gdx.input.getX() + ", " + Gdx.input.getY());
 
         if (inputProcessor.mouseHoverOver(buttons.get(0).getBound())) {
+            soundPlayed = true;
             buttons.get(0).setButtonColor(Color.LIGHT_GRAY);
 //            SoundManager.playButtonHover();
             if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
