@@ -21,18 +21,14 @@ import java.util.Random;
 
 public class EntityManager implements CollisionManager {
     private ArrayList<CollidableEntity<Player>> players;
-    private ArrayList<CollidableEntity<Asteroid>> fallingObjects;
+    private ArrayList<CollidableEntity<Asteroid>> asteroids;
     private ArrayList<CollidableEntity<UFO>> UFOs;
     private ArrayList<Texture> fallingObjectImages;
     public int noOfPlayers = 1;
 
     public EntityManager() {
-        fallingObjects = new ArrayList<>();
+        asteroids = new ArrayList<>();
         UFOs = new ArrayList<CollidableEntity<UFO>>();
-        fallingObjectImages = new ArrayList<>();
-        fallingObjectImages.add(new Texture(Gdx.files.internal("asteroid.png")));
-        fallingObjectImages.add(new Texture(Gdx.files.internal("star.png")));
-        fallingObjectImages.add(new Texture(Gdx.files.internal("rainbow_star.png")));
     }
 
     public void moveLasers() {
@@ -61,7 +57,7 @@ public class EntityManager implements CollisionManager {
         return 0;
     }
 
-    public long spawnFallingObject(int screenWidth, int screenHeight) {
+    public long spawnAsteroids(int screenWidth, int screenHeight) {
         int index = 0;
         int chance = (new Random()).nextInt(100) + 1;
 
@@ -70,21 +66,15 @@ public class EntityManager implements CollisionManager {
         } else if (chance > 6 & chance <= 20) {
             index = 1;
         }
+        int[] possibleX = {250, 450, 650};
 
-        CollidableEntity<Asteroid> fallingObject =
-                new CollidableEntity<>(
-                        MathUtils.random(0, screenWidth - fallingObjectImages.get(index).getWidth()),
-                        screenHeight,
-                        new Asteroid(
-                                index,
-                                fallingObjectImages.get(index))
-                );
-        fallingObjects.add(fallingObject);
+        CollidableEntity<Asteroid> asteroid = new CollidableEntity<Asteroid>(possibleX[index], 800, new Asteroid("asteroid.png"));
+        asteroids.add(asteroid);
         return TimeUtils.nanoTime();
     }
 
     public int moveFallingObject() {
-        Iterator<CollidableEntity<Asteroid>> iter = fallingObjects.iterator();
+        Iterator<CollidableEntity<Asteroid>> iter = asteroids.iterator();
         while (iter.hasNext()) {
             CollidableEntity<Asteroid> fallingObject = iter.next();
             fallingObject.setY(fallingObject.getY() - 200 * Gdx.graphics.getDeltaTime());
@@ -94,29 +84,19 @@ public class EntityManager implements CollisionManager {
             for (CollidableEntity<Player> player : players) {
                 if (asteroidCollision(player, fallingObject)) {
                     iter.remove();
-                    switch (fallingObject.getObject().getType()) {
-                        case 0:
-                            // minus health
-                            return -1;
-                        case 1:
-                            // gain points
-                            return 1;
-                        case 2:
-                            // super power up, gain points and redirect to trivia quiz
-                            return 2;
-                    }
+                    return 1;
                 }
             }
         }
         return 0;
     }
 
-    public ArrayList<CollidableEntity<Asteroid>> getFallingObjects() {
-        return fallingObjects;
+    public ArrayList<CollidableEntity<Asteroid>> getAsteroids() {
+        return asteroids;
     }
 
-    public void setFallingObjects(ArrayList<CollidableEntity<Asteroid>> fallingObjects) {
-        this.fallingObjects = fallingObjects;
+    public void setAsteroids(ArrayList<CollidableEntity<Asteroid>> asteroids) {
+        this.asteroids = asteroids;
     }
 
     public ArrayList<CollidableEntity<Player>> getPlayers() {
@@ -141,19 +121,11 @@ public class EntityManager implements CollisionManager {
 
     public void resetFailingObjects()
     {
-        for (Texture image : fallingObjectImages)
+        for (CollidableEntity<Asteroid> asteroid : asteroids)
         {
-            image.dispose();
+            asteroid.getObject().getImage().dispose();
         }
-        for (CollidableEntity<Asteroid> fallingObject : fallingObjects)
-        {
-            fallingObject.getObject().getImage().dispose();
-        }
-        fallingObjects = new ArrayList<>();
-        fallingObjectImages = new ArrayList<>();
-        fallingObjectImages.add(new Texture(Gdx.files.internal("ufo.png")));
-        fallingObjectImages.add(new Texture(Gdx.files.internal("star.png")));
-        fallingObjectImages.add(new Texture(Gdx.files.internal("rainbow_star.png")));
+        asteroids = new ArrayList<CollidableEntity<Asteroid>>();
     }
 
     // Factory method to add UFO

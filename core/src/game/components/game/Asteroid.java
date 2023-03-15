@@ -1,26 +1,17 @@
 package game.components.game;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Rectangle;
 
 public class Asteroid {
-    private int type;
     private Texture image;
     private float width;
     private float height;
 
-    public Asteroid(int type, Texture image) {
-        this.type = type;
-        this.image = image;
+    public Asteroid(String imgPath) {
+        this.image = new Texture(imgPath);
         this.width = image.getWidth();
         this.height = image.getHeight();
-    }
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
     }
 
     public Texture getImage() {

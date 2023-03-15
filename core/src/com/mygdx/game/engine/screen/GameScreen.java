@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 
@@ -83,7 +82,7 @@ public class GameScreen implements Screen {
     public GameScreen(final Main game) {
         this.game = game;
         this.inputProcessor = new CustomInputProcessor();
-        this.game.entityManager.spawnFallingObject(this.game.WIDTH, this.game.HEIGHT);
+        this.game.entityManager.spawnAsteroids(this.game.WIDTH, this.game.HEIGHT);
 
         this.game.entityManager.spawnUFO(); // For now, only generate 1 UFO
 
@@ -149,7 +148,7 @@ public class GameScreen implements Screen {
         game.getBatch().begin();
 
         if (TimeUtils.nanoTime() - lastDropTime > 1000000000)
-            lastDropTime = this.game.entityManager.spawnFallingObject(this.game.WIDTH, this.game.HEIGHT);
+            lastDropTime = this.game.entityManager.spawnAsteroids(this.game.WIDTH, this.game.HEIGHT);
 
         if (TimeUtils.nanoTime() - lastShootTime > spawnRate * spawnRateMultiplier)
         {
@@ -231,7 +230,7 @@ public class GameScreen implements Screen {
 //            player.getObject().getAfterburner().getBatch().end();
 //        }
 
-        for (CollidableEntity<Asteroid> fallingObject : this.game.entityManager.getFallingObjects()) {
+        for (CollidableEntity<Asteroid> fallingObject : this.game.entityManager.getAsteroids()) {
             game.getBatch().draw(fallingObject.getObject().getImage(), fallingObject.getX(), fallingObject.getY());
         }
 
@@ -278,13 +277,11 @@ public class GameScreen implements Screen {
 
             player.getObject().limitPlayerMovement(player, this.game.WIDTH, this.game.HEIGHT);
 
-            int point = this.game.entityManager.moveFallingObject();
-
             if (this.game.entityManager.moveFallingObject() == 1) {
-                player.getObject().setCurrentHealth(player.getObject().getCurrentHealth() - 1);
+                player.getObject().setCurrentHealth(player.getObject().getCurrentHealth() - 10);
             }
 
-            if (player.getObject().getCurrentHealth() == 0)
+            if (player.getObject().getCurrentHealth() <= 0)
             {
                 if (this.game.entityManager.getPlayers().size() == 1)
                 {
