@@ -123,22 +123,7 @@ public class PauseScreen extends ScreenManager implements Screen {
 
     public void quit() {
         this.game.entityManager = new EntityManager();
-        this.game.entityManager.setPlayers(new ArrayList<CollidableEntity<Player>>());
-        for (int i = 0; i < this.game.entityManager.noOfPlayers; i++)
-        {
-            CollidableEntity<Player> player = new CollidableEntity<>(
-                    this.game.WIDTH / 2 - 64 / 2 + (i * 64),
-                    20,
-                    new Player(
-                            "spaceship.png", //<a href="https://www.flaticon.com/free-icons/spaceship" title="spaceship icons">Spaceship icons created by Skyclick - Flaticon</a>
-                            200,
-                            new int[]{Input.Keys.LEFT, Input.Keys.RIGHT, Input.Keys.UP, Input.Keys.DOWN},
-                            new int[]{Input.Keys.A, Input.Keys.D, Input.Keys.W, Input.Keys.S},
-                            0,
-                            10));
-            this.game.entityManager.getPlayers().add(player);
-        }
-//        this.game.entityManager.setPlayer(player);
+        this.game.entityManager.setPlayers(1, this.game.WIDTH);
         this.game.entityManager.resetFailingObjects();
         this.game.setGameScreen(new GameScreen(this.game));
         this.game.setStoryboards(this.game.getScreenManager().generateStoryboards(this.game.getStoryboardImgPath()));

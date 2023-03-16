@@ -24,7 +24,6 @@ public class EntityManager implements CollisionManager {
     private ArrayList<CollidableEntity<Asteroid>> asteroids;
     private ArrayList<CollidableEntity<UFO>> UFOs;
     private ArrayList<Texture> fallingObjectImages;
-    public int noOfPlayers = 1;
 
     public EntityManager() {
         asteroids = new ArrayList<>();
@@ -96,7 +95,23 @@ public class EntityManager implements CollisionManager {
         return players;
     }
 
-    public void setPlayers(ArrayList<CollidableEntity<Player>> players) {
+    public void setPlayers(int noOfPlayers, int WIDTH) {
+        ArrayList<CollidableEntity<Player>> players = new ArrayList<>();
+        // THIS SHOULD BE IN ENTITY MANAGER!!!!
+        for (int i = 0; i < noOfPlayers; i++)
+        {
+            CollidableEntity<Player> player = new CollidableEntity<>(
+                    WIDTH / 2 - 64 / 2 + (i * 64),
+                    20,
+                    new Player(
+                            "spaceship.png", //<a href="https://www.flaticon.com/free-icons/spaceship" title="spaceship icons">Spaceship icons created by Skyclick - Flaticon</a>
+                            200,
+                            new int[]{Input.Keys.LEFT, Input.Keys.RIGHT, Input.Keys.UP, Input.Keys.DOWN},
+                            new int[]{Input.Keys.A, Input.Keys.D, Input.Keys.W, Input.Keys.S},
+                            0,
+                            100));
+            players.add(player);
+        }
         this.players = players;
     }
 
