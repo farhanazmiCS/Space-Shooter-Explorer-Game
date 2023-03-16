@@ -78,14 +78,14 @@ public class GameScreen implements Screen {
     private final float spawnRate = 1000000000;
     private final float spawnRateMultiplier = 0.15f;
 
+    private float lastTimeUFOSpawned = 0; // Variable to count the last time UFO was spawned
+
     private int distance = 0;
 
     public GameScreen(final Main game) {
         this.game = game;
         this.inputProcessor = new CustomInputProcessor();
         this.game.entityManager.spawnAsteroids(this.game.WIDTH, this.game.HEIGHT);
-
-        this.game.entityManager.spawnUFO(); // For now, only generate 1 UFO
 
         // Pause and resume button
         pauseButton = new Button(150, 66, 640, 420, "pause_button.png", game); // Pause button
@@ -127,9 +127,7 @@ public class GameScreen implements Screen {
 
         pauseButton.getBatch().begin();
         pauseButton.getBatch().draw(pauseButton.getTexture(), 640, 420);
-
         pauseButton.getBatch().end();
-
         pauseButton.setButtonColor(Color.WHITE);
 
         // Pause button logic
@@ -147,6 +145,11 @@ public class GameScreen implements Screen {
         healthBars.drawHealthBars(this.game.entityManager.getPlayers());
 
         game.getBatch().begin();
+
+        if (this.game.entityManager.getUFOs().size() == 0) {
+            this.game.entityManager.spawnUFO(); // For now, only generate 1 UFO
+        }
+
 
         if (TimeUtils.nanoTime() - lastDropTime > 1000000000)
             lastDropTime = this.game.entityManager.spawnAsteroids(this.game.WIDTH, this.game.HEIGHT);
@@ -197,7 +200,7 @@ public class GameScreen implements Screen {
 
         distance += 1;
 
-        game.getFont().draw(game.getBatch(), "Distance Travelled: " + distance + " km", 10, 470);
+        game.getFont().draw(game.getBatch(), "DISTANCE TRAVELLED: " + distance + " KM", 10, 470);
         for (CollidableEntity<Player> player : this.game.entityManager.getPlayers())
         {
             game.getBatch().draw(
