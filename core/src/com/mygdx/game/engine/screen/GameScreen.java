@@ -146,10 +146,9 @@ public class GameScreen implements Screen {
 
         game.getBatch().begin();
 
-        if (this.game.entityManager.getUFOs().size() == 0) {
+        if (this.game.entityManager.getUFOs().size() == 0 && distance % 1000 == 0) {
             this.game.entityManager.spawnUFO(); // For now, only generate 1 UFO
         }
-
 
         if (TimeUtils.nanoTime() - lastDropTime > 1000000000)
             lastDropTime = this.game.entityManager.spawnAsteroids(this.game.WIDTH, this.game.HEIGHT);
