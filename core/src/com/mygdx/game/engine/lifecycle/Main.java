@@ -189,6 +189,9 @@ public class Main extends Game {
 	@Override
 	public void dispose () {
 		batch.dispose();
+		mainMenuScreen.dispose();
+		pauseScreen.dispose();
+		gameScreen.dispose();
 		// img_test.dispose();
 	}
 }

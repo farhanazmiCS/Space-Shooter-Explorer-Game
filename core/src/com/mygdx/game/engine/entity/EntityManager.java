@@ -58,17 +58,10 @@ public class EntityManager implements CollisionManager {
     }
 
     public long spawnAsteroids(int screenWidth, int screenHeight) {
-        int index = 0;
-        int chance = (new Random()).nextInt(100) + 1;
+        int[] possibleX = {250, 250, 300, 350, 400, 450, 650};
+        int chance = (new Random()).nextInt(possibleX.length) ;
 
-        if (chance <= 5) {
-            index = 2;
-        } else if (chance > 6 & chance <= 20) {
-            index = 1;
-        }
-        int[] possibleX = {250, 450, 650};
-
-        CollidableEntity<Asteroid> asteroid = new CollidableEntity<Asteroid>(possibleX[index], 800, new Asteroid("asteroid.png"));
+        CollidableEntity<Asteroid> asteroid = new CollidableEntity<Asteroid>(possibleX[chance], 800, new Asteroid("asteroid.png"));
         asteroids.add(asteroid);
         return TimeUtils.nanoTime();
     }
@@ -132,7 +125,7 @@ public class EntityManager implements CollisionManager {
     public void spawnUFO() {
         int max = 5;
         Random random = new Random();
-        int numUFO = random.nextInt(max);
+        int numUFO = random.nextInt(max) + 1;
         ArrayList<Integer> possibleX = new ArrayList<Integer>();
         Integer[] elementsToAdd = {100, 200, 300, 400, 500, 600, 700};
         possibleX.addAll(Arrays.asList(elementsToAdd));

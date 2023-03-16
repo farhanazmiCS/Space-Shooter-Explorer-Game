@@ -117,7 +117,8 @@ public class PauseScreen extends ScreenManager implements Screen {
 
     @Override
     public void dispose() {
-
+        texture.dispose();
+        batch.dispose();
     }
 
     public void quit() {

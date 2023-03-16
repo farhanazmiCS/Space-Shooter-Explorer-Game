@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 
+import game.components.game.Background;
 import game.components.game.HealthBar;
 import game.components.menu.Button;
 
@@ -34,7 +35,7 @@ public class GameScreen implements Screen {
     private long lastShootTimeUFO;
     private CustomInputProcessor inputProcessor;
 
-    private Texture background;
+    private Background background;
     private Viewport viewport;
     private int backgroundOffset;
 
@@ -94,7 +95,7 @@ public class GameScreen implements Screen {
         camera.setToOrtho(false, 800, 480);
 
         viewport = new StretchViewport(game.WIDTH, game.HEIGHT, camera);
-        background = new Texture("background_game.jpg");
+        background = new Background("background_game.jpg");
         backgroundOffset = 0;
 
         batch = new SpriteBatch();
@@ -114,15 +115,15 @@ public class GameScreen implements Screen {
         camera.update();
 
         // background
-        batch.begin();
+        background.getBatch().begin();
         // Scrolling background
         backgroundOffset += 4;
         if (backgroundOffset % game.HEIGHT == 0) {
             backgroundOffset = 0;
         }
-        batch.draw(background, 0, -backgroundOffset+game.HEIGHT, game.WIDTH, game.HEIGHT);
-        batch.draw(background, 0, -backgroundOffset, game.WIDTH, game.HEIGHT);
-        batch.end();
+        background.getBatch().draw(background.getTexture(), 0, -backgroundOffset+game.HEIGHT, game.WIDTH, game.HEIGHT);
+        background.getBatch().draw(background.getTexture(), 0, -backgroundOffset, game.WIDTH, game.HEIGHT);
+        background.getBatch().end();
 
         pauseButton.getBatch().begin();
         pauseButton.getBatch().draw(pauseButton.getTexture(), 640, 420);
@@ -244,6 +245,9 @@ public class GameScreen implements Screen {
             CollidableEntity<Player> player = this.game.entityManager.getPlayers().get(i);
             int move_result = player.getObject().movePlayer(player, inputProcessor);
             player.getObject().getAfterburner().setVisibility(move_result == 2);
+            if (move_result == 2) {
+                backgroundOffset += 4;
+            }
 
             player.getObject().getAfterburner().setX(player.getX());
             player.getObject().getAfterburner().setY(player.getY() - 50);

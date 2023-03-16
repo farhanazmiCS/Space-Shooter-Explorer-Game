@@ -145,6 +145,7 @@ public class MainMenuScreen extends ScreenManager implements Screen {
 
     @Override
     public void dispose() {
-
+        texture.dispose();
+        batch.dispose();
     }
 }
