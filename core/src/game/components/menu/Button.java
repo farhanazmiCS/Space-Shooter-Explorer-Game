@@ -17,6 +17,7 @@ public class Button {
     private float y;
     private float width;
     private float height;
+    private String name;
 
     private String imgPath;
 
@@ -73,6 +74,11 @@ public class Button {
         this.height = height;
     }
 
+    public Button(int width, int height, float x, float y, String imgPath, Main game, String name) {
+        this(width, height, x, y, imgPath, game);
+        this.name = name;
+    }
+
     public void setButtonColor(Color color) {
         this.batch.begin();
         this.batch.setColor(color);
@@ -111,6 +117,14 @@ public class Button {
 
     public void setHeight(float height) {
         this.height = height;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Rectangle getBound() {

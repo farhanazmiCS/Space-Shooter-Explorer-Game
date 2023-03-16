@@ -126,7 +126,7 @@ public class GameScreen implements Screen {
         background.getBatch().end();
 
         pauseButton.getBatch().begin();
-        pauseButton.getBatch().draw(pauseButton.getTexture(), 640, 420);
+        pauseButton.getBatch().draw(pauseButton.getTexture(), this.game.WIDTH - pauseButton.getWidth(), this.game.HEIGHT - pauseButton.getHeight());
         pauseButton.getBatch().end();
         pauseButton.setButtonColor(Color.WHITE);
 
