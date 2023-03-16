@@ -247,6 +247,9 @@ public class GameScreen implements Screen {
             player.getObject().getAfterburner().setVisibility(move_result == 2);
             if (move_result == 2) {
                 backgroundOffset += 4;
+                if (backgroundOffset % game.HEIGHT == 0) {
+                    backgroundOffset = 0;
+                }
             }
 
             player.getObject().getAfterburner().setX(player.getX());
