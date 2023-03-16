@@ -13,6 +13,11 @@ public class Button {
     private Main game;
     private Rectangle rectangle;
 
+    private float x;
+    private float y;
+    private float width;
+    private float height;
+
     private String imgPath;
 
     public Texture getTexture() {
@@ -62,12 +67,50 @@ public class Button {
         this.sprite = new Sprite(this.texture);
         this.batch = new SpriteBatch();
         this.visibility = false;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
     }
 
     public void setButtonColor(Color color) {
         this.batch.begin();
         this.batch.setColor(color);
         this.batch.end();
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public void setX(float x) {
+        this.x = x;
+        this.rectangle = new Rectangle(x, game.HEIGHT - height - y, width, height);
+    }
+
+    public float getY() {
+        return y;
+    }
+
+    public void setY(float y) {
+        this.y = y;
+        this.rectangle = new Rectangle(x, game.HEIGHT - height - y, width, height);
+    }
+
+    public float getWidth() {
+        return width;
+    }
+
+    public void setWidth(float width) {
+        this.width = width;
+    }
+
+    public float getHeight() {
+        return height;
+    }
+
+    public void setHeight(float height) {
+        this.height = height;
     }
 
     public Rectangle getBound() {

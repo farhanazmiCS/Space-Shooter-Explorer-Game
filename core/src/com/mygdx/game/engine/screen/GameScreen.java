@@ -383,6 +383,15 @@ public class GameScreen implements Screen {
 //        this.game.entityManager.getPlayer().getObject().setScore((int) distance);
 //        //dropsGathered += point;
 
+        for (CollidableEntity<Player> player : this.game.entityManager.getPlayers())
+        {
+            if (player.getObject().getScore() % 1000 == 0)
+            {
+                //go to trivia screen
+                game.setScreen(game.getTriviaScreen());
+            }
+        }
+
         game.getBatch().end();
     }
 

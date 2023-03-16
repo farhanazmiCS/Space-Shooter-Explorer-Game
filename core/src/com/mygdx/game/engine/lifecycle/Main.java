@@ -14,6 +14,7 @@ import com.mygdx.game.engine.screen.MainMenuScreen;
 import com.mygdx.game.engine.screen.PauseScreen;
 import com.mygdx.game.engine.screen.ScoreboardScreen;
 import com.mygdx.game.engine.screen.ScreenManager;
+import com.mygdx.game.engine.screen.TriviaScreen;
 import com.mygdx.game.engine.screen.storyboard.StoryboardScreen;
 
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ public class Main extends Game {
 	PauseScreen pauseScreen;
 	GameOverScreen gameOverScreen;
 	ScoreboardScreen scoreboardScreen;
+	TriviaScreen triviaScreen;
 
 	public ControlScreen getControlScreen() {
 		return controlScreen;
@@ -132,6 +134,14 @@ public class Main extends Game {
 		this.scoreboardScreen = scoreboardScreen;
 	}
 
+	public TriviaScreen getTriviaScreen() {
+		return triviaScreen;
+	}
+
+	public void setTriviaScreen(TriviaScreen triviaScreen) {
+		this.triviaScreen = triviaScreen;
+	}
+
 	@Override
 	public void create () {
 		font = new BitmapFont();
@@ -144,6 +154,7 @@ public class Main extends Game {
 		pauseScreen = new PauseScreen(this);
 		gameOverScreen = new GameOverScreen(this);
 		scoreboardScreen = new ScoreboardScreen(this);
+		triviaScreen = new TriviaScreen(this);
 
 		storyboardImgPath = new ArrayList<String>();
 
