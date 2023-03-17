@@ -213,6 +213,7 @@ public class Main extends Game {
 		mainMenuScreen.dispose();
 		pauseScreen.dispose();
 		gameScreen.dispose();
+		scoreboardScreen.dispose();
 		// img_test.dispose();
 	}
 }

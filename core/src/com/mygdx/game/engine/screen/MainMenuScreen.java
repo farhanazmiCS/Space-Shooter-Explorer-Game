@@ -37,12 +37,16 @@ public class MainMenuScreen extends ScreenManager implements Screen {
 
     private boolean soundPlayed;
 
+    private ScoreboardScreen scoreboardScreen;
+
     public MainMenuScreen(final Main game) {
         super(game);
         this.game = game;
 
         texture = new Texture("main_menu_background_resized.png");
         batch = new SpriteBatch();
+
+        scoreboardScreen = new ScoreboardScreen(game);
 
         buttons = new ArrayList<Button>();
         buttonImagePath = new ArrayList<String>();
@@ -121,6 +125,7 @@ public class MainMenuScreen extends ScreenManager implements Screen {
             if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
                 // Todo
                 this.game.getSoundManager().playButtonClick();
+                game.setScreen(scoreboardScreen);
             }
         } else {
             buttons.get(1).setActive(false);
