@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.mygdx.game.engine.collision.CollidableEntity;
@@ -19,6 +21,7 @@ import com.mygdx.game.engine.sound.SoundManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
 import game.components.game.Player;
 import game.components.game.TriviaOption;
@@ -43,6 +46,8 @@ public class TriviaScreen extends ScreenManager implements Screen {
 
     private TriviaQuestion triviaQuestion;
 
+    private ArrayList<TriviaQuestion> triviaQuestions;
+
     private Timer.Task resumeGameTask;
 
     public TriviaScreen(Main game) {
@@ -52,43 +57,64 @@ public class TriviaScreen extends ScreenManager implements Screen {
         texture = new Texture("main_menu_background_resized.png");
         batch = new SpriteBatch();
 
-        ArrayList<TriviaOption> options = new ArrayList<>();
+        triviaQuestions = new ArrayList<>();
 
-        this.inputProcessor = new CustomInputProcessor();
+        //json shits
+        JsonReader json = new JsonReader();
+        JsonValue base = json.parse(Gdx.files.internal("space_questions.json"));
+
         int buttonWidth = this.game.WIDTH / 2;
         int buttonHeight = this.game.HEIGHT / 4;
         int buttonX = 0;
         int buttonY = 0;
-        for (int i = 0; i < 4; i ++)
+        for (JsonValue question : base)
         {
-            options.add(new TriviaOption(buttonWidth, buttonHeight, buttonX, buttonY, "blank_button.png", game, "", false));
+            System.out.println(question.getString("question"));
+            ArrayList<TriviaOption> triviaOptions = new ArrayList<>();
+            for (JsonValue options : question.get("options"))
+            {
+                TriviaOption triviaOption = new TriviaOption(
+                        buttonWidth,
+                        buttonHeight,
+                        buttonX,
+                        buttonY,
+                        "blank_button.png",
+                        game,
+                        options.getString("text"),
+                        options.getString("isCorrect").equals("true")
+                );
+                triviaOptions.add(triviaOption);
+                System.out.println(options.getString("text"));
+                System.out.println(options.getString("isCorrect"));
+            }
+            triviaOptions.get(0).setX(0);
+            triviaOptions.get(0).setY(0);
+
+            triviaOptions.get(1).setX(0);
+            triviaOptions.get(1).setY(buttonHeight);
+
+            triviaOptions.get(2).setX(buttonWidth);
+            triviaOptions.get(2).setY(0);
+
+            triviaOptions.get(3).setX(buttonWidth);
+            triviaOptions.get(3).setY(buttonHeight);
+
+            TriviaQuestion triviaQuestion = new TriviaQuestion(question.getString("question"), triviaOptions);
+            triviaQuestions.add(triviaQuestion);
         }
-        options.get(0).setX(0);
-        options.get(0).setY(0);
-        options.get(0).setName("1 week");
 
-        options.get(1).setX(0);
-        options.get(1).setY(buttonHeight);
-        options.get(1).setName("1 day");
-        options.get(1).setCorrect(true);
+        this.inputProcessor = new CustomInputProcessor();
 
-        options.get(2).setX(buttonWidth);
-        options.get(2).setY(0);
-        options.get(2).setName("1 hour");
-
-        options.get(3).setX(buttonWidth);
-        options.get(3).setY(buttonHeight);
-        options.get(3).setName("1 month");
-
-        triviaQuestion = new TriviaQuestion(
-                "How long does it take for a spacecraft to travel from Earth to the Moon?",
-                options);
+        triviaQuestion = triviaQuestions.get(0);
     }
 
     @Override
     public void show() {
         Gdx.input.setInputProcessor(inputProcessor);
         SoundManager.playMusic(SoundManager.ScreenType.PAUSE);
+        Random random = new Random();
+        int triviaQuestionIndex = random.nextInt(triviaQuestions.size()) - 1;
+        triviaQuestion = triviaQuestions.get(triviaQuestionIndex);
     }
 
     @Override
@@ -142,7 +168,7 @@ public class TriviaScreen extends ScreenManager implements Screen {
 
         game.getBatch().begin(); // Anything after begin() will be displayed
         GlyphLayout glyphLayout = new GlyphLayout();
-        glyphLayout.setText(game.getFont(), "this.triviaQuestion.getQuestion()\nthis.triviaQuestion.getQuestion()\nthis.triviaQuestion.getQuestion()\n", Color.WHITE, game.WIDTH, Align.center, true);
+        glyphLayout.setText(game.getFont(), this.triviaQuestion.getQuestion(), Color.WHITE, game.WIDTH, Align.center, true);
         game.getFont().draw(game.getBatch(), glyphLayout, 0, 400);
         game.getBatch().end(); // Anything after end() will NOT be displayed
     }
