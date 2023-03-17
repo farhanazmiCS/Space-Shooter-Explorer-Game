@@ -53,6 +53,7 @@ public class StoryboardScreen implements Screen {
         this.inputProcessor = new CustomInputProcessor();
 
         this.nextButton = new Button(150, 66, 640, 20, "next_button.png", game);
+        this.nextButton.setActive(false);
 
         buttonShowTask = new Timer.Task() {
             @Override
@@ -89,9 +90,16 @@ public class StoryboardScreen implements Screen {
         // Next button logic
         if (inputProcessor.mouseHoverOver(nextButton.getBound()) && nextButton.getVisibility()) {
             nextButton.setButtonColor(Color.LIGHT_GRAY);
+            if (!nextButton.isActive()) {
+                nextButton.setActive(true);
+                this.game.getSoundManager().playButtonHover();
+            }
             if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
                 next();
             }
+        }
+        else {
+            nextButton.setActive(false);
         }
 
     }

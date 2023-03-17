@@ -61,6 +61,16 @@ public class Button {
 
     private Sprite sprite;
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    private boolean active;
+
     public Button(int width, int height, float x, float y, String imgPath, Main game) {
         this.game = game;
         this.rectangle = new Rectangle(x, game.HEIGHT - height - y, width, height);
@@ -72,6 +82,7 @@ public class Button {
         this.y = y;
         this.width = width;
         this.height = height;
+        this.active = false;
     }
 
     public Button(int width, int height, float x, float y, String imgPath, Main game, String name) {

@@ -10,7 +10,7 @@ import com.mygdx.game.engine.collision.CollidableEntity;
 
 import java.util.ArrayList;
 
-public class UFO implements BehaviourManager<CollidableEntity> {
+public class UFO implements BehaviourManager {
     private String imgPath;
     private String dir = "left";
 
@@ -55,12 +55,6 @@ public class UFO implements BehaviourManager<CollidableEntity> {
         this.health = 10;
         this.lasers = new ArrayList<CollidableEntity<Laser>>();
     }
-
-    @Override
-    public CollidableEntity moveFallingObject() {
-        return null;
-    }
-
 
     @Override
     public void moveUFO(CollidableEntity ufo, int speed, int width) {

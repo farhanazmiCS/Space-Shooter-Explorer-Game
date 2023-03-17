@@ -146,7 +146,7 @@ public class GameScreen implements Screen {
 
         game.getBatch().begin();
 
-        if (this.game.entityManager.getUFOs().size() == 0 && distance % 1000 == 0) {
+        if (this.game.entityManager.getUFOs().size() == 0 && distance % 500 == 0) {
             this.game.entityManager.spawnUFO(); // For now, only generate 1 UFO
         }
 

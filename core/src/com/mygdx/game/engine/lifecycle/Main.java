@@ -17,6 +17,7 @@ import com.mygdx.game.engine.screen.ScoreboardScreen;
 import com.mygdx.game.engine.screen.ScreenManager;
 import com.mygdx.game.engine.screen.TriviaScreen;
 import com.mygdx.game.engine.screen.storyboard.StoryboardScreen;
+import com.mygdx.game.engine.sound.SoundManager;
 
 import java.util.ArrayList;
 
@@ -31,14 +32,24 @@ public class Main extends Game {
 		this.screenManager = screenManager;
 	}
 
-	ScreenManager screenManager;
-	MainMenuScreen mainMenuScreen;
-	GameScreen gameScreen;
-	PauseScreen pauseScreen;
-	GameOverScreen gameOverScreen;
-	ScoreboardScreen scoreboardScreen;
-	TriviaScreen triviaScreen;
-	ResultScreen resultScreen;
+	private ScreenManager screenManager;
+	private MainMenuScreen mainMenuScreen;
+	private GameScreen gameScreen;
+	private PauseScreen pauseScreen;
+	private GameOverScreen gameOverScreen;
+	private ScoreboardScreen scoreboardScreen;
+	private TriviaScreen triviaScreen;
+	private ResultScreen resultScreen;
+
+	public SoundManager getSoundManager() {
+		return soundManager;
+	}
+
+	public void setSoundManager(SoundManager soundManager) {
+		this.soundManager = soundManager;
+	}
+
+	private SoundManager soundManager;
 
 	public ControlScreen getControlScreen() {
 		return controlScreen;
@@ -176,6 +187,8 @@ public class Main extends Game {
 		storyboards = this.screenManager.generateStoryboards(storyboardImgPath);
 
 		controlScreen = new ControlScreen(this, "controls.jpg");
+
+		soundManager = new SoundManager();
 
 		batch = new SpriteBatch();
 		font.getData().setScale(1.5f);

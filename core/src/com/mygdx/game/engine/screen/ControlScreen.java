@@ -73,11 +73,17 @@ public class ControlScreen implements Screen {
 
         // Next button logic
         if (inputProcessor.mouseHoverOver(playButton.getBound()) && playButton.getVisibility()) {
-
             playButton.setButtonColor(Color.LIGHT_GRAY);
+            if (!playButton.isActive()) {
+                playButton.setActive(true);
+                this.game.getSoundManager().playButtonHover();
+            }
             if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
                 play();
             }
+        }
+        else {
+            playButton.setActive(false);
         }
     }
 

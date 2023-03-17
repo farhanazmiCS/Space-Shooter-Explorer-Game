@@ -114,7 +114,7 @@ public class SoundManager {
             buttonClick = Gdx.audio.newSound(Gdx.files.internal("hover.wav"));
         }
 
-        public static void playButtonHover() {
+        public void playButtonHover() {
             buttonHover.play();
         }
 

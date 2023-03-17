@@ -55,6 +55,10 @@ public class MainMenuScreen extends ScreenManager implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
         createScreenButtons(3, buttons, 75, buttonImagePath);
+
+        for (Button button : buttons) {
+            button.setActive(false);
+        }
     }
 
     @Override
@@ -65,7 +69,6 @@ public class MainMenuScreen extends ScreenManager implements Screen {
 
     @Override
     public void render(float delta) {
-        soundPlayed = false;
         ScreenUtils.clear(0, 0, 0.2f, 1);
         this.batch.begin();
         this.batch.draw(this.texture, 0, 0);
@@ -94,25 +97,47 @@ public class MainMenuScreen extends ScreenManager implements Screen {
         // System.out.println(Gdx.input.getX() + ", " + Gdx.input.getY());
 
         if (inputProcessor.mouseHoverOver(buttons.get(0).getBound())) {
-            soundPlayed = true;
             buttons.get(0).setButtonColor(Color.LIGHT_GRAY);
-//            SoundManager.playButtonHover();
+            if (!buttons.get(0).isActive()) {
+                buttons.get(0).setActive(true);
+                this.game.getSoundManager().playButtonHover();
+            }
             if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
 //                SoundManager.playButtonClick();
                 play();
+                this.game.getSoundManager().playButtonClick();
             }
         }
+        else {
+            buttons.get(0).setActive(false);
+        }
+
         if (inputProcessor.mouseHoverOver(buttons.get(1).getBound())) {
             buttons.get(1).setButtonColor(Color.LIGHT_GRAY);
+            if (!buttons.get(1).isActive()) {
+                buttons.get(1).setActive(true);
+                this.game.getSoundManager().playButtonHover();
+            }
             if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
                 // Todo
+                this.game.getSoundManager().playButtonClick();
             }
+        } else {
+            buttons.get(1).setActive(false);
         }
+
         if (inputProcessor.mouseHoverOver(buttons.get(2).getBound())) {
             buttons.get(2).setButtonColor(Color.LIGHT_GRAY);
+            if (!buttons.get(2).isActive()) {
+                buttons.get(2).setActive(true);
+                this.game.getSoundManager().playButtonHover();
+            }
             if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
+                this.game.getSoundManager().playButtonClick();
                 quit();
             }
+        } else {
+            buttons.get(2).setActive(false);
         }
     }
     @Override
