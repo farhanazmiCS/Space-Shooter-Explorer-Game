@@ -9,6 +9,8 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.engine.collision.CollidableEntity;
 import com.mygdx.game.engine.collision.CollisionManager;
 import com.mygdx.game.engine.input.CustomInputProcessor;
+import com.mygdx.game.engine.lifecycle.Main;
+
 import game.components.game.Asteroid;
 import game.components.game.Laser;
 import game.components.game.Player;
@@ -41,7 +43,7 @@ public class EntityManager implements CollisionManager {
         }
     }
 
-    public long spawnLasers(CustomInputProcessor inputProcessor, CollidableEntity<Player> player) {
+    public long spawnLasers(CustomInputProcessor inputProcessor, CollidableEntity<Player> player, Main game) {
         if (inputProcessor.keyDown(Input.Keys.SPACE) || inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
             ArrayList<CollidableEntity<Laser>> lasers = player.getObject().getLasers();
             CollidableEntity<Laser> laser = new CollidableEntity<>(
@@ -51,6 +53,7 @@ public class EntityManager implements CollisionManager {
                             "green_laser.png",
                             800));
             lasers.add(laser);
+            game.getSoundManager().playLaserSound();
             return TimeUtils.nanoTime();
         }
         return 0;

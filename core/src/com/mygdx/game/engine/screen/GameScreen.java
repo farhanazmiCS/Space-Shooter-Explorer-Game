@@ -164,7 +164,7 @@ public class GameScreen implements Screen {
         {
             for (CollidableEntity<Player> player: this.game.entityManager.getPlayers())
             {
-                lastShootTime = this.game.entityManager.spawnLasers(inputProcessor, player);
+                lastShootTime = this.game.entityManager.spawnLasers(inputProcessor, player, this.game);
             }
         }
 
@@ -276,7 +276,7 @@ public class GameScreen implements Screen {
             {
                 for (CollidableEntity<UFO> ufo: this.game.entityManager.getUFOs())
                 {
-                    lastShootTimeUFO = ufo.getObject().fireWeapon(ufo);
+                    lastShootTimeUFO = ufo.getObject().fireWeapon(ufo, game);
                     if (this.game.entityManager.laserCollision(player, ufo.getObject().getLasers())) {
                         // Check collision between player and UFO lasers
                         player.getObject().setCurrentHealth(player.getObject().getCurrentHealth() - 1);

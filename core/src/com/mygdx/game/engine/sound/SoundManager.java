@@ -15,6 +15,8 @@ public class SoundManager {
     private static Music storyMusic;
     private static Sound buttonHover;
     private static Sound buttonClick;
+    private static Sound laserPew;
+    private static Sound enemyLaserPew;
 
     // Whether or not the music is currently playing
     private static boolean isPlaying = false;
@@ -112,19 +114,27 @@ public class SoundManager {
             // Load sounds from assets folder
             buttonHover = Gdx.audio.newSound(Gdx.files.internal("blip.wav"));
             buttonClick = Gdx.audio.newSound(Gdx.files.internal("hover.wav"));
+            laserPew = Gdx.audio.newSound(Gdx.files.internal("blaster.mp3"));
+            enemyLaserPew = Gdx.audio.newSound(Gdx.files.internal("waeo.wav"));
         }
 
         public void playButtonHover() {
             buttonHover.play();
         }
 
-        public static void playButtonClick() {
+        public void playButtonClick() {
             buttonClick.play();
         }
+
+        public void playLaserSound() { laserPew.play(); }
+
+        public void playEnemyLaserSound() { enemyLaserPew.play(); }
 
         public void dispose() {
             // Dispose sounds to free memory
             buttonHover.dispose();
             buttonClick.dispose();
+            laserPew.dispose();
+            enemyLaserPew.dispose();
         }
     }

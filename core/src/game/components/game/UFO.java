@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.engine.behavior.BehaviourManager;
 import com.mygdx.game.engine.collision.CollidableEntity;
+import com.mygdx.game.engine.lifecycle.Main;
 
 import java.util.ArrayList;
 
@@ -77,7 +78,7 @@ public class UFO implements BehaviourManager {
     private long shotDelay = 500000000; // 1 second in nanoseconds
 
     @Override
-    public long fireWeapon(CollidableEntity ufo) {
+    public long fireWeapon(CollidableEntity ufo, Main game) {
         long currentTime = TimeUtils.nanoTime();
         if (currentTime - lastShotTime > shotDelay) {
             CollidableEntity<Laser> laser = new CollidableEntity<Laser>(
@@ -87,6 +88,7 @@ public class UFO implements BehaviourManager {
                             "purple_laser.png",
                             500));
             this.lasers.add(laser);
+            game.getSoundManager().playEnemyLaserSound();
             lastShotTime = currentTime;
         }
         return currentTime;
