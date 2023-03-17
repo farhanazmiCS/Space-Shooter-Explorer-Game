@@ -100,9 +100,16 @@ public class ResultScreen extends ScreenManager implements Screen {
         // Next button logic
         if (inputProcessor.mouseHoverOver(nextButton.getBound()) && nextButton.getVisibility()) {
             nextButton.setButtonColor(Color.LIGHT_GRAY);
+            if (!nextButton.isActive()) {
+                nextButton.setActive(true);
+                this.game.getSoundManager().playButtonHover();
+            }
             if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
                 game.setScreen(game.getGameScreen());
             }
+        }
+        else {
+            nextButton.setActive(false);
         }
     }
 

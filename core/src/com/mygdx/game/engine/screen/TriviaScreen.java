@@ -113,7 +113,7 @@ public class TriviaScreen extends ScreenManager implements Screen {
         Gdx.input.setInputProcessor(inputProcessor);
         SoundManager.playMusic(SoundManager.ScreenType.PAUSE);
         Random random = new Random();
-        int triviaQuestionIndex = random.nextInt(triviaQuestions.size()) - 1;
+        int triviaQuestionIndex = random.nextInt(triviaQuestions.size());
         triviaQuestion = triviaQuestions.get(triviaQuestionIndex);
     }
 
@@ -142,6 +142,10 @@ public class TriviaScreen extends ScreenManager implements Screen {
 
             if (inputProcessor.mouseHoverOver(option.getBound())) {
                 option.setButtonColor(Color.LIGHT_GRAY);
+                if (!option.isActive()) {
+                    option.setActive(true);
+                    this.game.getSoundManager().playButtonHover();
+                }
                 if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
                     //do something
                     if (option.getCorrect())
@@ -163,6 +167,9 @@ public class TriviaScreen extends ScreenManager implements Screen {
                     //go to result screen
                     game.setScreen(game.getResultScreen());
                 }
+            }
+            else {
+                option.setActive(false);
             }
         }
 

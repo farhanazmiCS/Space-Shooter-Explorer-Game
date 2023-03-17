@@ -83,15 +83,29 @@ public class PauseScreen extends ScreenManager implements Screen {
 
         if (inputProcessor.mouseHoverOver(buttons.get(0).getBound())) {
             buttons.get(0).setButtonColor(Color.LIGHT_GRAY);
+            if (!buttons.get(0).isActive()) {
+                buttons.get(0).setActive(true);
+                this.game.getSoundManager().playButtonHover();
+            }
             if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
                   resume();
             }
         }
+        else {
+            buttons.get(0).setActive(false);
+        }
         if (inputProcessor.mouseHoverOver(buttons.get(1).getBound())) {
             buttons.get(1).setButtonColor(Color.LIGHT_GRAY);
+            if (!buttons.get(1).isActive()) {
+                buttons.get(1).setActive(true);
+                this.game.getSoundManager().playButtonHover();
+            }
             if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
                 quit();
             }
+        }
+        else {
+            buttons.get(1).setActive(false);
         }
     }
 

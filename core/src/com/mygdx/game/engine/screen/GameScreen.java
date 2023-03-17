@@ -133,9 +133,16 @@ public class GameScreen implements Screen {
         // Pause button logic
         if (inputProcessor.mouseHoverOver(pauseButton.getBound())) {
             pauseButton.setButtonColor(Color.LIGHT_GRAY);
+            if (!pauseButton.isActive()) {
+                pauseButton.setActive(true);
+                this.game.getSoundManager().playButtonHover();
+            }
             if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
                 pause();
             }
+        }
+        else {
+            pauseButton.setActive(false);
         }
 
         // tell the SpritegetBatch() to render in the
