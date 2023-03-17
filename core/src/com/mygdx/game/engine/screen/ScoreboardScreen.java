@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import game.components.menu.Button;
 
@@ -25,10 +27,16 @@ public class ScoreboardScreen implements Screen{
 
     private CustomInputProcessor inputProcessor;
     private Button button;
+
+    private SpriteBatch batch;
+    private Texture backgroundTexture;
     private Main game;
     public ScoreboardScreen(Main game) {
         this.game = game;
         this.inputProcessor = new CustomInputProcessor();
+
+        backgroundTexture = new Texture("main_menu_background_resized.png");
+        batch = new SpriteBatch();
     }
 
     @Override
@@ -40,18 +48,20 @@ public class ScoreboardScreen implements Screen{
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0.2f, 1);
-
-        button.getBatch().begin();
-        button.getBatch().draw(button.getTexture(), game.HEIGHT - button.getBound().getHeight() - button.getBound().getY(), button.getBound().getWidth());
-
-        button.getBatch().end();
-
-        if (inputProcessor.mouseHoverOver(button.getBound())) {
-            button.setButtonColor(Color.ORANGE);
-            if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
-                game.setScreen(game.getMainMenuScreen());
-            }
-        }
+        this.batch.begin();
+        this.batch.draw(this.backgroundTexture, 0, 0);
+        this.batch.end();
+//        button.getBatch().begin();
+//        button.getBatch().draw(button.getTexture(), game.HEIGHT - button.getBound().getHeight() - button.getBound().getY(), button.getBound().getWidth());
+//
+//        button.getBatch().end();
+//
+//        if (inputProcessor.mouseHoverOver(button.getBound())) {
+//            button.setButtonColor(Color.ORANGE);
+//            if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
+//                game.setScreen(game.getMainMenuScreen());
+//            }
+//        }
 
     }
 
@@ -77,7 +87,8 @@ public class ScoreboardScreen implements Screen{
 
     @Override
     public void dispose() {
-
+        backgroundTexture.dispose();
+        batch.dispose();
     }
 
 
