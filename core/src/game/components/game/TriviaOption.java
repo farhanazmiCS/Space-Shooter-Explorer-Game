@@ -1,14 +1,15 @@
 package game.components.game;
 
+import com.mygdx.game.engine.lifecycle.Main;
+
 import game.components.menu.Button;
 
-public class TriviaOption {
+public class TriviaOption extends Button{
     private Boolean isCorrect;
-    private Button button;
 
-    public TriviaOption(Boolean isCorrect, Button button) {
+    public TriviaOption(int width, int height, float x, float y, String imgPath, Main game, String name, Boolean isCorrect) {
+        super(width, height, x, y, imgPath, game, name);
         this.isCorrect = isCorrect;
-        this.button = button;
     }
 
     public Boolean getCorrect() {
@@ -17,13 +18,5 @@ public class TriviaOption {
 
     public void setCorrect(Boolean correct) {
         isCorrect = correct;
-    }
-
-    public Button getButton() {
-        return button;
-    }
-
-    public void setButton(Button button) {
-        this.button = button;
     }
 }

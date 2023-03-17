@@ -58,25 +58,24 @@ public class TriviaScreen extends ScreenManager implements Screen {
         int buttonY = 0;
         for (int i = 0; i < 4; i ++)
         {
-            Button button = new Button(buttonWidth, buttonHeight, buttonX, buttonY, "blank_button.png", game);
-            options.add(new TriviaOption(false, button));
+            options.add(new TriviaOption(buttonWidth, buttonHeight, buttonX, buttonY, "blank_button.png", game, "", false));
         }
-        options.get(0).getButton().setX(0);
-        options.get(0).getButton().setY(0);
-        options.get(0).getButton().setName("1 week");
+        options.get(0).setX(0);
+        options.get(0).setY(0);
+        options.get(0).setName("1 week");
 
-        options.get(1).getButton().setX(0);
-        options.get(1).getButton().setY(buttonHeight);
-        options.get(1).getButton().setName("1 day");
+        options.get(1).setX(0);
+        options.get(1).setY(buttonHeight);
+        options.get(1).setName("1 day");
         options.get(1).setCorrect(true);
 
-        options.get(2).getButton().setX(buttonWidth);
-        options.get(2).getButton().setY(0);
-        options.get(2).getButton().setName("1 hour");
+        options.get(2).setX(buttonWidth);
+        options.get(2).setY(0);
+        options.get(2).setName("1 hour");
 
-        options.get(3).getButton().setX(buttonWidth);
-        options.get(3).getButton().setY(buttonHeight);
-        options.get(3).getButton().setName("1 month");
+        options.get(3).setX(buttonWidth);
+        options.get(3).setY(buttonHeight);
+        options.get(3).setName("1 month");
 
         triviaQuestion = new TriviaQuestion(
                 "How long does it take for a spacecraft to travel from Earth to the Moon?",
@@ -99,22 +98,21 @@ public class TriviaScreen extends ScreenManager implements Screen {
 
         for (TriviaOption option : this.triviaQuestion.getOptionButtons())
         {
-            Button button = option.getButton();
-            button.getBatch().begin();
-            button.getBatch().draw(button.getTexture(), button.getX(), button.getY(), button.getWidth(), button.getHeight());
-            button.getBatch().end();
+            option.getBatch().begin();
+            option.getBatch().draw(option.getTexture(), option.getX(), option.getY(), option.getWidth(), option.getHeight());
+            option.getBatch().end();
 
-            button.setButtonColor(Color.WHITE);
+            option.setButtonColor(Color.WHITE);
 
             game.getBatch().begin(); // Anything after begin() will be displayed
             GlyphLayout glyphLayout = new GlyphLayout();
-            glyphLayout.setText(game.getFont(), button.getName(), Color.WHITE, button.getWidth(), Align.center, true);
+            glyphLayout.setText(game.getFont(), option.getName(), Color.WHITE, option.getWidth(), Align.center, true);
 //            game.getFont().draw(game.getBatch(), glyphLayout, button.getX() + (button.getWidth() / 2) - (glyphLayout.width / 2), button.getY() + (button.getHeight() / 2));
-            game.getFont().draw(game.getBatch(), glyphLayout, button.getX(), button.getY() + (button.getHeight() / 2));
+            game.getFont().draw(game.getBatch(), glyphLayout, option.getX(), option.getY() + (option.getHeight() / 2));
             game.getBatch().end(); // Anything after end() will NOT be displayed
 
-            if (inputProcessor.mouseHoverOver(button.getBound())) {
-                button.setButtonColor(Color.LIGHT_GRAY);
+            if (inputProcessor.mouseHoverOver(option.getBound())) {
+                option.setButtonColor(Color.LIGHT_GRAY);
                 if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
                     //do something
                     if (option.getCorrect())
