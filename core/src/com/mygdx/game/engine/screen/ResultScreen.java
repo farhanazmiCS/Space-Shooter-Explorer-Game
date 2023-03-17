@@ -5,10 +5,12 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.Timer;
 import com.mygdx.game.engine.collision.CollidableEntity;
-import com.mygdx.game.engine.entity.EntityManager;
 import com.mygdx.game.engine.input.CustomInputProcessor;
 import com.mygdx.game.engine.lifecycle.Main;
 import com.mygdx.game.engine.sound.SoundManager;
@@ -16,9 +18,12 @@ import com.mygdx.game.engine.sound.SoundManager;
 import java.util.ArrayList;
 
 import game.components.game.Player;
+import game.components.game.TriviaOption;
+import game.components.game.TriviaQuestion;
 import game.components.menu.Button;
 
-public class GameOverScreen extends ScreenManager implements Screen {
+public class ResultScreen extends ScreenManager implements Screen {
+
     public CustomInputProcessor getInputProcessor() {
         return inputProcessor;
     }
@@ -27,39 +32,50 @@ public class GameOverScreen extends ScreenManager implements Screen {
         this.inputProcessor = inputProcessor;
     }
 
-    public ArrayList<Button> getButtons() {
-        return buttons;
-    }
-
-    public void setButtons(ArrayList<Button> buttons) {
-        this.buttons = buttons;
-    }
-
     private SpriteBatch batch;
     private Texture texture;
 
     private CustomInputProcessor inputProcessor;
     private Main game;
-    private ArrayList<Button> buttons;
-    private ArrayList<String> buttonPath;
-    public GameOverScreen(Main game) {
+
+    private float buttonShowDelay = 0.5f; // seconds
+    private Timer.Task buttonShowTask;
+    private Button nextButton;
+
+    private String resultBG;
+
+    public String getResultBG() {
+        return resultBG;
+    }
+
+    public void setResultBG(String resultBG) {
+        this.resultBG = resultBG;
+        texture = new Texture(resultBG);
+    }
+
+    public ResultScreen(Main game) {
         super(game);
         this.game = game;
 
-        texture = new Texture("game_over.jpg");
+        texture = new Texture("main_menu_background_resized.png");
         batch = new SpriteBatch();
 
         this.inputProcessor = new CustomInputProcessor();
 
-        buttons = new ArrayList<Button>();
-        buttonPath = new ArrayList<String>();
-        buttonPath.add("quit_button.png");
-        createScreenButtons(1, buttons, 75, buttonPath);
+        this.nextButton = new Button(150, 66, 640, 20, "resume_button.png", game);
+
+        buttonShowTask = new Timer.Task() {
+            @Override
+            public void run() {
+                nextButton.setVisibility(true);
+            }
+        };
     }
 
     @Override
     public void show() {
         Gdx.input.setInputProcessor(inputProcessor);
+        Timer.schedule(buttonShowTask, buttonShowDelay);
         SoundManager.playMusic(SoundManager.ScreenType.PAUSE);
     }
 
@@ -71,18 +87,19 @@ public class GameOverScreen extends ScreenManager implements Screen {
         this.batch.draw(this.texture, 0, 0);
         this.batch.end();
 
-        for (Button button : buttons) {
-                button.getBatch().begin();
-                button.getBatch().draw(button.getTexture(), button.getBound().getX(), game.HEIGHT - button.getBound().getHeight() - button.getBound().getY());
-                button.getBatch().end();
+        if (nextButton.getVisibility()) {
+            nextButton.getBatch().begin();
+            nextButton.getBatch().draw(nextButton.getTexture(), 640, 20);
+            nextButton.getBatch().end();
         }
 
-        buttons.get(0).setButtonColor(Color.WHITE);
+        nextButton.setButtonColor(Color.WHITE);
 
-        if (inputProcessor.mouseHoverOver(buttons.get(0).getBound())) {
-            buttons.get(0).setButtonColor(Color.LIGHT_GRAY);
+        // Next button logic
+        if (inputProcessor.mouseHoverOver(nextButton.getBound()) && nextButton.getVisibility()) {
+            nextButton.setButtonColor(Color.LIGHT_GRAY);
             if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
-                quit();
+                game.setScreen(game.getGameScreen());
             }
         }
     }
@@ -111,15 +128,5 @@ public class GameOverScreen extends ScreenManager implements Screen {
     public void dispose() {
         texture.dispose();
         batch.dispose();
-    }
-
-    public void quit() {
-        this.game.entityManager = new EntityManager();
-        this.game.entityManager.setPlayers(1, this.game.WIDTH);
-        this.game.entityManager.resetFailingObjects();
-        this.game.setGameScreen(new GameScreen(this.game));
-        this.game.setStoryboards(this.game.getScreenManager().generateStoryboards(this.game.getStoryboardImgPath()));
-        this.game.setControlScreen(new ControlScreen(this.game, "controls.jpg"));
-        game.setScreen(game.getMainMenuScreen());
     }
 }

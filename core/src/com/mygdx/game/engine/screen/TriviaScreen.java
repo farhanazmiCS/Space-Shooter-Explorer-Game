@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.Timer;
 import com.mygdx.game.engine.collision.CollidableEntity;
 import com.mygdx.game.engine.entity.EntityManager;
 import com.mygdx.game.engine.input.CustomInputProcessor;
@@ -41,6 +42,8 @@ public class TriviaScreen extends ScreenManager implements Screen {
     private Main game;
 
     private TriviaQuestion triviaQuestion;
+
+    private Timer.Task resumeGameTask;
 
     public TriviaScreen(Main game) {
         super(game);
@@ -121,6 +124,7 @@ public class TriviaScreen extends ScreenManager implements Screen {
                         {
                             player.getObject().setCurrentHealth(player.getObject().getMaxHealth());
                         }
+                        this.game.getResultScreen().setResultBG("correct_background.jpg");
                     }
                     else
                     {
@@ -128,15 +132,17 @@ public class TriviaScreen extends ScreenManager implements Screen {
                         {
                             player.getObject().setCurrentHealth(player.getObject().getCurrentHealth() - 10);
                         }
+                        this.game.getResultScreen().setResultBG("wrong.jpg");
                     }
-                    resume();
+                    //go to result screen
+                    game.setScreen(game.getResultScreen());
                 }
             }
         }
 
         game.getBatch().begin(); // Anything after begin() will be displayed
         GlyphLayout glyphLayout = new GlyphLayout();
-        glyphLayout.setText(game.getFont(), this.triviaQuestion.getQuestion(), Color.WHITE, game.WIDTH, Align.center, true);
+        glyphLayout.setText(game.getFont(), "this.triviaQuestion.getQuestion()\nthis.triviaQuestion.getQuestion()\nthis.triviaQuestion.getQuestion()\n", Color.WHITE, game.WIDTH, Align.center, true);
         game.getFont().draw(game.getBatch(), glyphLayout, 0, 400);
         game.getBatch().end(); // Anything after end() will NOT be displayed
     }
