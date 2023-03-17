@@ -64,6 +64,8 @@ public class ResultScreen extends ScreenManager implements Screen {
 
         this.nextButton = new Button(150, 66, 640, 20, "resume_button.png", game);
 
+        nextButton.setVisibility(false);
+
         buttonShowTask = new Timer.Task() {
             @Override
             public void run() {
