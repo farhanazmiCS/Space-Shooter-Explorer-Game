@@ -316,6 +316,7 @@ public class GameScreen implements Screen {
                 if (this.game.entityManager.getUFOs().get(u).getObject().getHealth() == 0) {
                     this.game.entityManager.getUFOs().remove(u);
                     u--;
+                    player.getObject().setAliensKilled(player.getObject().getAliensKilled() + 1);
                 }
             }
         }

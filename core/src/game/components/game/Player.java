@@ -20,6 +20,7 @@ public class Player {
     private ArrayList<CollidableEntity<Laser>> lasers;
     private int maxHealth;
     private int currentHealth;
+    private int aliensKilled;
 
     public Afterburner getAfterburner() {
         return afterburner;
@@ -44,6 +45,7 @@ public class Player {
         this.afterburner = new Afterburner("afterburner.png");
         this.maxHealth = health;
         this.currentHealth = health;
+        aliensKilled = 0;
     }
 
     public String getImgName() {
@@ -168,5 +170,13 @@ public class Player {
             move_result = 3;
         }
         return move_result;
+    }
+
+    public int getAliensKilled() {
+        return aliensKilled;
+    }
+
+    public void setAliensKilled(int aliensKilled) {
+        this.aliensKilled = aliensKilled;
     }
 }
