@@ -204,7 +204,7 @@ public class Main extends Game {
 
 		batch = new SpriteBatch();
 		font.getData().setScale(1.5f);
-		entityManager = new EntityManager();
+		entityManager = new EntityManager(this);
 		entityManager.setPlayers(1, WIDTH);
 
 

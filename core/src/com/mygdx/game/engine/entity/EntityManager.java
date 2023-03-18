@@ -2,6 +2,7 @@ package com.mygdx.game.engine.entity;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
@@ -16,6 +17,7 @@ import game.components.game.Laser;
 import game.components.game.Player;
 import game.components.game.UFO;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -26,10 +28,12 @@ public class EntityManager implements CollisionManager {
     private ArrayList<CollidableEntity<Asteroid>> asteroids;
     private ArrayList<CollidableEntity<UFO>> UFOs;
     private ArrayList<Texture> fallingObjectImages;
+    private Main game;
 
-    public EntityManager() {
+    public EntityManager(Main game) {
         asteroids = new ArrayList<>();
         UFOs = new ArrayList<CollidableEntity<UFO>>();
+        this.game = game;
     }
 
     public void moveLasers() {
@@ -181,6 +185,24 @@ public class EntityManager implements CollisionManager {
                 }
             }
         return false;
+    }
+
+    public void savePlayerData()
+    {
+        // save score here
+        Preferences prefs = game.getPrefs();
+        StringBuilder data = new StringBuilder(prefs.getString("data"));
+        SimpleDateFormat sdf3 = new SimpleDateFormat("EEE d MMM yyyy HH:mm:ss");
+        for (CollidableEntity<Player> player : game.entityManager.getPlayers())
+        {
+            String startTime = sdf3.format(player.getObject().getStartTime());
+            int distanceTravelled = player.getObject().getScore();
+            int aliensKilled = player.getObject().getAliensKilled();
+            data.append(startTime).append(", ").append(distanceTravelled).append(", ").append(aliensKilled).append("\n");
+        }
+        prefs.putString("data", data.toString());
+        System.out.println(data);
+        prefs.flush();
     }
 
 }

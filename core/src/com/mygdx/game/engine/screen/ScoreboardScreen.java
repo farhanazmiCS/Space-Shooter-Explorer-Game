@@ -106,7 +106,7 @@ public class ScoreboardScreen implements Screen{
         Collections.sort(playerScores);
         if (playerScores.size() > 15)
         {
-            for (PlayerScore score : playerScores.subList(0, 14))
+            for (PlayerScore score : playerScores.subList(0, 15))
             {
                 time_column_content.append(score.getStartTime()).append('\n');
                 distance_column_content.append(score.getDistanceTravelled()).append("km\n");
