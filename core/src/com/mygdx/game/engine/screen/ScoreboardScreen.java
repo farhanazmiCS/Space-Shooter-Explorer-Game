@@ -61,12 +61,15 @@ public class ScoreboardScreen implements Screen{
         String data = prefs.getString("data");
         String[] data_split = data.split("\n");
         playerScores = new ArrayList<>();
-        for (String row : data_split)
+        if (!data.equals(""))
         {
-            String[] row_split = row.split(",");
-            PlayerScore score = new PlayerScore(row_split[0].trim(), Integer.parseInt(row_split[1].trim()), Integer.parseInt(row_split[2].trim()));
+            for (String row : data_split)
+            {
+                String[] row_split = row.split(",");
+                PlayerScore score = new PlayerScore(row_split[0].trim(), Integer.parseInt(row_split[1].trim()), Integer.parseInt(row_split[2].trim()));
 
-            playerScores.add(score);
+                playerScores.add(score);
+            }
         }
     }
 
@@ -97,7 +100,6 @@ public class ScoreboardScreen implements Screen{
         else {
             backButton.setActive(false);
         }
-
         //display score
         game.getBatch().begin(); // Anything after begin() will be displayed
         StringBuilder time_column_content = new StringBuilder("Score Board\nDate\n");
@@ -115,11 +117,18 @@ public class ScoreboardScreen implements Screen{
         }
         else
         {
-            for (PlayerScore score : playerScores)
+            if (playerScores.size() > 0)
             {
-                time_column_content.append(score.getStartTime()).append('\n');
-                distance_column_content.append(score.getDistanceTravelled()).append("km\n");
-                aliens_killed_column_content.append(score.getAliensKilled()).append('\n');
+                for (PlayerScore score : playerScores)
+                {
+                    time_column_content.append(score.getStartTime()).append('\n');
+                    distance_column_content.append(score.getDistanceTravelled()).append("km\n");
+                    aliens_killed_column_content.append(score.getAliensKilled()).append('\n');
+                }
+            }
+            else
+            {
+                time_column_content.append("Play the game to get a score on the board");
             }
         }
         GlyphLayout time_column = new GlyphLayout();
