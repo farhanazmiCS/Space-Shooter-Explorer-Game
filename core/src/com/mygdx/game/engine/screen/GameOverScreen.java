@@ -120,7 +120,7 @@ public class GameOverScreen extends ScreenManager implements Screen {
         // save score here
         Preferences prefs = this.game.getPrefs();
         StringBuilder data = new StringBuilder(prefs.getString("data"));
-        SimpleDateFormat sdf3 = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
+        SimpleDateFormat sdf3 = new SimpleDateFormat("EEE d MMM yyyy HH:mm:ss");
         for (CollidableEntity<Player> player : this.game.entityManager.getPlayers())
         {
             String startTime = sdf3.format(player.getObject().getStartTime());
