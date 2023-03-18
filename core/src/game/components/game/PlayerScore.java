@@ -1,13 +1,13 @@
 package game.components.game;
 
-public class PlayerScore {
+public class PlayerScore implements Comparable<PlayerScore>{
     private String startTime;
-    private int distanceTravel;
+    private int distanceTravelled;
     private int aliensKilled;
 
     public PlayerScore(String startTime, int distanceTravel, int aliensKilled) {
         this.startTime = startTime;
-        this.distanceTravel = distanceTravel;
+        this.distanceTravelled = distanceTravel;
         this.aliensKilled = aliensKilled;
     }
 
@@ -19,12 +19,12 @@ public class PlayerScore {
         this.startTime = startTime;
     }
 
-    public int getDistanceTravel() {
-        return distanceTravel;
+    public int getDistanceTravelled() {
+        return distanceTravelled;
     }
 
-    public void setDistanceTravel(int distanceTravel) {
-        this.distanceTravel = distanceTravel;
+    public void setDistanceTravelled(int distanceTravelled) {
+        this.distanceTravelled = distanceTravelled;
     }
 
     public int getAliensKilled() {
@@ -37,10 +37,20 @@ public class PlayerScore {
 
     @Override
     public String toString() {
-        return String.format("| %-30s | %20s km | %15s |%n", startTime, distanceTravel, aliensKilled);
+        return String.format("| %-30s | %20s km | %15s |%n", startTime, distanceTravelled, aliensKilled);
 //        return String.format("%-30s", startTime) +
 //                String.format("%-20s", distanceTravel + " km ") +
 //                String.format("%-15s", aliensKilled) +
 //                '\n';
+    }
+
+    @Override
+    public int compareTo(PlayerScore score) {
+        int compare_distance = score.getDistanceTravelled();
+        /* For Ascending order*/
+        //return this.distanceTravelled-compare_distance;
+
+        /* For Descending order do like this */
+        return compare_distance-this.distanceTravelled;
     }
 }

@@ -16,11 +16,11 @@ import com.mygdx.game.engine.sound.SoundManager;
 import com.mygdx.game.engine.lifecycle.Main;
 import com.mygdx.game.engine.input.CustomInputProcessor;
 
-import java.util.ArrayList;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import game.components.game.PlayerScore;
 import game.components.menu.Button;
-import game.components.game.Player;
 
 public class ScoreboardScreen implements Screen{
     public CustomInputProcessor getInputProcessor() {
@@ -40,11 +40,7 @@ public class ScoreboardScreen implements Screen{
 
     private Table table;
 
-    private ArrayList<Player> playScores;
-
     private ArrayList<PlayerScore> playerScores;
-
-    private StringBuilder scoreboardContent;
 
     public ScoreboardScreen(Main game) {
         this.game = game;
@@ -55,7 +51,6 @@ public class ScoreboardScreen implements Screen{
         this.backButton = new Button(150, 66, 640, 20, "back_to_menu_button.png", game);
         table = new Table();
         playerScores = new ArrayList<>();
-        scoreboardContent = new StringBuilder("Date\t\tDistance Traveled\t\tAliens Killed\n");
     }
 
     @Override
@@ -65,25 +60,13 @@ public class ScoreboardScreen implements Screen{
         Preferences prefs = this.game.getPrefs();
         String data = prefs.getString("data");
         String[] data_split = data.split("\n");
-        String header = String.format("| %-44s | %-20s | %15s |%n", "Date", "Distance Traveled", "Aliens Killed");
-        scoreboardContent = new StringBuilder(header);
         playerScores = new ArrayList<>();
         for (String row : data_split)
         {
             String[] row_split = row.split(",");
-            System.out.println(row_split[0].trim());
-            System.out.println(row_split[1].trim());
-            System.out.println(row_split[2].trim());
             PlayerScore score = new PlayerScore(row_split[0].trim(), Integer.parseInt(row_split[1].trim()), Integer.parseInt(row_split[2].trim()));
 
-            scoreboardContent.append(score);
-
             playerScores.add(score);
-
-//            for (String cell : row_split)
-//            {
-//                scoreboardContent.append(cell).append("\t\t");
-//            }
         }
     }
 
@@ -92,22 +75,6 @@ public class ScoreboardScreen implements Screen{
         ScreenUtils.clear(0, 0, 0.2f, 1);
         this.batch.begin();
         this.batch.draw(this.texture, 0, 0);
-
-        // Draw the scoreboard table
-        float tableX = 10;
-        float tableY = 30;
-        float tableWidth = Gdx.graphics.getWidth() - 2 * tableX;
-        float tableHeight = Gdx.graphics.getHeight() - 2 * tableY;
-
-        table.setBounds(tableX, tableY, tableWidth, tableHeight);
-
-        // Add column headers
-        //table.add("Player Name").width(100);
-        //table.add("Score").width(100);
-//        table.row();
-
-        table.draw(batch, 1f);
-
         this.batch.end();
 
         backButton.getBatch().begin();
@@ -136,11 +103,24 @@ public class ScoreboardScreen implements Screen{
         StringBuilder time_column_content = new StringBuilder("Score Board\nDate\n");
         StringBuilder distance_column_content = new StringBuilder("\nDistance Traveled\n");
         StringBuilder aliens_killed_column_content = new StringBuilder("\nAliens Killed\n");
-        for (PlayerScore score : playerScores)
+        Collections.sort(playerScores);
+        if (playerScores.size() > 15)
         {
-            time_column_content.append(score.getStartTime()).append('\n');
-            distance_column_content.append(score.getDistanceTravel()).append("km\n");
-            aliens_killed_column_content.append(score.getAliensKilled()).append('\n');
+            for (PlayerScore score : playerScores.subList(0, 14))
+            {
+                time_column_content.append(score.getStartTime()).append('\n');
+                distance_column_content.append(score.getDistanceTravelled()).append("km\n");
+                aliens_killed_column_content.append(score.getAliensKilled()).append('\n');
+            }
+        }
+        else
+        {
+            for (PlayerScore score : playerScores)
+            {
+                time_column_content.append(score.getStartTime()).append('\n');
+                distance_column_content.append(score.getDistanceTravelled()).append("km\n");
+                aliens_killed_column_content.append(score.getAliensKilled()).append('\n');
+            }
         }
         GlyphLayout time_column = new GlyphLayout();
         time_column.setText(game.getFont(), time_column_content, Color.WHITE, game.WIDTH, Align.left, true);
@@ -152,14 +132,6 @@ public class ScoreboardScreen implements Screen{
         game.getFont().draw(game.getBatch(), distance_column, 300, this.game.HEIGHT);
         game.getFont().draw(game.getBatch(), aliens_killed_column, 500, this.game.HEIGHT);
         game.getBatch().end(); // Anything after end() will NOT be displayed
-    }
-
-    public ArrayList<Player> getPlayScores() {
-        return playScores;
-    }
-
-    public void setPlayScores(ArrayList<Player> playScores) {
-        this.playScores = playScores;
     }
 
     @Override

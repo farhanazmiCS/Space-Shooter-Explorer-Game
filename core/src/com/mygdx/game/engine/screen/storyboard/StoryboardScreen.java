@@ -69,7 +69,6 @@ public class StoryboardScreen implements Screen {
         Gdx.input.setInputProcessor(inputProcessor);
         Timer.schedule(buttonShowTask, buttonShowDelay);
         SoundManager.playMusic(SoundManager.ScreenType.STORY);
-        System.out.println(this.game.getPrefs().getString("data"));
     }
 
     @Override
