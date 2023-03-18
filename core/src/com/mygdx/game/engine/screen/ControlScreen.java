@@ -9,10 +9,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.Timer;
+import com.mygdx.game.engine.collision.CollidableEntity;
 import com.mygdx.game.engine.sound.SoundManager;
 import com.mygdx.game.engine.input.CustomInputProcessor;
 import com.mygdx.game.engine.lifecycle.Main;
 
+import java.sql.Timestamp;
+
+import game.components.game.Player;
 import game.components.menu.Button;
 
 public class ControlScreen implements Screen {
@@ -114,6 +118,10 @@ public class ControlScreen implements Screen {
     }
 
     public void play() {
+        for (CollidableEntity<Player> player : this.game.entityManager.getPlayers())
+        {
+            player.getObject().setStartTime(new Timestamp(System.currentTimeMillis()));
+        }
         this.game.setScreen(this.game.getGameScreen());
     }
 }

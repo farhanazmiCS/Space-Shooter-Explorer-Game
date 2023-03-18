@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.mygdx.game.engine.collision.CollidableEntity;
 import com.mygdx.game.engine.input.CustomInputProcessor;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class Player {
@@ -21,6 +22,7 @@ public class Player {
     private int maxHealth;
     private int currentHealth;
     private int aliensKilled;
+    private Timestamp startTime;
 
     public Afterburner getAfterburner() {
         return afterburner;
@@ -134,6 +136,14 @@ public class Player {
 
     public void setCurrentHealth(int currentHealth) {
         this.currentHealth = currentHealth;
+    }
+
+    public Timestamp getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Timestamp startTime) {
+        this.startTime = startTime;
     }
 
     public void limitPlayerMovement(CollidableEntity<Player> player, Integer screenWidth, Integer screenHeight) {

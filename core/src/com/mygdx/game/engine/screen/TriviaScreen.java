@@ -69,7 +69,7 @@ public class TriviaScreen extends ScreenManager implements Screen {
         int buttonY = 0;
         for (JsonValue question : base)
         {
-            System.out.println(question.getString("question"));
+//            System.out.println(question.getString("question"));
             ArrayList<TriviaOption> triviaOptions = new ArrayList<>();
             for (JsonValue options : question.get("options"))
             {
@@ -84,8 +84,8 @@ public class TriviaScreen extends ScreenManager implements Screen {
                         options.getString("isCorrect").equals("true")
                 );
                 triviaOptions.add(triviaOption);
-                System.out.println(options.getString("text"));
-                System.out.println(options.getString("isCorrect"));
+//                System.out.println(options.getString("text"));
+//                System.out.println(options.getString("isCorrect"));
             }
             triviaOptions.get(0).setX(0);
             triviaOptions.get(0).setY(0);

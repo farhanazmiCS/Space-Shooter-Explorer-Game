@@ -2,6 +2,7 @@ package com.mygdx.game.engine.screen;
 
 import  com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -17,6 +18,8 @@ import com.mygdx.game.engine.lifecycle.Main;
 import com.mygdx.game.engine.entity.EntityManager;
 import com.mygdx.game.engine.input.CustomInputProcessor;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class PauseScreen extends ScreenManager implements Screen {
@@ -136,6 +139,20 @@ public class PauseScreen extends ScreenManager implements Screen {
     }
 
     public void quit() {
+        // save score here
+        Preferences prefs = this.game.getPrefs();
+        StringBuilder data = new StringBuilder(prefs.getString("data"));
+        SimpleDateFormat sdf3 = new SimpleDateFormat("EEE d MMM yyyy HH:mm:ss");
+        for (CollidableEntity<Player> player : this.game.entityManager.getPlayers())
+        {
+            String startTime = sdf3.format(player.getObject().getStartTime());
+            int distanceTravelled = player.getObject().getScore();
+            int aliensKilled = player.getObject().getAliensKilled();
+            data.append(startTime).append(", ").append(distanceTravelled).append(", ").append(aliensKilled).append("\n");
+        }
+        prefs.putString("data", data.toString());
+        System.out.println(data);
+        prefs.flush();
         this.game.entityManager = new EntityManager();
         this.game.entityManager.setPlayers(1, this.game.WIDTH);
         this.game.entityManager.resetFailingObjects();

@@ -1,7 +1,9 @@
 package com.mygdx.game.engine.lifecycle;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -40,6 +42,7 @@ public class Main extends Game {
 	private ScoreboardScreen scoreboardScreen;
 	private TriviaScreen triviaScreen;
 	private ResultScreen resultScreen;
+	private Preferences prefs;
 
 	public SoundManager getSoundManager() {
 		return soundManager;
@@ -163,6 +166,14 @@ public class Main extends Game {
 		this.resultScreen = resultScreen;
 	}
 
+	public Preferences getPrefs() {
+		return prefs;
+	}
+
+	public void setPrefs(Preferences prefs) {
+		this.prefs = prefs;
+	}
+
 	@Override
 	public void create () {
 		font = new BitmapFont();
@@ -177,6 +188,7 @@ public class Main extends Game {
 		scoreboardScreen = new ScoreboardScreen(this);
 		triviaScreen = new TriviaScreen(this);
 		resultScreen = new ResultScreen(this);
+		prefs = Gdx.app.getPreferences("Player Data");
 
 		storyboardImgPath = new ArrayList<String>();
 
