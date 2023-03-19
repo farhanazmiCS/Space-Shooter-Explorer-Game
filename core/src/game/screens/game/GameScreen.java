@@ -55,7 +55,6 @@ public class GameScreen implements Screen {
     public GameScreen(final Main game) {
         this.game = game;
         this.inputProcessor = new CustomInputProcessor();
-        this.game.entityManager.spawnAsteroids(this.game.WIDTH, this.game.HEIGHT);
 
         // Pause and resume button
         this.pauseButton = new Button(150, 66, 640, 420, "pause_button.png", game); // Pause button

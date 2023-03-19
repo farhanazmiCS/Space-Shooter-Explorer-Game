@@ -35,7 +35,7 @@ public class GamePlay extends Game {
         this.inputProcessor = new CustomInputProcessor();
 
         // Spawn the asteroids
-        this.game.entityManager.spawnAsteroids(this.game.WIDTH, this.game.HEIGHT);
+        this.game.entityManager.spawnEnemy("Asteroid");
 
         // Scrolling background
         this.background = new Background("background_game.jpg");
@@ -74,17 +74,20 @@ public class GamePlay extends Game {
         game.getBatch().begin();
 
         if (this.game.entityManager.getUFOs().size() == 0 && distance % 500 == 0) {
-            this.game.entityManager.spawnUFO(); // For now, only generate 1 UFO
+            this.game.entityManager.spawnEnemy("UFO"); // For now, only generate 1 UFO
         }
 
-        if (TimeUtils.nanoTime() - lastDropTime > 1000000000)
-            lastDropTime = this.game.entityManager.spawnAsteroids(this.game.WIDTH, this.game.HEIGHT);
+        if (TimeUtils.nanoTime() - lastDropTime > 1000000000) {
+            this.game.entityManager.spawnEnemy("Asteroid");
+            lastDropTime = TimeUtils.nanoTime();
+        }
 
         if (TimeUtils.nanoTime() - lastShootTime > spawnRate * spawnRateMultiplier)
         {
             for (CollidableEntity<Player> player: this.game.entityManager.getPlayers())
             {
-                lastShootTime = player.getObject().spawnLasers(inputProcessor, player, this.game);
+                player.getObject().spawnLasers(inputProcessor, player, this.game);
+                lastShootTime = TimeUtils.nanoTime();
             }
         }
 

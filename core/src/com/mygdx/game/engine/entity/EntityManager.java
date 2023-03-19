@@ -30,15 +30,6 @@ public class EntityManager {
         this.game = game;
     }
 
-    public long spawnAsteroids(int screenWidth, int screenHeight) {
-        int[] possibleX = {250, 250, 300, 350, 400, 450, 650};
-        int chance = (new Random()).nextInt(possibleX.length) ;
-
-        CollidableEntity<Asteroid> asteroid = new CollidableEntity<Asteroid>(possibleX[chance], 800, new Asteroid("asteroid.png"));
-        asteroids.add(asteroid);
-        return TimeUtils.nanoTime();
-    }
-
     public ArrayList<CollidableEntity<Asteroid>> getAsteroids() {
         return asteroids;
     }
@@ -91,30 +82,6 @@ public class EntityManager {
         asteroids = new ArrayList<CollidableEntity<Asteroid>>();
     }
 
-    // Factory method to add UFO
-    public void spawnUFO() {
-        int max = 5;
-        Random random = new Random();
-        int numUFO = random.nextInt(max) + 1;
-        ArrayList<Integer> possibleX = new ArrayList<Integer>();
-        Integer[] elementsToAdd = {100, 200, 300, 400, 500, 600, 700};
-        possibleX.addAll(Arrays.asList(elementsToAdd));
-        for (int i = 0; i < numUFO; i++) {
-            UFO ufoObject = new UFO("alien.png");
-            int x = possibleX.get(random.nextInt(possibleX.size()));
-            if (possibleX.contains(x)) {
-                int index = possibleX.indexOf(x);
-                possibleX.remove(index);
-            }
-            int y = 460; // Put beyond the screen first
-            CollidableEntity<UFO> ufo = new CollidableEntity<UFO>(
-                    x,
-                    y,
-                    ufoObject);
-            UFOs.add(ufo);
-        }
-    }
-
     public void savePlayerData()
     {
         // save score here
@@ -132,5 +99,43 @@ public class EntityManager {
         System.out.println(data);
         prefs.flush();
     }
+
+    public CollidableEntity<?> spawnEnemy(String entityType) {
+        Random random = new Random();
+        if (entityType.equals("Asteroid")) {
+            int[] possibleX = {250, 250, 300, 350, 400, 450, 650};
+            int chance = random.nextInt(possibleX.length);
+            Asteroid asteroid = new Asteroid("asteroid.png");
+            CollidableEntity<Asteroid> asteroidEntity = new CollidableEntity<Asteroid>(
+                    possibleX[chance],
+                    800,
+                    asteroid);
+            asteroids.add(asteroidEntity);
+            return asteroidEntity;
+        } else if (entityType.equals("UFO")) {
+            int max = 5;
+            ArrayList<Integer> possibleX = new ArrayList<Integer>();
+            Integer[] elementsToAdd = {100, 200, 300, 400, 500, 600, 700};
+            possibleX.addAll(Arrays.asList(elementsToAdd));
+            int numUFO = random.nextInt(max) + 1;
+            for (int i = 0; i < numUFO; i++) {
+                UFO ufoObject = new UFO("alien.png");
+                int x = possibleX.get(random.nextInt(possibleX.size()));
+                if (possibleX.contains(x)) {
+                    int index = possibleX.indexOf(x);
+                    possibleX.remove(index);
+                }
+                int y = 460; // Put beyond the screen first
+                CollidableEntity<UFO> ufoEntity = new CollidableEntity<UFO>(
+                        x,
+                        y,
+                        ufoObject);
+                UFOs.add(ufoEntity);
+                return ufoEntity;
+            }
+        }
+        return null;
+    }
+
 
 }

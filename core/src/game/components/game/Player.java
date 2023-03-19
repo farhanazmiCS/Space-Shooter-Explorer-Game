@@ -202,7 +202,7 @@ public class Player {
         }
     }
 
-    public long spawnLasers(CustomInputProcessor inputProcessor, CollidableEntity<Player> player, Main game) {
+    public void spawnLasers(CustomInputProcessor inputProcessor, CollidableEntity<Player> player, Main game) {
         if (inputProcessor.keyDown(Input.Keys.SPACE) || inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
             ArrayList<CollidableEntity<Laser>> lasers = player.getObject().getLasers();
             CollidableEntity<Laser> laser = new CollidableEntity<>(
@@ -213,9 +213,7 @@ public class Player {
                             800));
             lasers.add(laser);
             game.getSoundManager().playLaserSound();
-            return TimeUtils.nanoTime();
         }
-        return 0;
     }
 
 }
