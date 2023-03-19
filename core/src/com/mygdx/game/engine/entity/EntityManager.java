@@ -100,9 +100,9 @@ public class EntityManager {
         prefs.flush();
     }
 
-    public CollidableEntity<?> spawnEnemy(String entityType) {
-        Random random = new Random();
+    public ArrayList spawnEnemy(String entityType) {
         if (entityType.equals("Asteroid")) {
+            Random random = new Random();
             int[] possibleX = {250, 250, 300, 350, 400, 450, 650};
             int chance = random.nextInt(possibleX.length);
             Asteroid asteroid = new Asteroid("asteroid.png");
@@ -111,8 +111,9 @@ public class EntityManager {
                     800,
                     asteroid);
             asteroids.add(asteroidEntity);
-            return asteroidEntity;
+            return asteroids;
         } else if (entityType.equals("UFO")) {
+            Random random = new Random();
             int max = 5;
             ArrayList<Integer> possibleX = new ArrayList<Integer>();
             Integer[] elementsToAdd = {100, 200, 300, 400, 500, 600, 700};
@@ -131,8 +132,8 @@ public class EntityManager {
                         y,
                         ufoObject);
                 UFOs.add(ufoEntity);
-                return ufoEntity;
             }
+            return UFOs;
         }
         return null;
     }

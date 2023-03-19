@@ -211,6 +211,9 @@ public class GamePlay extends Game {
                     this.game.entityManager.getAsteroids().remove(asteroid);
                     j--;
                 }
+                if (asteroid.getY() < 0) {
+                    this.game.entityManager.getAsteroids().remove(asteroid);
+                }
             }
 
             if (player.getObject().getCurrentHealth() <= 0)
