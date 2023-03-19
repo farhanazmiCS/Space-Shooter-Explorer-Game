@@ -21,7 +21,7 @@ import com.mygdx.game.engine.sound.SoundManager;
 import java.util.ArrayList;
 
 public class Main extends Game {
-	public static Main instance = null;
+	private static Main instance = null;
 
 	/*
 		- In order to satisfy the singleton principle, this class cannot be instantiated from outside this class.
