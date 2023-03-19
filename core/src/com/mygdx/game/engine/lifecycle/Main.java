@@ -3,7 +3,6 @@ package com.mygdx.game.engine.lifecycle;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.engine.entity.EntityManager;
@@ -22,6 +21,26 @@ import com.mygdx.game.engine.sound.SoundManager;
 import java.util.ArrayList;
 
 public class Main extends Game {
+	public static Main instance = null;
+
+	/*
+		- In order to satisfy the singleton principle, this class cannot be instantiated from outside this class.
+		- Instead, it can check if the Main instance is null, and if it is, the Main class will create a new Main instance.
+		- Thus, the constructor is private.
+	 */
+	private Main() { }
+
+	/*
+		A static method to get the instance. If instance is null (No Main instance present),
+		create a new Main instance.
+	*/
+	public static Main getInstance() {
+		if (instance == null) {
+			instance = new Main();
+		}
+		return instance;
+	}
+
 	public ScreenManager getScreenManager() {
 		return screenManager;
 	}
@@ -80,7 +99,6 @@ public class Main extends Game {
 
 	ArrayList<String> storyboardImgPath;
 	public EntityManager entityManager;
-	Texture img_test;
 
 	public SpriteBatch getBatch() {
 		return batch;

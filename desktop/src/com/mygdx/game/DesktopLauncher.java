@@ -11,6 +11,6 @@ public class DesktopLauncher {
 		config.setForegroundFPS(60);
 		config.setWindowedMode(800, 480);
 		config.setTitle("Team_Project");
-		new Lwjgl3Application(new Main(), config);
+		new Lwjgl3Application(Main.getInstance(), config);
 	}
 }

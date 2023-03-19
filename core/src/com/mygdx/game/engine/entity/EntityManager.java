@@ -15,7 +15,6 @@ import game.components.game.UFO;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.Random;
 
 public class EntityManager {
