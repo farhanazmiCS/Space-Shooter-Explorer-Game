@@ -277,11 +277,11 @@ public class GameScreen implements Screen {
                 for (CollidableEntity<UFO> ufo: this.game.entityManager.getUFOs())
                 {
                     lastShootTimeUFO = ufo.getObject().fireWeapon(ufo, game);
-                    if (this.game.entityManager.laserCollision(player, ufo.getObject().getLasers())) {
+                    if (player.laserCollision(player, ufo.getObject().getLasers())) {
                         // Check collision between player and UFO lasers
                         player.getObject().setCurrentHealth(player.getObject().getCurrentHealth() - 1);
                     }
-                    if (this.game.entityManager.laserCollision(ufo, player.getObject().getLasers())) {
+                    if (ufo.laserCollision(ufo, player.getObject().getLasers())) {
                         ufo.getObject().setHealth(ufo.getObject().getHealth() - 2);
                     }
                 }

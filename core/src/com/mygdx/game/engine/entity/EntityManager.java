@@ -23,7 +23,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Random;
 
-public class EntityManager implements CollisionManager {
+public class EntityManager {
     private ArrayList<CollidableEntity<Player>> players;
     private ArrayList<CollidableEntity<Asteroid>> asteroids;
     private ArrayList<CollidableEntity<UFO>> UFOs;
@@ -81,7 +81,7 @@ public class EntityManager implements CollisionManager {
                 iter.remove();
             }
             for (CollidableEntity<Player> player : players) {
-                if (asteroidCollision(player, fallingObject)) {
+                if (player.asteroidCollision(player, fallingObject) || fallingObject.asteroidCollision(player, fallingObject)) {
                     iter.remove();
                     return 1;
                 }
@@ -165,26 +165,6 @@ public class EntityManager implements CollisionManager {
                     ufoObject);
             UFOs.add(ufo);
         }
-    }
-
-    @Override
-    public boolean asteroidCollision(CollidableEntity<Player> player, CollidableEntity<Asteroid> asteroid) {
-        player.setRectangle(new Rectangle(player.getX(), player.getY(), player.getObject().getWidth(), player.getObject().getHeight()));
-        asteroid.setRectangle(new Rectangle(asteroid.getX(), asteroid.getY(), asteroid.getObject().getWidth(), asteroid.getObject().getHeight()));
-        return player.getRectangle().overlaps(asteroid.getRectangle());
-    }
-
-    @Override
-    public boolean laserCollision(CollidableEntity entity, ArrayList<CollidableEntity<Laser>> lasers) {
-            entity.setRectangle(new Rectangle(entity.getX(), entity.getY(), entity.getRectangle().getWidth(), entity.getRectangle().getHeight()));
-            for (int j = 0; j < lasers.size(); j++) {
-                lasers.get(j).setRectangle(new Rectangle(lasers.get(j).getX(), lasers.get(j).getY(), lasers.get(j).getObject().getWidth(), lasers.get(j).getObject().getHeight()));
-                if (entity.getRectangle().overlaps(lasers.get(j).getRectangle())) {
-                    System.out.println("Hit!\n");
-                    return true;
-                }
-            }
-        return false;
     }
 
     public void savePlayerData()
