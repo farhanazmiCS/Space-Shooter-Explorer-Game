@@ -1,4 +1,4 @@
-package com.mygdx.game.engine.screen;
+package game.screens.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -17,7 +17,7 @@ import com.mygdx.game.engine.lifecycle.Main;
 import java.sql.Timestamp;
 
 import game.components.game.Player;
-import game.components.menu.Button;
+import game.components.ui.Button;
 
 public class ControlScreen implements Screen {
     private String imgPath;

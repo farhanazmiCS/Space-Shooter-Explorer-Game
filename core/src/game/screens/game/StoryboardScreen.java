@@ -1,70 +1,57 @@
-package com.mygdx.game.engine.screen;
-
+package game.screens.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.Timer;
-import com.mygdx.game.engine.collision.CollidableEntity;
 import com.mygdx.game.engine.input.CustomInputProcessor;
 import com.mygdx.game.engine.lifecycle.Main;
+
+
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.engine.sound.SoundManager;
 
-import java.util.ArrayList;
+import game.components.ui.Button;
 
-import game.components.game.Player;
-import game.components.game.TriviaOption;
-import game.components.game.TriviaQuestion;
-import game.components.menu.Button;
-
-public class ResultScreen extends ScreenManager implements Screen {
-
-    public CustomInputProcessor getInputProcessor() {
-        return inputProcessor;
-    }
-
-    public void setInputProcessor(CustomInputProcessor inputProcessor) {
-        this.inputProcessor = inputProcessor;
-    }
-
-    private SpriteBatch batch;
+public class StoryboardScreen implements Screen {
+    private String imgPath;
     private Texture texture;
-
+    private SpriteBatch batch;
+    private final Main game;
     private CustomInputProcessor inputProcessor;
-    private Main game;
+    private OrthographicCamera camera;
+    private Button nextButton;
 
     private float buttonShowDelay = 0.5f; // seconds
     private Timer.Task buttonShowTask;
-    private Button nextButton;
 
-    private String resultBG;
 
-    public String getResultBG() {
-        return resultBG;
+    public int getCurrent() {
+        return current;
     }
 
-    public void setResultBG(String resultBG) {
-        this.resultBG = resultBG;
-        texture = new Texture(resultBG);
+    public void setCurrent(int current) {
+        this.current = current;
     }
 
-    public ResultScreen(Main game) {
-        super(game);
+    private int current;
+
+
+    public StoryboardScreen(final Main game, String imgPath) {
+        this.camera = new OrthographicCamera();
+        this.camera.setToOrtho(false, 800, 480);
+
+        this.imgPath = imgPath;
+        this.texture = new Texture(this.imgPath);
+        this.batch = new SpriteBatch();
         this.game = game;
-
-        texture = new Texture("main_menu_background_resized.png");
-        batch = new SpriteBatch();
-
         this.inputProcessor = new CustomInputProcessor();
 
-        this.nextButton = new Button(150, 66, 640, 20, "resume_button.png", game);
-
-        nextButton.setVisibility(false);
+        this.nextButton = new Button(150, 66, 640, 20, "next_button.png", game);
+        this.nextButton.setActive(false);
 
         buttonShowTask = new Timer.Task() {
             @Override
@@ -72,13 +59,14 @@ public class ResultScreen extends ScreenManager implements Screen {
                 nextButton.setVisibility(true);
             }
         };
+
     }
 
     @Override
     public void show() {
         Gdx.input.setInputProcessor(inputProcessor);
         Timer.schedule(buttonShowTask, buttonShowDelay);
-        SoundManager.playMusic(SoundManager.ScreenType.PAUSE);
+        SoundManager.playMusic(SoundManager.ScreenType.STORY);
     }
 
     @Override
@@ -105,12 +93,13 @@ public class ResultScreen extends ScreenManager implements Screen {
                 this.game.getSoundManager().playButtonHover();
             }
             if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
-                game.setScreen(game.getGameScreen());
+                next();
             }
         }
         else {
             nextButton.setActive(false);
         }
+
     }
 
     @Override
@@ -125,7 +114,7 @@ public class ResultScreen extends ScreenManager implements Screen {
 
     @Override
     public void resume() {
-        game.setScreen(game.getGameScreen());
+
     }
 
     @Override
@@ -135,7 +124,15 @@ public class ResultScreen extends ScreenManager implements Screen {
 
     @Override
     public void dispose() {
-        texture.dispose();
-        batch.dispose();
+
+    }
+
+    public void next() {
+        if (current < game.getStoryboards().size() - 1) {
+            game.setScreen(game.getStoryboards().get(current + 1));
+        }
+        else {
+            game.setScreen(game.getControlScreen());
+        }
     }
 }

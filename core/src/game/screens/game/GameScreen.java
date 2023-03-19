@@ -1,18 +1,17 @@
-package com.mygdx.game.engine.screen;
+package game.screens.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 
 import game.components.game.Background;
 import game.components.game.HealthBar;
-import game.components.menu.Button;
+import game.components.ui.Button;
 
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -164,14 +163,13 @@ public class GameScreen implements Screen {
         {
             for (CollidableEntity<Player> player: this.game.entityManager.getPlayers())
             {
-                lastShootTime = this.game.entityManager.spawnLasers(inputProcessor, player, this.game);
+                lastShootTime = player.getObject().spawnLasers(inputProcessor, player, this.game);
             }
         }
 
-        this.game.entityManager.moveLasers();
-
         for (CollidableEntity<Player> player : this.game.entityManager.getPlayers())
         {
+            player.getObject().moveLasers(player);
             if (player.getObject().getLasers().size() > 0)
             {
                 for (CollidableEntity<Laser> laser : player.getObject().getLasers())
@@ -279,9 +277,11 @@ public class GameScreen implements Screen {
                     lastShootTimeUFO = ufo.getObject().fireWeapon(ufo, game);
                     if (player.laserCollision(player, ufo.getObject().getLasers())) {
                         // Check collision between player and UFO lasers
+                        System.out.println("Player " + i + " hit!");
                         player.getObject().setCurrentHealth(player.getObject().getCurrentHealth() - 1);
                     }
                     if (ufo.laserCollision(ufo, player.getObject().getLasers())) {
+                        System.out.println("UFO " + ufo + " hit!");
                         ufo.getObject().setHealth(ufo.getObject().getHealth() - 2);
                     }
                 }
@@ -307,6 +307,7 @@ public class GameScreen implements Screen {
                 else
                 {
                     this.game.entityManager.getPlayers().remove(player);
+                    i--;
                 }
             }
             player.getObject().setScore((int) distance);

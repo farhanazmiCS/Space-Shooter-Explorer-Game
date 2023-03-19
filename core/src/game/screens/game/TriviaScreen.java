@@ -1,4 +1,4 @@
-package com.mygdx.game.engine.screen;
+package game.screens.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -8,25 +8,22 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.mygdx.game.engine.collision.CollidableEntity;
-import com.mygdx.game.engine.entity.EntityManager;
 import com.mygdx.game.engine.input.CustomInputProcessor;
 import com.mygdx.game.engine.lifecycle.Main;
+import com.mygdx.game.engine.screen.ScreenManager;
 import com.mygdx.game.engine.sound.SoundManager;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 import game.components.game.Player;
 import game.components.game.TriviaOption;
 import game.components.game.TriviaQuestion;
-import game.components.menu.Button;
 
 public class TriviaScreen extends ScreenManager implements Screen {
 

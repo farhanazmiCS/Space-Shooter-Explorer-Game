@@ -1,4 +1,4 @@
-package com.mygdx.game.engine.screen;
+package game.screens.menu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -8,8 +8,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
-import game.components.menu.Button;
+import game.components.ui.Button;
 
+import com.mygdx.game.engine.screen.ScreenManager;
 import com.mygdx.game.engine.sound.SoundManager;
 import com.mygdx.game.engine.input.CustomInputProcessor;
 import com.mygdx.game.engine.lifecycle.Main;

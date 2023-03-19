@@ -2,8 +2,6 @@ package game.components.game;
 
 import java.util.ArrayList;
 
-import game.components.menu.Button;
-
 public class TriviaQuestion {
     private String question;
     private ArrayList<TriviaOption> optionButtons;

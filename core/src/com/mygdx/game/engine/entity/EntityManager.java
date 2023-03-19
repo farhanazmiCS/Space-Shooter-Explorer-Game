@@ -4,16 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.engine.collision.CollidableEntity;
-import com.mygdx.game.engine.collision.CollisionManager;
-import com.mygdx.game.engine.input.CustomInputProcessor;
 import com.mygdx.game.engine.lifecycle.Main;
 
 import game.components.game.Asteroid;
-import game.components.game.Laser;
 import game.components.game.Player;
 import game.components.game.UFO;
 
@@ -34,33 +29,6 @@ public class EntityManager {
         asteroids = new ArrayList<>();
         UFOs = new ArrayList<CollidableEntity<UFO>>();
         this.game = game;
-    }
-
-    public void moveLasers() {
-        for (CollidableEntity<Player> player : players) {
-            ArrayList<CollidableEntity<Laser>> lasers = player.getObject().getLasers();
-            for (int i = 0; i < lasers.size(); i++) {
-                CollidableEntity<Laser> laser = lasers.get(i);
-                laser.setY(laser.getY() + (laser.getObject().getSpeed() * Gdx.graphics.getDeltaTime()));
-                lasers.set(i, laser);
-            }
-        }
-    }
-
-    public long spawnLasers(CustomInputProcessor inputProcessor, CollidableEntity<Player> player, Main game) {
-        if (inputProcessor.keyDown(Input.Keys.SPACE) || inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
-            ArrayList<CollidableEntity<Laser>> lasers = player.getObject().getLasers();
-            CollidableEntity<Laser> laser = new CollidableEntity<>(
-                    player.getX() + 15,
-                    player.getY(),
-                    new Laser(
-                            "green_laser.png",
-                            800));
-            lasers.add(laser);
-            game.getSoundManager().playLaserSound();
-            return TimeUtils.nanoTime();
-        }
-        return 0;
     }
 
     public long spawnAsteroids(int screenWidth, int screenHeight) {
@@ -104,7 +72,6 @@ public class EntityManager {
 
     public void setPlayers(int noOfPlayers, int WIDTH) {
         ArrayList<CollidableEntity<Player>> players = new ArrayList<>();
-        // THIS SHOULD BE IN ENTITY MANAGER!!!!
         for (int i = 0; i < noOfPlayers; i++)
         {
             CollidableEntity<Player> player = new CollidableEntity<>(

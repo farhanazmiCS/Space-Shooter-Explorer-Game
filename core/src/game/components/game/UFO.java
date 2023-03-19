@@ -1,7 +1,6 @@
 package game.components.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.TimeUtils;
@@ -104,10 +103,7 @@ public class UFO implements BehaviourManager {
             }
         }
     }
-
-
     public ArrayList<CollidableEntity<Laser>> getLasers() {
         return lasers;
     }
-
 }

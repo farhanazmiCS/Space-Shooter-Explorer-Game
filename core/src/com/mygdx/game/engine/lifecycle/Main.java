@@ -2,28 +2,24 @@ package com.mygdx.game.engine.lifecycle;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.engine.collision.CollidableEntity;
 import com.mygdx.game.engine.entity.EntityManager;
-import com.mygdx.game.engine.screen.ControlScreen;
-import com.mygdx.game.engine.screen.GameOverScreen;
-import com.mygdx.game.engine.screen.GameScreen;
-import com.mygdx.game.engine.screen.MainMenuScreen;
-import com.mygdx.game.engine.screen.PauseScreen;
-import com.mygdx.game.engine.screen.ResultScreen;
-import com.mygdx.game.engine.screen.ScoreboardScreen;
+import game.screens.game.ControlScreen;
+import game.screens.game.GameOverScreen;
+import game.screens.game.GameScreen;
+import game.screens.menu.MainMenuScreen;
+import game.screens.menu.PauseScreen;
+import game.screens.game.ResultScreen;
+import game.screens.menu.ScoreboardScreen;
 import com.mygdx.game.engine.screen.ScreenManager;
-import com.mygdx.game.engine.screen.TriviaScreen;
-import com.mygdx.game.engine.screen.storyboard.StoryboardScreen;
+import game.screens.game.TriviaScreen;
+import game.screens.game.StoryboardScreen;
 import com.mygdx.game.engine.sound.SoundManager;
 
 import java.util.ArrayList;
-
-import game.components.game.Player;
 
 public class Main extends Game {
 	public ScreenManager getScreenManager() {
@@ -104,9 +100,6 @@ public class Main extends Game {
 
 	private SpriteBatch batch;
 	private BitmapFont font;
-
-//	TestEntity test;
-
 	public final int HEIGHT = 480;
 	public final int WIDTH = 800;
 
@@ -176,42 +169,40 @@ public class Main extends Game {
 
 	@Override
 	public void create () {
+		// BitmapFont for drawing text
 		font = new BitmapFont();
+		font.getData().setScale(1.5f);
 
-		// Create new screen/scene manager
+		// Create Screen, Sound and Entity Managers
 		screenManager = new ScreenManager(this);
+		soundManager = new SoundManager();
+		entityManager = new EntityManager(this);
 
-		// Create Pause menu, main menu and scoreboard menu
+		// Set players (Single Player game)
+		entityManager.setPlayers(1, WIDTH);
+
+		prefs = Gdx.app.getPreferences("Player Data");
+
+		// Generating storyboards for the game
+		storyboardImgPath = new ArrayList<String>();
+		storyboardImgPath.add("1.jpg");
+		storyboardImgPath.add("2.jpg");
+		storyboardImgPath.add("3.jpg");
+		storyboards = this.screenManager.generateStoryboards(storyboardImgPath);
+
+		batch = new SpriteBatch();
+
+		// Create screens
 		mainMenuScreen = new MainMenuScreen(this);
 		pauseScreen = new PauseScreen(this);
 		gameOverScreen = new GameOverScreen(this);
 		scoreboardScreen = new ScoreboardScreen(this);
 		triviaScreen = new TriviaScreen(this);
 		resultScreen = new ResultScreen(this);
-		prefs = Gdx.app.getPreferences("Player Data");
-
-		storyboardImgPath = new ArrayList<String>();
-
-		storyboardImgPath.add("1.jpg");
-		storyboardImgPath.add("2.jpg");
-		storyboardImgPath.add("3.jpg");
-
-		storyboards = this.screenManager.generateStoryboards(storyboardImgPath);
-
 		controlScreen = new ControlScreen(this, "controls.jpg");
-
-		soundManager = new SoundManager();
-
-		batch = new SpriteBatch();
-		font.getData().setScale(1.5f);
-		entityManager = new EntityManager(this);
-		entityManager.setPlayers(1, WIDTH);
-
-
-		//entityManager.setPlayer(player);
-		this.setScreen(mainMenuScreen);
-		// Create game screen
 		gameScreen = new GameScreen(this);
+
+		this.setScreen(mainMenuScreen);
 	}
 
 	@Override
@@ -221,11 +212,20 @@ public class Main extends Game {
 	
 	@Override
 	public void dispose () {
+		// Dispose batch
 		batch.dispose();
+
+		// Dispose screens
 		mainMenuScreen.dispose();
 		pauseScreen.dispose();
 		gameScreen.dispose();
+		gameOverScreen.dispose();
 		scoreboardScreen.dispose();
-		// img_test.dispose();
+		triviaScreen.dispose();
+		resultScreen.dispose();
+		controlScreen.dispose();
+
+		// Dispose Sound manager
+		soundManager.dispose();
 	}
 }

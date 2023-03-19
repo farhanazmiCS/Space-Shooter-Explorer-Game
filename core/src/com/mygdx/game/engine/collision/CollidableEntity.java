@@ -58,9 +58,9 @@ public class CollidableEntity<T> extends Entity<T> implements CollisionManager{
     @Override
     public boolean laserCollision(CollidableEntity entity, ArrayList<CollidableEntity<Laser>> lasers) {
         entity.setRectangle(new Rectangle(entity.getX(), entity.getY(), entity.getRectangle().getWidth(), entity.getRectangle().getHeight()));
-        for (int j = 0; j < lasers.size(); j++) {
-            lasers.get(j).setRectangle(new Rectangle(lasers.get(j).getX(), lasers.get(j).getY(), lasers.get(j).getObject().getWidth(), lasers.get(j).getObject().getHeight()));
-            if (entity.getRectangle().overlaps(lasers.get(j).getRectangle())) {
+        for (CollidableEntity<Laser> laser : lasers) {
+            laser.setRectangle(new Rectangle(laser.getX(), laser.getY(), laser.getObject().getWidth(), laser.getObject().getHeight()));
+            if (entity.getRectangle().overlaps(laser.getRectangle())) {
                 System.out.println("Hit!\n");
                 return true;
             }

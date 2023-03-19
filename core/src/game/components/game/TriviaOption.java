@@ -2,7 +2,7 @@ package game.components.game;
 
 import com.mygdx.game.engine.lifecycle.Main;
 
-import game.components.menu.Button;
+import game.components.ui.Button;
 
 public class TriviaOption extends Button{
     private Boolean isCorrect;

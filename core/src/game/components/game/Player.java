@@ -1,10 +1,13 @@
 package game.components.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.engine.collision.CollidableEntity;
 import com.mygdx.game.engine.input.CustomInputProcessor;
+import com.mygdx.game.engine.lifecycle.Main;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -189,4 +192,30 @@ public class Player {
     public void setAliensKilled(int aliensKilled) {
         this.aliensKilled = aliensKilled;
     }
+
+    public void moveLasers(CollidableEntity<Player> player) {
+        ArrayList<CollidableEntity<Laser>> lasers = player.getObject().getLasers();
+        for (int i = 0; i < lasers.size(); i++) {
+            CollidableEntity<Laser> laser = lasers.get(i);
+            laser.setY(laser.getY() + (laser.getObject().getSpeed() * Gdx.graphics.getDeltaTime()));
+            lasers.set(i, laser);
+        }
+    }
+
+    public long spawnLasers(CustomInputProcessor inputProcessor, CollidableEntity<Player> player, Main game) {
+        if (inputProcessor.keyDown(Input.Keys.SPACE) || inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
+            ArrayList<CollidableEntity<Laser>> lasers = player.getObject().getLasers();
+            CollidableEntity<Laser> laser = new CollidableEntity<>(
+                    player.getX() + 15,
+                    player.getY(),
+                    new Laser(
+                            "green_laser.png",
+                            800));
+            lasers.add(laser);
+            game.getSoundManager().playLaserSound();
+            return TimeUtils.nanoTime();
+        }
+        return 0;
+    }
+
 }

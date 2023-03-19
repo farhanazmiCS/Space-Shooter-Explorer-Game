@@ -1,4 +1,4 @@
-package com.mygdx.game.engine.screen;
+package game.screens.menu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -17,10 +17,9 @@ import com.mygdx.game.engine.lifecycle.Main;
 import com.mygdx.game.engine.input.CustomInputProcessor;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import game.components.game.PlayerScore;
-import game.components.menu.Button;
+import game.components.ui.Button;
 
 public class ScoreboardScreen implements Screen{
     public CustomInputProcessor getInputProcessor() {

@@ -1,27 +1,26 @@
-package com.mygdx.game.engine.screen;
+package game.screens.menu;
 
-import com.badlogic.gdx.Gdx;
+import  com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.mygdx.game.engine.collision.CollidableEntity;
+
+import game.components.ui.Button;
+import game.screens.game.ControlScreen;
+import game.screens.game.GameScreen;
+
+import com.mygdx.game.engine.screen.ScreenManager;
+import com.mygdx.game.engine.sound.SoundManager;
+import com.mygdx.game.engine.lifecycle.Main;
 import com.mygdx.game.engine.entity.EntityManager;
 import com.mygdx.game.engine.input.CustomInputProcessor;
-import com.mygdx.game.engine.lifecycle.Main;
-import com.mygdx.game.engine.sound.SoundManager;
 
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-import game.components.game.Player;
-import game.components.menu.Button;
-
-public class GameOverScreen extends ScreenManager implements Screen {
+public class PauseScreen extends ScreenManager implements Screen {
     public CustomInputProcessor getInputProcessor() {
         return inputProcessor;
     }
@@ -45,19 +44,20 @@ public class GameOverScreen extends ScreenManager implements Screen {
     private Main game;
     private ArrayList<Button> buttons;
     private ArrayList<String> buttonPath;
-    public GameOverScreen(Main game) {
+    public PauseScreen(Main game) {
         super(game);
         this.game = game;
 
-        texture = new Texture("game_over.jpg");
+        texture = new Texture("main_menu_background_resized.png");
         batch = new SpriteBatch();
 
         this.inputProcessor = new CustomInputProcessor();
 
         buttons = new ArrayList<Button>();
         buttonPath = new ArrayList<String>();
+        buttonPath.add("resume_button.png");
         buttonPath.add("quit_button.png");
-        createScreenButtons(1, buttons, 75, buttonPath);
+        createScreenButtons(2, buttons, 75, buttonPath);
     }
 
     @Override
@@ -69,7 +69,6 @@ public class GameOverScreen extends ScreenManager implements Screen {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0.2f, 1);
-
         this.batch.begin();
         this.batch.draw(this.texture, 0, 0);
         this.batch.end();
@@ -81,12 +80,33 @@ public class GameOverScreen extends ScreenManager implements Screen {
         }
 
         buttons.get(0).setButtonColor(Color.WHITE);
+        buttons.get(1).setButtonColor(Color.WHITE);
 
         if (inputProcessor.mouseHoverOver(buttons.get(0).getBound())) {
             buttons.get(0).setButtonColor(Color.LIGHT_GRAY);
+            if (!buttons.get(0).isActive()) {
+                buttons.get(0).setActive(true);
+                this.game.getSoundManager().playButtonHover();
+            }
+            if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
+                  resume();
+            }
+        }
+        else {
+            buttons.get(0).setActive(false);
+        }
+        if (inputProcessor.mouseHoverOver(buttons.get(1).getBound())) {
+            buttons.get(1).setButtonColor(Color.LIGHT_GRAY);
+            if (!buttons.get(1).isActive()) {
+                buttons.get(1).setActive(true);
+                this.game.getSoundManager().playButtonHover();
+            }
             if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
                 quit();
             }
+        }
+        else {
+            buttons.get(1).setActive(false);
         }
     }
 

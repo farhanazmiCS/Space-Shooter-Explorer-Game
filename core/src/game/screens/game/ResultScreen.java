@@ -1,59 +1,63 @@
-package com.mygdx.game.engine.screen.storyboard;
+package game.screens.game;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.mygdx.game.engine.input.CustomInputProcessor;
 import com.mygdx.game.engine.lifecycle.Main;
-
-
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.engine.screen.ScreenManager;
 import com.mygdx.game.engine.sound.SoundManager;
 
-import java.sql.Time;
+import game.components.ui.Button;
 
-import game.components.menu.Button;
+public class ResultScreen extends ScreenManager implements Screen {
 
-public class StoryboardScreen implements Screen {
-    private String imgPath;
-    private Texture texture;
+    public CustomInputProcessor getInputProcessor() {
+        return inputProcessor;
+    }
+
+    public void setInputProcessor(CustomInputProcessor inputProcessor) {
+        this.inputProcessor = inputProcessor;
+    }
+
     private SpriteBatch batch;
-    private final Main game;
+    private Texture texture;
+
     private CustomInputProcessor inputProcessor;
-    private OrthographicCamera camera;
-    private Button nextButton;
+    private Main game;
 
     private float buttonShowDelay = 0.5f; // seconds
     private Timer.Task buttonShowTask;
+    private Button nextButton;
 
+    private String resultBG;
 
-    public int getCurrent() {
-        return current;
+    public String getResultBG() {
+        return resultBG;
     }
 
-    public void setCurrent(int current) {
-        this.current = current;
+    public void setResultBG(String resultBG) {
+        this.resultBG = resultBG;
+        texture = new Texture(resultBG);
     }
 
-    private int current;
-
-
-    public StoryboardScreen(final Main game, String imgPath) {
-        this.camera = new OrthographicCamera();
-        this.camera.setToOrtho(false, 800, 480);
-
-        this.imgPath = imgPath;
-        this.texture = new Texture(this.imgPath);
-        this.batch = new SpriteBatch();
+    public ResultScreen(Main game) {
+        super(game);
         this.game = game;
+
+        texture = new Texture("main_menu_background_resized.png");
+        batch = new SpriteBatch();
+
         this.inputProcessor = new CustomInputProcessor();
 
-        this.nextButton = new Button(150, 66, 640, 20, "next_button.png", game);
-        this.nextButton.setActive(false);
+        this.nextButton = new Button(150, 66, 640, 20, "resume_button.png", game);
+
+        nextButton.setVisibility(false);
 
         buttonShowTask = new Timer.Task() {
             @Override
@@ -61,14 +65,13 @@ public class StoryboardScreen implements Screen {
                 nextButton.setVisibility(true);
             }
         };
-
     }
 
     @Override
     public void show() {
         Gdx.input.setInputProcessor(inputProcessor);
         Timer.schedule(buttonShowTask, buttonShowDelay);
-        SoundManager.playMusic(SoundManager.ScreenType.STORY);
+        SoundManager.playMusic(SoundManager.ScreenType.PAUSE);
     }
 
     @Override
@@ -95,13 +98,12 @@ public class StoryboardScreen implements Screen {
                 this.game.getSoundManager().playButtonHover();
             }
             if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
-                next();
+                game.setScreen(game.getGameScreen());
             }
         }
         else {
             nextButton.setActive(false);
         }
-
     }
 
     @Override
@@ -116,7 +118,7 @@ public class StoryboardScreen implements Screen {
 
     @Override
     public void resume() {
-
+        game.setScreen(game.getGameScreen());
     }
 
     @Override
@@ -126,15 +128,7 @@ public class StoryboardScreen implements Screen {
 
     @Override
     public void dispose() {
-
-    }
-
-    public void next() {
-        if (current < game.getStoryboards().size() - 1) {
-            game.setScreen(game.getStoryboards().get(current + 1));
-        }
-        else {
-            game.setScreen(game.getControlScreen());
-        }
+        texture.dispose();
+        batch.dispose();
     }
 }
