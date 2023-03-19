@@ -9,7 +9,7 @@ import game.components.game.Asteroid;
 import game.components.game.Laser;
 import game.components.game.Player;
 
-public class CollidableEntity<T> extends Entity<T> implements CollisionManager{
+public class CollidableEntity<T> extends Entity<T> implements CollisionManager {
     private float prevX;
     private float prevY;
 

@@ -179,7 +179,7 @@ public class Main extends Game {
 		entityManager = new EntityManager(this);
 
 		// Set players (Single Player game)
-		entityManager.setPlayers(1, WIDTH);
+		entityManager.setPlayers(3, WIDTH);
 
 		prefs = Gdx.app.getPreferences("Player Data");
 

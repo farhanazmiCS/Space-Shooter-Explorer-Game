@@ -40,24 +40,6 @@ public class EntityManager {
         return TimeUtils.nanoTime();
     }
 
-    public int moveFallingObject() {
-        Iterator<CollidableEntity<Asteroid>> iter = asteroids.iterator();
-        while (iter.hasNext()) {
-            CollidableEntity<Asteroid> fallingObject = iter.next();
-            fallingObject.setY(fallingObject.getY() - 200 * Gdx.graphics.getDeltaTime());
-            if (fallingObject.getY() + fallingObject.getObject().getWidth() < 0) {
-                iter.remove();
-            }
-            for (CollidableEntity<Player> player : players) {
-                if (player.asteroidCollision(player, fallingObject) || fallingObject.asteroidCollision(player, fallingObject)) {
-                    iter.remove();
-                    return 1;
-                }
-            }
-        }
-        return 0;
-    }
-
     public ArrayList<CollidableEntity<Asteroid>> getAsteroids() {
         return asteroids;
     }

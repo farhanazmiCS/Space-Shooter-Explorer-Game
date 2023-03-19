@@ -293,8 +293,15 @@ public class GameScreen implements Screen {
 
             player.getObject().limitPlayerMovement(player, this.game.WIDTH, this.game.HEIGHT);
 
-            if (this.game.entityManager.moveFallingObject() == 1) {
-                player.getObject().setCurrentHealth(player.getObject().getCurrentHealth() - 10);
+            // Asteroid movement and collision
+            for (int j = 0; j < this.game.entityManager.getAsteroids().size(); j++) {
+                CollidableEntity<Asteroid> asteroid = this.game.entityManager.getAsteroids().get(j);
+                asteroid.getObject().dropAsteroid(asteroid);
+                if (asteroid.asteroidCollision(player, asteroid)) {
+                    player.getObject().setCurrentHealth(player.getObject().getCurrentHealth() - 10);
+                    this.game.entityManager.getAsteroids().remove(asteroid);
+                    j--;
+                }
             }
 
             if (player.getObject().getCurrentHealth() <= 0)

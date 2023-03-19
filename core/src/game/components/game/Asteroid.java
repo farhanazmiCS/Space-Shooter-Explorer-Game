@@ -1,9 +1,12 @@
 package game.components.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.game.engine.behavior.BehaviourManager;
+import com.mygdx.game.engine.collision.CollidableEntity;
+import com.mygdx.game.engine.lifecycle.Main;
 
-public class Asteroid {
+public class Asteroid implements BehaviourManager {
     private Texture image;
     private float width;
     private float height;
@@ -36,5 +39,18 @@ public class Asteroid {
 
     public void setHeight(float height) {
         this.height = height;
+    }
+
+    @Override
+    public void moveUFO(CollidableEntity ufo, int speed, int width) {}
+
+    @Override
+    public long fireWeapon(CollidableEntity ufo, Main game) {
+        return 0;
+    }
+
+    @Override
+    public void dropAsteroid(CollidableEntity<Asteroid> asteroid) {
+        asteroid.setY(asteroid.getY() - 200 * Gdx.graphics.getDeltaTime());
     }
 }

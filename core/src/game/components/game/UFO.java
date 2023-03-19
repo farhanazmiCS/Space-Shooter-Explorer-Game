@@ -93,6 +93,11 @@ public class UFO implements BehaviourManager {
         return currentTime;
     }
 
+    @Override
+    public void dropAsteroid(CollidableEntity<Asteroid> asteroid) {
+        // NOT IMPLEMENTED
+    }
+
     public void moveLasers(CollidableEntity<UFO> ufo) {
         if (this.lasers.size() > 0) {
             for (int i = 0; i < this.lasers.size(); i++)
