@@ -1,4 +1,4 @@
-package game.components.game;
+package game.components.game.player;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;

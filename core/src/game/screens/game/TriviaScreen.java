@@ -21,7 +21,7 @@ import com.mygdx.game.engine.sound.SoundManager;
 import java.util.ArrayList;
 import java.util.Random;
 
-import game.components.game.Player;
+import game.components.game.player.Player;
 import game.components.game.TriviaOption;
 import game.components.game.TriviaQuestion;
 

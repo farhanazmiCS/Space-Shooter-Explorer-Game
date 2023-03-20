@@ -1,16 +1,17 @@
-package game.components.game;
+package game.components.game.player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.engine.collision.CollidableEntity;
 import com.mygdx.game.engine.input.CustomInputProcessor;
 import com.mygdx.game.engine.lifecycle.Main;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+
+import game.components.game.Laser;
 
 public class Player {
     private String imgName;

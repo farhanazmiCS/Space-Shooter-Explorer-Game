@@ -1,16 +1,14 @@
 package com.mygdx.game.engine.entity;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.engine.collision.CollidableEntity;
 import com.mygdx.game.engine.lifecycle.Main;
 
-import game.components.game.Asteroid;
-import game.components.game.Player;
-import game.components.game.UFO;
+import game.components.game.enemy.Asteroid;
+import game.components.game.player.Player;
+import game.components.game.enemy.UFO;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

@@ -6,11 +6,11 @@ import com.mygdx.game.engine.collision.CollidableEntity;
 import com.mygdx.game.engine.input.CustomInputProcessor;
 import com.mygdx.game.engine.lifecycle.Main;
 
-import game.components.game.Asteroid;
+import game.components.game.enemy.Asteroid;
 import game.components.game.HealthBar;
 import game.components.game.Laser;
-import game.components.game.Player;
-import game.components.game.UFO;
+import game.components.game.player.Player;
+import game.components.game.enemy.UFO;
 
 import game.components.game.Background;
 

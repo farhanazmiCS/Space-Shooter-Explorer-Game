@@ -16,7 +16,7 @@ import com.mygdx.game.engine.lifecycle.Main;
 
 import java.sql.Timestamp;
 
-import game.components.game.Player;
+import game.components.game.player.Player;
 import game.components.ui.Button;
 
 public class ControlScreen implements Screen {

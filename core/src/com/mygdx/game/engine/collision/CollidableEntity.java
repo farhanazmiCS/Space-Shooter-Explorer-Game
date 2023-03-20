@@ -5,9 +5,9 @@ import com.mygdx.game.engine.entity.Entity;
 
 import java.util.ArrayList;
 
-import game.components.game.Asteroid;
+import game.components.game.enemy.Asteroid;
 import game.components.game.Laser;
-import game.components.game.Player;
+import game.components.game.player.Player;
 
 public class CollidableEntity<T> extends Entity<T> implements CollisionManager {
     private float prevX;

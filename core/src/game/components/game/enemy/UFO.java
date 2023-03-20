@@ -1,4 +1,4 @@
-package game.components.game;
+package game.components.game.enemy;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -9,6 +9,8 @@ import com.mygdx.game.engine.collision.CollidableEntity;
 import com.mygdx.game.engine.lifecycle.Main;
 
 import java.util.ArrayList;
+
+import game.components.game.Laser;
 
 public class UFO implements BehaviourManager {
     private String imgPath;

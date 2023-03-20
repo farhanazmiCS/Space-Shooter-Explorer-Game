@@ -2,9 +2,9 @@ package com.mygdx.game.engine.collision;
 
 import java.util.ArrayList;
 
-import game.components.game.Asteroid;
+import game.components.game.enemy.Asteroid;
 import game.components.game.Laser;
-import game.components.game.Player;
+import game.components.game.player.Player;
 
 public interface CollisionManager {
     // This class contains the methods to which the entities behave when a collision occurs.

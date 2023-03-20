@@ -8,6 +8,8 @@ import com.mygdx.game.engine.collision.CollidableEntity;
 
 import java.util.ArrayList;
 
+import game.components.game.player.Player;
+
 public class HealthBar {
     private ShapeRenderer shapeRenderer;
     private SpriteBatch batch;
