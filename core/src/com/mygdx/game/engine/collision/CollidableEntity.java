@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import game.components.game.enemy.Asteroid;
 import game.components.game.Laser;
 import game.components.game.player.Player;
+import game.components.planets.Planet;
 
 public class CollidableEntity<T> extends Entity<T> implements CollisionManager {
     private float prevX;
@@ -71,5 +72,12 @@ public class CollidableEntity<T> extends Entity<T> implements CollisionManager {
             }
         }
         return false;
+    }
+
+    @Override
+    public boolean planetCollision(CollidableEntity<Player> player, CollidableEntity<Planet> planet) {
+        player.setRectangle(new Rectangle(player.getX(), player.getY(), player.getObject().getWidth(), player.getObject().getHeight()));
+        planet.setRectangle(new Rectangle(planet.getX(), planet.getY(), planet.getObject().getWidth(), planet.getObject().getHeight()));
+        return player.getRectangle().overlaps(planet.getRectangle());
     }
 }

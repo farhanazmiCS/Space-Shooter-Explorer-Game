@@ -6,6 +6,8 @@ import com.mygdx.game.engine.behavior.BehaviourManager;
 import com.mygdx.game.engine.collision.CollidableEntity;
 import com.mygdx.game.engine.lifecycle.Main;
 
+import game.components.planets.Planet;
+
 public class Asteroid implements BehaviourManager {
     private Texture image;
     private float width;
@@ -52,5 +54,10 @@ public class Asteroid implements BehaviourManager {
     @Override
     public void dropAsteroid(CollidableEntity<Asteroid> asteroid) {
         asteroid.setY(asteroid.getY() - 200 * Gdx.graphics.getDeltaTime());
+    }
+
+    @Override
+    public void dropPlanet(CollidableEntity<Planet> planet) {
+
     }
 }

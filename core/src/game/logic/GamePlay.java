@@ -6,6 +6,8 @@ import com.mygdx.game.engine.collision.CollidableEntity;
 import com.mygdx.game.engine.input.CustomInputProcessor;
 import com.mygdx.game.engine.lifecycle.Main;
 
+import java.sql.Time;
+
 import game.components.game.enemy.Asteroid;
 import game.components.game.HealthBar;
 import game.components.game.Laser;
@@ -13,6 +15,7 @@ import game.components.game.player.Player;
 import game.components.game.enemy.UFO;
 
 import game.components.game.Background;
+import game.components.planets.Planet;
 
 public class GamePlay extends Game {
     private Main game;
@@ -22,12 +25,19 @@ public class GamePlay extends Game {
     private HealthBar healthBar;
     private int distance;
     private long lastDropTime;
+    private long lastPlanetDropTime;
     private long lastShootTime;
     private long lastShootTimeUFO;
     private final float spawnRate = 1000000000;
     private final float spawnRateMultiplier = 0.15f;
 
     private float lastTimeUFOSpawned = 0; // Variable to count the last time UFO was spawned
+
+    private boolean isDrop = false;
+
+    private int nextPlanetIndex = 0;
+
+    private String nextPlanet = "Mercury";
 
     public GamePlay(final Main game) {
         // Initialize the lifecycle manager and input processor
@@ -36,6 +46,9 @@ public class GamePlay extends Game {
 
         // Spawn the asteroids
         this.game.entityManager.spawnEnemy("Asteroid");
+
+        // Spawn the planets
+        this.game.entityManager.spawnPlanets();
 
         // Scrolling background
         this.background = new Background("background_game.jpg");
@@ -46,6 +59,7 @@ public class GamePlay extends Game {
 
         // For tracking the distance covered by the player
         this.distance = 0;
+
     }
 
     @Override
@@ -61,7 +75,7 @@ public class GamePlay extends Game {
         if (backgroundOffset % game.HEIGHT == 0) {
             backgroundOffset = 0;
         }
-        background.getBatch().draw(background.getTexture(), 0, -backgroundOffset+game.HEIGHT, game.WIDTH, game.HEIGHT);
+        background.getBatch().draw(background.getTexture(), 0, -backgroundOffset + game.HEIGHT, game.WIDTH, game.HEIGHT);
         background.getBatch().draw(background.getTexture(), 0, -backgroundOffset, game.WIDTH, game.HEIGHT);
         background.getBatch().end();
 
@@ -81,6 +95,19 @@ public class GamePlay extends Game {
             this.game.entityManager.spawnEnemy("Asteroid");
             lastDropTime = TimeUtils.nanoTime();
         }
+
+        for (CollidableEntity<Planet> planet : this.game.entityManager.getPlanets()) {
+            game.getBatch().draw(planet.getObject().getTexture(), planet.getX(), planet.getY());
+        }
+
+        if (nextPlanetIndex < this.game.entityManager.getPlanets().size() && distance >=(nextPlanetIndex + 1) * 500) {
+            CollidableEntity<Planet> planet = this.game.entityManager.getPlanets().get(nextPlanetIndex);
+            planet.getObject().dropPlanet(planet);
+            if (planet.getY() < 0) {
+                nextPlanetIndex++;
+            }
+        }
+
 
         if (TimeUtils.nanoTime() - lastShootTime > spawnRate * spawnRateMultiplier)
         {

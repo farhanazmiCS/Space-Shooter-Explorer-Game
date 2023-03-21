@@ -11,6 +11,7 @@ import com.mygdx.game.engine.lifecycle.Main;
 import java.util.ArrayList;
 
 import game.components.game.Laser;
+import game.components.planets.Planet;
 
 public class UFO implements BehaviourManager {
     private String imgPath;
@@ -98,6 +99,11 @@ public class UFO implements BehaviourManager {
     @Override
     public void dropAsteroid(CollidableEntity<Asteroid> asteroid) {
         // NOT IMPLEMENTED
+    }
+
+    @Override
+    public void dropPlanet(CollidableEntity<Planet> planet) {
+
     }
 
     public void moveLasers(CollidableEntity<UFO> ufo) {
