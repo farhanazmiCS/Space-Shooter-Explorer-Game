@@ -88,6 +88,7 @@ public class Main extends Game {
 	}
 
 	ArrayList<StoryboardScreen> storyboards;
+	ArrayList<StoryboardScreen> visitPlanetStoryboards;
 
 	public ArrayList<String> getStoryboardImgPath() {
 		return storyboardImgPath;
@@ -98,6 +99,7 @@ public class Main extends Game {
 	}
 
 	ArrayList<String> storyboardImgPath;
+	ArrayList<String> planetVisitImgPath;
 	public EntityManager entityManager;
 
 	public SpriteBatch getBatch() {
@@ -185,6 +187,22 @@ public class Main extends Game {
 		this.prefs = prefs;
 	}
 
+	public ArrayList<StoryboardScreen> getVisitPlanetStoryboards() {
+		return visitPlanetStoryboards;
+	}
+
+	public void setVisitPlanetStoryboards(ArrayList<StoryboardScreen> visitPlanetStoryboards) {
+		this.visitPlanetStoryboards = visitPlanetStoryboards;
+	}
+
+	public ArrayList<String> getPlanetVisitImgPath() {
+		return planetVisitImgPath;
+	}
+
+	public void setPlanetVisitImgPath(ArrayList<String> planetVisitImgPath) {
+		this.planetVisitImgPath = planetVisitImgPath;
+	}
+
 	@Override
 	public void create () {
 		// BitmapFont for drawing text
@@ -206,7 +224,18 @@ public class Main extends Game {
 		storyboardImgPath.add("1.jpg");
 		storyboardImgPath.add("2.jpg");
 		storyboardImgPath.add("3.jpg");
-		storyboards = this.screenManager.generateStoryboards(storyboardImgPath);
+
+		planetVisitImgPath = new ArrayList<String>();
+		planetVisitImgPath.add("Mercury_Visit.jpg");
+		planetVisitImgPath.add("Venus_Visit.jpg");
+		planetVisitImgPath.add("Mars_Visit.jpg");
+		planetVisitImgPath.add("Jupiter_Visit.jpg");
+		planetVisitImgPath.add("Saturn_Visit.jpg");
+		planetVisitImgPath.add("Neptune_Visit.jpg");
+		planetVisitImgPath.add("Uranus_Visit.jpg");
+
+		storyboards = this.screenManager.generateStoryboards(storyboardImgPath, "Story");
+		visitPlanetStoryboards = this.screenManager.generateStoryboards(planetVisitImgPath, "Planet");
 
 		batch = new SpriteBatch();
 

@@ -38,9 +38,9 @@ public class StoryboardScreen implements Screen {
     }
 
     private int current;
+    private String type;
 
-
-    public StoryboardScreen(final Main game, String imgPath) {
+    public StoryboardScreen(final Main game, String imgPath, String type) {
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, 800, 480);
 
@@ -50,7 +50,14 @@ public class StoryboardScreen implements Screen {
         this.game = game;
         this.inputProcessor = new CustomInputProcessor();
 
-        this.nextButton = new Button(150, 66, 640, 20, "next_button.png", game);
+        this.type = type;
+
+        if (type == "Planet") {
+            this.nextButton = new Button(150, 66, 640, 400, "resume_button.png", game);
+        }
+        else {
+            this.nextButton = new Button(150, 66, 640, 20, "next_button.png", game);
+        }
         this.nextButton.setActive(false);
 
         buttonShowTask = new Timer.Task() {
@@ -59,7 +66,6 @@ public class StoryboardScreen implements Screen {
                 nextButton.setVisibility(true);
             }
         };
-
     }
 
     @Override
@@ -79,7 +85,7 @@ public class StoryboardScreen implements Screen {
 
         if (nextButton.getVisibility()) {
             nextButton.getBatch().begin();
-            nextButton.getBatch().draw(nextButton.getTexture(), 640, 20);
+            nextButton.getBatch().draw(nextButton.getTexture(), nextButton.getX(), nextButton.getY());
             nextButton.getBatch().end();
         }
 
@@ -93,7 +99,12 @@ public class StoryboardScreen implements Screen {
                 this.game.getSoundManager().playButtonHover();
             }
             if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
-                next();
+                if (type == "Planet") {
+                    resume();
+                }
+                else {
+                    next();
+                }
             }
         }
         else {
@@ -114,7 +125,7 @@ public class StoryboardScreen implements Screen {
 
     @Override
     public void resume() {
-
+        game.setScreen(game.getGameScreen());
     }
 
     @Override

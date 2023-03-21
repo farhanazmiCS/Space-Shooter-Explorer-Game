@@ -21,6 +21,8 @@ public class Planet implements BehaviourManager {
     public Planet(String planet, String imgPath) {
         this.planet = planet;
         this.texture = new Texture(imgPath);
+        this.width = texture.getWidth();
+        this.height = texture.getHeight();
         this.batch = new SpriteBatch();
         this.sprite = new Sprite(this.texture);
     }
@@ -42,7 +44,7 @@ public class Planet implements BehaviourManager {
 
     @Override
     public void dropPlanet(CollidableEntity<Planet> planet) {
-        planet.setY(planet.getY() - 50 * Gdx.graphics.getDeltaTime());
+        planet.setY(planet.getY() - 100 * Gdx.graphics.getDeltaTime());
     }
 
     public String getPlanet() {

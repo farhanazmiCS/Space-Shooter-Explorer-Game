@@ -29,8 +29,8 @@ public class CollidableEntity<T> extends Entity<T> implements CollisionManager {
         this.rectangle = new Rectangle();
         this.prevX = x;
         this.prevY = y;
-        this.rectangle.setWidth(50);
-        this.rectangle.setHeight(50);
+        this.rectangle.setWidth(75);
+        this.rectangle.setHeight(75);
     }
 
     public float getPrevX() {

@@ -142,7 +142,7 @@ public class PauseScreen extends ScreenManager implements Screen {
         this.game.entityManager.setPlayers(1, this.game.WIDTH);
         this.game.entityManager.resetFailingObjects();
         this.game.setGameScreen(new GameScreen(this.game));
-        this.game.setStoryboards(this.game.getScreenManager().generateStoryboards(this.game.getStoryboardImgPath()));
+        this.game.setStoryboards(this.game.getScreenManager().generateStoryboards(this.game.getStoryboardImgPath(), "Story"));
         this.game.setControlScreen(new ControlScreen(this.game, "controls.jpg"));
         game.setScreen(game.getMainMenuScreen());
     }

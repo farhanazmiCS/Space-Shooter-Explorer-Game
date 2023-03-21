@@ -26,10 +26,10 @@ public class ScreenManager {
             }
         }
     }
-    public ArrayList<StoryboardScreen> generateStoryboards(ArrayList<String> imgPaths) {
+    public ArrayList<StoryboardScreen> generateStoryboards(ArrayList<String> imgPaths, String type) {
         ArrayList<StoryboardScreen> storyboards = new ArrayList<StoryboardScreen>();
         for (int i = 0; i < imgPaths.size(); i++) {
-            StoryboardScreen storyboard = new StoryboardScreen(this.game, imgPaths.get(i));
+            StoryboardScreen storyboard = new StoryboardScreen(this.game, imgPaths.get(i), type);
             storyboard.setCurrent(i);
             storyboards.add(storyboard);
         }

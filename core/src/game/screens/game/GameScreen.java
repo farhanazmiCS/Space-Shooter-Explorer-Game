@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 import game.components.ui.Button;
 
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.engine.sound.SoundManager;
@@ -25,6 +26,9 @@ public class GameScreen implements Screen {
     private CustomInputProcessor inputProcessor;
     private Viewport viewport;
     private GamePlay gamePlay;
+    private float buttonShowDelay = 0.5f; // seconds
+    private Timer.Task buttonShowTask;
+
 
     public SpriteBatch getBatch() {
         return batch;
@@ -69,11 +73,21 @@ public class GameScreen implements Screen {
 
         // Spritebatch for the camera
         this.batch = new SpriteBatch();
+
+        this.pauseButton.setActive(false);
+
+        buttonShowTask = new Timer.Task() {
+            @Override
+            public void run() {
+                pauseButton.setVisibility(true);
+            }
+        };
     }
 
     @Override
     public void show() {
         Gdx.input.setInputProcessor(inputProcessor);
+        Timer.schedule(buttonShowTask, buttonShowDelay);
         SoundManager.playMusic(SoundManager.ScreenType.GAME);
     }
 
@@ -91,10 +105,12 @@ public class GameScreen implements Screen {
         this.gamePlay.render();
 
         // Render the Pause Buttpn
-        pauseButton.getBatch().begin();
-        pauseButton.getBatch().draw(pauseButton.getTexture(), this.game.WIDTH - pauseButton.getWidth(), this.game.HEIGHT - pauseButton.getHeight());
-        pauseButton.getBatch().end();
-        pauseButton.setButtonColor(Color.WHITE);
+        if (pauseButton.getVisibility()) {
+            pauseButton.getBatch().begin();
+            pauseButton.getBatch().draw(pauseButton.getTexture(), this.game.WIDTH - pauseButton.getWidth(), this.game.HEIGHT - pauseButton.getHeight());
+            pauseButton.getBatch().end();
+            pauseButton.setButtonColor(Color.WHITE);
+        }
 
         // Pause button logic
         if (inputProcessor.mouseHoverOver(pauseButton.getBound())) {

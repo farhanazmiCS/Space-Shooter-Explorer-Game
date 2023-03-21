@@ -35,7 +35,7 @@ public class GamePlay extends Game {
 
     private boolean isDrop = false;
 
-    private int nextPlanetIndex = 0;
+    private int nextPlanetIndex;
 
     private String nextPlanet = "Mercury";
 
@@ -59,6 +59,8 @@ public class GamePlay extends Game {
 
         // For tracking the distance covered by the player
         this.distance = 0;
+
+        this.nextPlanetIndex = 0;
 
     }
 
@@ -100,14 +102,23 @@ public class GamePlay extends Game {
             game.getBatch().draw(planet.getObject().getTexture(), planet.getX(), planet.getY());
         }
 
-        if (nextPlanetIndex < this.game.entityManager.getPlanets().size() && distance >=(nextPlanetIndex + 1) * 500) {
-            CollidableEntity<Planet> planet = this.game.entityManager.getPlanets().get(nextPlanetIndex);
-            planet.getObject().dropPlanet(planet);
-            if (planet.getY() < 0) {
-                nextPlanetIndex++;
+        for (int i = 0; i < this.game.entityManager.getPlayers().size(); i++) {
+            CollidableEntity<Player> player =this.game.entityManager.getPlayers().get(i);
+            if (nextPlanetIndex < this.game.entityManager.getPlanets().size() && distance >= (nextPlanetIndex + 1) * 1200) {
+                CollidableEntity<Planet> planet = this.game.entityManager.getPlanets().get(nextPlanetIndex);
+                planet.getObject().dropPlanet(planet);
+                if (player.planetCollision(player, planet)) {
+                    System.out.println("Planet Collided!");
+                    planet.setY(600);
+                    this.game.setScreen(this.game.getVisitPlanetStoryboards().get(nextPlanetIndex));
+                    nextPlanetIndex++;
+                    System.out.println(nextPlanetIndex);
+                }
+                if (planet.getY() < 0) {
+                    planet.setY(600);
+                }
             }
         }
-
 
         if (TimeUtils.nanoTime() - lastShootTime > spawnRate * spawnRateMultiplier)
         {
