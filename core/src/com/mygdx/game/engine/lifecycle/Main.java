@@ -5,18 +5,18 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.engine.entity.EntityManager;
-import game.screens.game.ControlScreen;
-import game.screens.game.GameOverScreen;
-import game.screens.game.GameScreen;
-import game.screens.menu.MainMenuScreen;
-import game.screens.menu.PauseScreen;
-import game.screens.game.ResultScreen;
-import game.screens.menu.ScoreboardScreen;
 import com.mygdx.game.engine.screen.ScreenManager;
-import game.screens.game.TriviaScreen;
-import game.screens.game.StoryboardScreen;
 import com.mygdx.game.engine.sound.SoundManager;
+import com.mygdx.game.engine.entity.EntityManager;
+import com.mygdx.game.game.screens.game.ControlScreen;
+import com.mygdx.game.game.screens.game.GameOverScreen;
+import com.mygdx.game.game.screens.game.GameScreen;
+import com.mygdx.game.game.screens.menu.MainMenuScreen;
+import com.mygdx.game.game.screens.menu.PauseScreen;
+import com.mygdx.game.game.screens.game.ResultScreen;
+import com.mygdx.game.game.screens.menu.ScoreboardScreen;
+import com.mygdx.game.game.screens.game.TriviaScreen;
+import com.mygdx.game.game.screens.game.StoryboardScreen;
 
 import java.util.ArrayList;
 

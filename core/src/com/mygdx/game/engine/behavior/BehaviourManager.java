@@ -3,8 +3,8 @@ package com.mygdx.game.engine.behavior;
 import com.mygdx.game.engine.collision.CollidableEntity;
 import com.mygdx.game.engine.lifecycle.Main;
 
-import game.components.game.enemy.Asteroid;
-import game.components.planets.Planet;
+import com.mygdx.game.game.components.game.enemy.Asteroid;
+import com.mygdx.game.game.components.planets.Planet;
 
 public interface BehaviourManager {
     void moveUFO(CollidableEntity ufo, int speed, int width);

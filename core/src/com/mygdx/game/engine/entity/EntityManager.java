@@ -6,15 +6,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.engine.collision.CollidableEntity;
 import com.mygdx.game.engine.lifecycle.Main;
 
-import game.components.game.enemy.Asteroid;
-import game.components.game.player.Player;
-import game.components.game.enemy.UFO;
-import game.components.planets.Planet;
+import com.mygdx.game.game.components.game.enemy.Asteroid;
+import com.mygdx.game.game.components.game.player.Player;
+import com.mygdx.game.game.components.game.enemy.UFO;
+import com.mygdx.game.game.components.planets.Planet;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Random;
 
 public class EntityManager {
