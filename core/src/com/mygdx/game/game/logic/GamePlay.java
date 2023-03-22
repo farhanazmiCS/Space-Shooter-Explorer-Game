@@ -105,7 +105,7 @@ public class GamePlay extends Game {
             if (nextPlanetIndex < this.game.entityManager.getPlanets().size() && distance >= (nextPlanetIndex + 1) * 1200) {
                 CollidableEntity<Planet> planet = this.game.entityManager.getPlanets().get(nextPlanetIndex);
                 planet.getObject().dropPlanet(planet);
-                if (player.planetCollision(player, planet)) {
+                if (player.checkCollision(player, planet)) {
                     System.out.println("Planet Collided!");
                     planet.setY(600);
                     this.game.setScreen(this.game.getVisitPlanetStoryboards().get(nextPlanetIndex));
@@ -220,14 +220,24 @@ public class GamePlay extends Game {
                 for (CollidableEntity<UFO> ufo: this.game.entityManager.getUFOs())
                 {
                     lastShootTimeUFO = ufo.getObject().fireWeapon(ufo, game);
-                    if (player.laserCollision(player, ufo.getObject().getLasers())) {
-                        // Check collision between player and UFO lasers
-                        System.out.println("Player " + i + " hit!");
-                        player.getObject().setCurrentHealth(player.getObject().getCurrentHealth() - 1);
+                    for (int j = 0; j < ufo.getObject().getLasers().size(); j++) {
+                        CollidableEntity<Laser> laser = ufo.getObject().getLasers().get(j);
+                        if (player.checkCollision(player, laser)) {
+                            System.out.println("Player " + i + " hit!");
+                            player.getObject().setCurrentHealth(player.getObject().getCurrentHealth() - 1);
+                            ufo.getObject().getLasers().remove(laser);
+                            j--;
+                        }
                     }
-                    if (ufo.laserCollision(ufo, player.getObject().getLasers())) {
-                        System.out.println("UFO " + ufo + " hit!");
-                        ufo.getObject().setHealth(ufo.getObject().getHealth() - 2);
+
+                    for (int j = 0; j < player.getObject().getLasers().size(); j++) {
+                        CollidableEntity<Laser> laser = player.getObject().getLasers().get(j);
+                        if (ufo.checkCollision(ufo, laser)) {
+                            System.out.println("UFO " + i + " hit!");
+                            ufo.getObject().setHealth(ufo.getObject().getHealth() - 2);
+                            player.getObject().getLasers().remove(laser);
+                            j--;
+                        }
                     }
                 }
                 //lastShootTime = this.game.entityManager.spawnLasers(inputProcessor, this.game.entityManager.getPlayer());
@@ -242,7 +252,7 @@ public class GamePlay extends Game {
             for (int j = 0; j < this.game.entityManager.getAsteroids().size(); j++) {
                 CollidableEntity<Asteroid> asteroid = this.game.entityManager.getAsteroids().get(j);
                 asteroid.getObject().dropAsteroid(asteroid);
-                if (asteroid.asteroidCollision(player, asteroid)) {
+                if (asteroid.checkCollision(player, asteroid)) {
                     player.getObject().setCurrentHealth(player.getObject().getCurrentHealth() - 10);
                     this.game.entityManager.getAsteroids().remove(asteroid);
                     j--;

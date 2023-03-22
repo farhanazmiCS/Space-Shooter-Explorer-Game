@@ -14,6 +14,25 @@ public class CollidableEntity<T> extends Entity<T> implements CollisionManager {
     private float prevX;
     private float prevY;
 
+    public float getWidth() {
+        return width;
+    }
+
+    public void setWidth(float width) {
+        this.width = width;
+    }
+
+    public float getHeight() {
+        return height;
+    }
+
+    public void setHeight(float height) {
+        this.height = height;
+    }
+
+    private float width;
+    private float height;
+
     public Rectangle getRectangle() {
         return rectangle;
     }
@@ -31,6 +50,8 @@ public class CollidableEntity<T> extends Entity<T> implements CollisionManager {
         this.prevY = y;
         this.rectangle.setWidth(75);
         this.rectangle.setHeight(75);
+        this.width = this.rectangle.getWidth();
+        this.height = this.rectangle.getHeight();
     }
 
     public float getPrevX() {
@@ -50,34 +71,9 @@ public class CollidableEntity<T> extends Entity<T> implements CollisionManager {
     }
 
     @Override
-    public boolean asteroidCollision(CollidableEntity<Player> player, CollidableEntity<Asteroid> asteroid) {
-        player.setRectangle(new Rectangle(player.getX(), player.getY(), player.getObject().getWidth(), player.getObject().getHeight()));
-        asteroid.setRectangle(new Rectangle(asteroid.getX(), asteroid.getY(), asteroid.getObject().getWidth(), asteroid.getObject().getHeight()));
-        return player.getRectangle().overlaps(asteroid.getRectangle());
-    }
-
-    @Override
-    public boolean laserCollision(CollidableEntity entity, ArrayList<CollidableEntity<Laser>> lasers) {
-        entity.setRectangle(new Rectangle(entity.getX(), entity.getY(), entity.getRectangle().getWidth(), entity.getRectangle().getHeight()));
-        for (int i = 0; i < lasers.size(); i++) {
-            CollidableEntity<Laser> laser = lasers.get(i);
-            laser.setRectangle(new Rectangle(laser.getX(), laser.getY(), laser.getObject().getWidth(), laser.getObject().getHeight()));
-            if (entity.getRectangle().overlaps(laser.getRectangle())) {
-                System.out.println("Hit!\n");
-                lasers.remove(laser);
-                return true;
-            }
-            if (laser.getY() > 480) {
-                lasers.remove(laser);
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public boolean planetCollision(CollidableEntity<Player> player, CollidableEntity<Planet> planet) {
-        player.setRectangle(new Rectangle(player.getX(), player.getY(), player.getObject().getWidth(), player.getObject().getHeight()));
-        planet.setRectangle(new Rectangle(planet.getX(), planet.getY(), planet.getObject().getWidth(), planet.getObject().getHeight()));
-        return player.getRectangle().overlaps(planet.getRectangle());
+    public boolean checkCollision(CollidableEntity entity, CollidableEntity other) {
+        entity.setRectangle(new Rectangle(entity.getX(), entity.getY(), entity.getWidth(), entity.getHeight()));
+        other.setRectangle(new Rectangle(other.getX(), other.getY(), other.getWidth(), other.getHeight()));
+        return entity.getRectangle().overlaps(other.getRectangle());
     }
 }
