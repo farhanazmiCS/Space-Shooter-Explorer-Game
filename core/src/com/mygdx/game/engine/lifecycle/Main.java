@@ -224,6 +224,7 @@ public class Main extends Game {
 		storyboardImgPath.add("1.jpg");
 		storyboardImgPath.add("2.jpg");
 		storyboardImgPath.add("3.jpg");
+		storyboardImgPath.add("Demo.jpg");
 
 		planetVisitImgPath = new ArrayList<String>();
 		planetVisitImgPath.add("Mercury_Visit.jpg");
