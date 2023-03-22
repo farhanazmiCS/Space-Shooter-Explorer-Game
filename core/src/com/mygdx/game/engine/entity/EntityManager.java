@@ -2,7 +2,6 @@ package com.mygdx.game.engine.entity;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Preferences;
-import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.engine.collision.CollidableEntity;
 import com.mygdx.game.engine.lifecycle.Main;
 
@@ -20,7 +19,6 @@ public class EntityManager {
     private ArrayList<CollidableEntity<Player>> players;
     private ArrayList<CollidableEntity<Asteroid>> asteroids;
     private ArrayList<CollidableEntity<UFO>> UFOs;
-    private ArrayList<Texture> fallingObjectImages;
 
     public ArrayList<CollidableEntity<Planet>> getPlanets() {
         return planets;
@@ -81,16 +79,8 @@ public class EntityManager {
         this.players = players;
     }
 
-    public ArrayList<Texture> getFallingObjectImages() {
-        return fallingObjectImages;
-    }
-
     public ArrayList<CollidableEntity<UFO>> getUFOs() {
         return this.UFOs;
-    }
-
-    public void setFallingObjectImages(ArrayList<Texture> fallingObjectImages) {
-        this.fallingObjectImages = fallingObjectImages;
     }
 
     public void resetFailingObjects()
@@ -100,24 +90,6 @@ public class EntityManager {
             asteroid.getObject().getImage().dispose();
         }
         asteroids = new ArrayList<CollidableEntity<Asteroid>>();
-    }
-
-    public void savePlayerData()
-    {
-        // save score here
-        Preferences prefs = game.getPrefs();
-        StringBuilder data = new StringBuilder(prefs.getString("data"));
-        SimpleDateFormat sdf3 = new SimpleDateFormat("EEE d MMM yyyy HH:mm:ss");
-        for (CollidableEntity<Player> player : game.entityManager.getPlayers())
-        {
-            String startTime = sdf3.format(player.getObject().getStartTime());
-            int distanceTravelled = player.getObject().getScore();
-            int aliensKilled = player.getObject().getAliensKilled();
-            data.append(startTime).append(", ").append(distanceTravelled).append(", ").append(aliensKilled).append("\n");
-        }
-        prefs.putString("data", data.toString());
-        System.out.println(data);
-        prefs.flush();
     }
 
     public ArrayList spawnEnemy(String entityType) {

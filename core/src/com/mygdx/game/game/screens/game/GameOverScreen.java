@@ -7,11 +7,13 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.mygdx.game.engine.collision.CollidableEntity;
 import com.mygdx.game.engine.entity.EntityManager;
 import com.mygdx.game.engine.input.CustomInputProcessor;
 import com.mygdx.game.engine.lifecycle.Main;
 import com.mygdx.game.engine.screen.ScreenManager;
 import com.mygdx.game.engine.sound.SoundManager;
+import com.mygdx.game.game.components.game.player.Player;
 import com.mygdx.game.game.components.ui.Button;
 
 import java.util.ArrayList;
@@ -112,7 +114,9 @@ public class GameOverScreen extends ScreenManager implements Screen {
     }
 
     public void quit() {
-        this.game.entityManager.savePlayerData();
+        for (CollidableEntity<Player> player : this.game.entityManager.getPlayers()) {
+            player.getObject().savePlayerData(game);
+        }
         this.game.entityManager = new EntityManager(this.game);
         this.game.entityManager.setPlayers(1, this.game.WIDTH);
         this.game.entityManager.resetFailingObjects();

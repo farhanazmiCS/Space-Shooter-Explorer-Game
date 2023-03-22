@@ -137,7 +137,7 @@ public class PauseScreen extends ScreenManager implements Screen {
     }
 
     public void quit() {
-        this.game.entityManager.savePlayerData();
+        this.game.entityManager.getPlayers().get(0).getObject().savePlayerData(game);
         this.game.entityManager = new EntityManager(this.game);
         this.game.entityManager.setPlayers(1, this.game.WIDTH);
         this.game.entityManager.resetFailingObjects();
