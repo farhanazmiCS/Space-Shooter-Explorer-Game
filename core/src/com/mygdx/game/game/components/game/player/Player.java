@@ -210,8 +210,6 @@ public class Player {
             CollidableEntity<Laser> laser = new CollidableEntity<>(
                     player.getX() + 15,
                     player.getY(),
-                    29,
-                    63,
                     new Laser(
                             "green_laser.png",
                             800), 29, 63);

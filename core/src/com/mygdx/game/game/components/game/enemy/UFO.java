@@ -85,8 +85,6 @@ public class UFO implements BehaviourManager {
             CollidableEntity<Laser> laser = new CollidableEntity<Laser>(
                     ufo.getX() + 35,
                     ufo.getY(),
-                    29,
-                    63,
                     new Laser(
                             "purple_laser.png",
                             500), 29, 63);
