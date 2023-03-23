@@ -108,7 +108,7 @@ public class GamePlay extends Game {
                 if (player.checkCollision(player, planet)) {
                     System.out.println("Planet Collided!");
                     planet.setY(600);
-                    this.game.setScreen(this.game.getVisitPlanetStoryboards().get(nextPlanetIndex));
+                    this.game.setScreen(this.game.getScreenManager().getVisitPlanetStoryboards().get(nextPlanetIndex));
                     nextPlanetIndex++;
                     System.out.println(nextPlanetIndex);
                 }
@@ -267,7 +267,7 @@ public class GamePlay extends Game {
                 if (this.game.entityManager.getPlayers().size() == 1)
                 {
                     //game over screen
-                    game.setScreen(game.getGameOverScreen());
+                    game.setScreen(game.getScreenManager().getGameOverScreen());
                 }
                 else
                 {
@@ -284,15 +284,6 @@ public class GamePlay extends Game {
                     u--;
                     player.getObject().setAliensKilled(player.getObject().getAliensKilled() + 1);
                 }
-            }
-        }
-
-        for (CollidableEntity<Player> player : this.game.entityManager.getPlayers())
-        {
-            if (player.getObject().getScore() % 1000 == 0)
-            {
-                //go to trivia screen
-                game.setScreen(game.getTriviaScreen());
             }
         }
 

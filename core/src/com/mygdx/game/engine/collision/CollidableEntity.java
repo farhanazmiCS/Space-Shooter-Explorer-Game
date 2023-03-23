@@ -43,15 +43,15 @@ public class CollidableEntity<T> extends Entity<T> implements CollisionManager {
 
     private Rectangle rectangle;
 
-    public CollidableEntity(float x, float y, T object) {
+    public CollidableEntity(float x, float y, T object, float width, float height) {
         super(x, y, object);
         this.rectangle = new Rectangle();
         this.prevX = x;
         this.prevY = y;
-        this.rectangle.setWidth(75);
-        this.rectangle.setHeight(75);
-        this.width = this.rectangle.getWidth();
-        this.height = this.rectangle.getHeight();
+        this.width = width;
+        this.height = height;
+        this.rectangle.setWidth(width);
+        this.rectangle.setHeight(height);
     }
 
     public float getPrevX() {

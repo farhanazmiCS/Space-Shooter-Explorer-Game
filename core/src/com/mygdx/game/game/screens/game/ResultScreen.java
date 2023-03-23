@@ -97,7 +97,7 @@ public class ResultScreen extends ScreenManager implements Screen {
                 this.game.getSoundManager().playButtonHover();
             }
             if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
-                game.setScreen(game.getGameScreen());
+                game.setScreen(game.getScreenManager().getGameScreen());
             }
         }
         else {
@@ -117,7 +117,7 @@ public class ResultScreen extends ScreenManager implements Screen {
 
     @Override
     public void resume() {
-        game.setScreen(game.getGameScreen());
+        game.setScreen(game.getScreenManager().getGameScreen());
     }
 
     @Override

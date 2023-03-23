@@ -121,6 +121,6 @@ public class ControlScreen implements Screen {
         {
             player.getObject().setStartTime(new Timestamp(System.currentTimeMillis()));
         }
-        this.game.setScreen(this.game.getGameScreen());
+        this.game.setScreen(this.game.getScreenManager().getGameScreen());
     }
 }

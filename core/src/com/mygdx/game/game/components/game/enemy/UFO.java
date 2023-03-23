@@ -87,7 +87,7 @@ public class UFO implements BehaviourManager {
                     ufo.getY(),
                     new Laser(
                             "purple_laser.png",
-                            500));
+                            500), 29, 63);
             this.lasers.add(laser);
             game.getSoundManager().playEnemyLaserSound();
             lastShotTime = currentTime;

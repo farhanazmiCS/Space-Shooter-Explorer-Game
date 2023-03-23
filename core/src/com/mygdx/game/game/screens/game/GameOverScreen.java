@@ -99,7 +99,7 @@ public class GameOverScreen extends ScreenManager implements Screen {
 
     @Override
     public void resume() {
-        game.setScreen(game.getGameScreen());
+        game.setScreen(game.getScreenManager().getGameScreen());
     }
 
     @Override
@@ -120,9 +120,9 @@ public class GameOverScreen extends ScreenManager implements Screen {
         this.game.entityManager = new EntityManager(this.game);
         this.game.entityManager.setPlayers(1, this.game.WIDTH);
         this.game.entityManager.resetFailingObjects();
-        this.game.setGameScreen(new GameScreen(this.game));
-        this.game.setStoryboards(this.game.getScreenManager().generateStoryboards(this.game.getStoryboardImgPath(), "Story"));
-        this.game.setControlScreen(new ControlScreen(this.game, "controls.jpg"));
-        game.setScreen(game.getMainMenuScreen());
+        this.game.getScreenManager().setGameScreen(new GameScreen(this.game));
+        this.game.getScreenManager().setStoryboards(this.game.getScreenManager().generateStoryboards(this.game.getScreenManager().getStoryboardImgPath(), "Story"));
+        this.game.getScreenManager().setControlScreen(new ControlScreen(this.game, "controls.jpg"));
+        game.setScreen(game.getScreenManager().getMainMenuScreen());
     }
 }

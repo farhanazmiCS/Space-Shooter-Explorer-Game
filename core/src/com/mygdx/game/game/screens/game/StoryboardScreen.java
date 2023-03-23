@@ -124,7 +124,7 @@ public class StoryboardScreen implements Screen {
 
     @Override
     public void resume() {
-        game.setScreen(game.getGameScreen());
+        game.setScreen(game.getScreenManager().getGameScreen());
     }
 
     @Override
@@ -138,11 +138,11 @@ public class StoryboardScreen implements Screen {
     }
 
     public void next() {
-        if (current < game.getStoryboards().size() - 1) {
-            game.setScreen(game.getStoryboards().get(current + 1));
+        if (current < game.getScreenManager().getStoryboards().size() - 1) {
+            game.setScreen(game.getScreenManager().getStoryboards().get(current + 1));
         }
         else {
-            game.setScreen(game.getControlScreen());
+            game.setScreen(game.getScreenManager().getControlScreen());
         }
     }
 }

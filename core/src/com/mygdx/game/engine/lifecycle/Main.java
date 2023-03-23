@@ -50,13 +50,7 @@ public class Main extends Game {
 	}
 
 	private ScreenManager screenManager;
-	private MainMenuScreen mainMenuScreen;
-	private GameScreen gameScreen;
-	private PauseScreen pauseScreen;
-	private GameOverScreen gameOverScreen;
-	private ScoreboardScreen scoreboardScreen;
-	private TriviaScreen triviaScreen;
-	private ResultScreen resultScreen;
+
 	private Preferences prefs;
 
 	public SoundManager getSoundManager() {
@@ -69,37 +63,6 @@ public class Main extends Game {
 
 	private SoundManager soundManager;
 
-	public ControlScreen getControlScreen() {
-		return controlScreen;
-	}
-
-	public void setControlScreen(ControlScreen controlScreen) {
-		this.controlScreen = controlScreen;
-	}
-
-	ControlScreen controlScreen;
-
-	public ArrayList<StoryboardScreen> getStoryboards() {
-		return storyboards;
-	}
-
-	public void setStoryboards(ArrayList<StoryboardScreen> storyboards) {
-		this.storyboards = storyboards;
-	}
-
-	ArrayList<StoryboardScreen> storyboards;
-	ArrayList<StoryboardScreen> visitPlanetStoryboards;
-
-	public ArrayList<String> getStoryboardImgPath() {
-		return storyboardImgPath;
-	}
-
-	public void setStoryboardImgPath(ArrayList<String> storyboardImgPath) {
-		this.storyboardImgPath = storyboardImgPath;
-	}
-
-	ArrayList<String> storyboardImgPath;
-	ArrayList<String> planetVisitImgPath;
 	public EntityManager entityManager;
 
 	public SpriteBatch getBatch() {
@@ -123,84 +86,12 @@ public class Main extends Game {
 	public final int HEIGHT = 480;
 	public final int WIDTH = 800;
 
-	public GameScreen getGameScreen() {
-		return gameScreen;
-	}
-
-	public void setGameScreen(GameScreen gameScreen) {
-		this.gameScreen = gameScreen;
-	}
-
-	public PauseScreen getPauseScreen() {
-		return pauseScreen;
-	}
-
-	public GameOverScreen getGameOverScreen() {
-		return gameOverScreen;
-	}
-
-	public void setGameOverScreen(GameOverScreen gameOverScreen) {
-		this.gameOverScreen = gameOverScreen;
-	}
-
-	public void setPauseScreen(PauseScreen pauseScreen) {
-		this.pauseScreen = pauseScreen;
-	}
-
-	public MainMenuScreen getMainMenuScreen() {
-		return mainMenuScreen;
-	}
-
-	public void setMainMenuScreen(MainMenuScreen mainMenuScreen) {
-		this.mainMenuScreen = mainMenuScreen;
-	}
-
-	public ScoreboardScreen getScoreboardScreen() {
-		return scoreboardScreen;
-	}
-
-	public void setScoreboardScreen(ScoreboardScreen scoreboardScreen) {
-		this.scoreboardScreen = scoreboardScreen;
-	}
-
-	public TriviaScreen getTriviaScreen() {
-		return triviaScreen;
-	}
-
-	public void setTriviaScreen(TriviaScreen triviaScreen) {
-		this.triviaScreen = triviaScreen;
-	}
-
-	public ResultScreen getResultScreen() {
-		return resultScreen;
-	}
-
-	public void setResultScreen(ResultScreen resultScreen) {
-		this.resultScreen = resultScreen;
-	}
-
 	public Preferences getPrefs() {
 		return prefs;
 	}
 
 	public void setPrefs(Preferences prefs) {
 		this.prefs = prefs;
-	}
-
-	public ArrayList<StoryboardScreen> getVisitPlanetStoryboards() {
-		return visitPlanetStoryboards;
-	}
-
-	public void setVisitPlanetStoryboards(ArrayList<StoryboardScreen> visitPlanetStoryboards) {
-		this.visitPlanetStoryboards = visitPlanetStoryboards;
-	}
-
-	public ArrayList<String> getPlanetVisitImgPath() {
-		return planetVisitImgPath;
-	}
-
-	public void setPlanetVisitImgPath(ArrayList<String> planetVisitImgPath) {
-		this.planetVisitImgPath = planetVisitImgPath;
 	}
 
 	@Override
@@ -218,38 +109,10 @@ public class Main extends Game {
 		entityManager.setPlayers(1, WIDTH);
 
 		prefs = Gdx.app.getPreferences("Player Data");
-
-		// Generating storyboards for the game
-		storyboardImgPath = new ArrayList<String>();
-		storyboardImgPath.add("1.jpg");
-		storyboardImgPath.add("2.jpg");
-		storyboardImgPath.add("3.jpg");
-
-		planetVisitImgPath = new ArrayList<String>();
-		planetVisitImgPath.add("Mercury_Visit.jpg");
-		planetVisitImgPath.add("Venus_Visit.jpg");
-		planetVisitImgPath.add("Mars_Visit.jpg");
-		planetVisitImgPath.add("Jupiter_Visit.jpg");
-		planetVisitImgPath.add("Saturn_Visit.jpg");
-		planetVisitImgPath.add("Neptune_Visit.jpg");
-		planetVisitImgPath.add("Uranus_Visit.jpg");
-
-		storyboards = this.screenManager.generateStoryboards(storyboardImgPath, "Story");
-		visitPlanetStoryboards = this.screenManager.generateStoryboards(planetVisitImgPath, "Planet");
-
 		batch = new SpriteBatch();
 
-		// Create screens
-		mainMenuScreen = new MainMenuScreen(this);
-		pauseScreen = new PauseScreen(this);
-		gameOverScreen = new GameOverScreen(this);
-		scoreboardScreen = new ScoreboardScreen(this);
-		triviaScreen = new TriviaScreen(this);
-		resultScreen = new ResultScreen(this);
-		controlScreen = new ControlScreen(this, "controls.jpg");
-		gameScreen = new GameScreen(this);
-
-		this.setScreen(mainMenuScreen);
+		screenManager.instantiateScreens();
+		this.setScreen(screenManager.getMainMenuScreen());
 	}
 
 	@Override
@@ -263,14 +126,14 @@ public class Main extends Game {
 		batch.dispose();
 
 		// Dispose screens
-		mainMenuScreen.dispose();
-		pauseScreen.dispose();
-		gameScreen.dispose();
-		gameOverScreen.dispose();
-		scoreboardScreen.dispose();
-		triviaScreen.dispose();
-		resultScreen.dispose();
-		controlScreen.dispose();
+		screenManager.getMainMenuScreen().dispose();
+		screenManager.getPauseScreen().dispose();
+		screenManager.getGameScreen().dispose();
+		screenManager.getGameOverScreen().dispose();
+		screenManager.getScoreboardScreen().dispose();
+		screenManager.getTriviaScreen().dispose();
+		screenManager.getResultScreen().dispose();
+		screenManager.getControlScreen().dispose();
 
 		// Dispose Sound manager
 		soundManager.dispose();

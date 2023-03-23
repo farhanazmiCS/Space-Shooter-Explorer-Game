@@ -17,7 +17,7 @@ import com.mygdx.game.engine.lifecycle.Main;
 
 import java.util.ArrayList;
 
-public class MainMenuScreen extends ScreenManager implements Screen {
+public class MainMenuScreen implements Screen {
     public void setInputProcessor(CustomInputProcessor inputProcessor) {
         this.inputProcessor = inputProcessor;
     }
@@ -40,8 +40,7 @@ public class MainMenuScreen extends ScreenManager implements Screen {
 
     private ScoreboardScreen scoreboardScreen;
 
-    public MainMenuScreen(final Main game) {
-        super(game);
+    public MainMenuScreen(final Main game, ScreenManager screenManager) {
         this.game = game;
 
         texture = new Texture("main_menu_background_resized.png");
@@ -57,9 +56,10 @@ public class MainMenuScreen extends ScreenManager implements Screen {
         buttonImagePath.add("leaderboard_button.png");
         buttonImagePath.add("quit_button.png");
 
+        screenManager.createScreenButtons(3, buttons, 75, buttonImagePath);
+
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
-        createScreenButtons(3, buttons, 75, buttonImagePath);
 
         for (Button button : buttons) {
             button.setActive(false);
@@ -124,7 +124,6 @@ public class MainMenuScreen extends ScreenManager implements Screen {
                 this.game.getSoundManager().playButtonHover();
             }
             if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
-                // Todo
                 this.game.getSoundManager().playButtonClick();
                 game.setScreen(scoreboardScreen);
             }
@@ -152,7 +151,7 @@ public class MainMenuScreen extends ScreenManager implements Screen {
     }
 
     public void play() {
-        game.setScreen(game.getStoryboards().get(0));
+        game.setScreen(game.getScreenManager().getStoryboards().get(0));
     }
 
     public void quit() {

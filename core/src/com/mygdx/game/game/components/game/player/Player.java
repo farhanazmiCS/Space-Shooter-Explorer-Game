@@ -212,7 +212,7 @@ public class Player {
                     player.getY(),
                     new Laser(
                             "green_laser.png",
-                            800));
+                            800), 29, 63);
             lasers.add(laser);
             game.getSoundManager().playLaserSound();
         }

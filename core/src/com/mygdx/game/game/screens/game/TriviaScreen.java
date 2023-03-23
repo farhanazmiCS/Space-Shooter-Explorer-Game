@@ -151,7 +151,7 @@ public class TriviaScreen extends ScreenManager implements Screen {
                         {
                             player.getObject().setCurrentHealth(player.getObject().getMaxHealth());
                         }
-                        this.game.getResultScreen().setResultBG("correct_background.jpg");
+                        this.game.getScreenManager().getResultScreen().setResultBG("correct_background.jpg");
                     }
                     else
                     {
@@ -159,10 +159,10 @@ public class TriviaScreen extends ScreenManager implements Screen {
                         {
                             player.getObject().setCurrentHealth(player.getObject().getCurrentHealth() - 10);
                         }
-                        this.game.getResultScreen().setResultBG("wrong.jpg");
+                        this.game.getScreenManager().getResultScreen().setResultBG("wrong.jpg");
                     }
                     //go to result screen
-                    game.setScreen(game.getResultScreen());
+                    game.setScreen(game.getScreenManager().getResultScreen());
                 }
             }
             else {
@@ -189,7 +189,7 @@ public class TriviaScreen extends ScreenManager implements Screen {
 
     @Override
     public void resume() {
-        game.setScreen(game.getGameScreen());
+        game.setScreen(game.getScreenManager().getGameScreen());
     }
 
     @Override

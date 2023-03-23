@@ -92,7 +92,7 @@ public class ScoreboardScreen implements Screen{
                 this.game.getSoundManager().playButtonHover();
             }
             if (inputProcessor.mouseClicked(Input.Buttons.LEFT)) {
-                game.setScreen(game.getMainMenuScreen());
+                game.setScreen(game.getScreenManager().getMainMenuScreen());
             }
         }
         else {

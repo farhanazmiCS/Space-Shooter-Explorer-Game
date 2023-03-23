@@ -135,7 +135,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void pause() {
-        game.setScreen(game.getPauseScreen());
+        game.setScreen(game.getScreenManager().getPauseScreen());
     }
 
     @Override

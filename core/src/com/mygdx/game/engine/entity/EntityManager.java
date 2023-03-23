@@ -73,7 +73,9 @@ public class EntityManager {
                             new int[]{Input.Keys.LEFT, Input.Keys.RIGHT, Input.Keys.UP, Input.Keys.DOWN},
                             new int[]{Input.Keys.A, Input.Keys.D, Input.Keys.W, Input.Keys.S},
                             0,
-                            100));
+                            100),
+                    64,
+                    64);
             players.add(player);
         }
         this.players = players;
@@ -101,7 +103,7 @@ public class EntityManager {
             CollidableEntity<Asteroid> asteroidEntity = new CollidableEntity<Asteroid>(
                     possibleX[chance],
                     800,
-                    asteroid);
+                    asteroid, 64, 64);
             asteroids.add(asteroidEntity);
             return asteroids;
         } else if (entityType.equals("UFO")) {
@@ -122,7 +124,7 @@ public class EntityManager {
                 CollidableEntity<UFO> ufoEntity = new CollidableEntity<UFO>(
                         x,
                         y,
-                        ufoObject);
+                        ufoObject, 64, 64);
                 UFOs.add(ufoEntity);
             }
             return UFOs;
@@ -136,7 +138,7 @@ public class EntityManager {
         for (int i = 0; i < availablePlanets.length; i++) {
             int posX = random.nextInt(this.game.WIDTH - 125);
             Planet p = new Planet(availablePlanets[i], String.format("%s.png", availablePlanets[i]));
-            CollidableEntity<Planet> planet = new CollidableEntity<Planet>(posX, 600, p);
+            CollidableEntity<Planet> planet = new CollidableEntity<Planet>(posX, 600, p, 29, 63);
             planets.add(planet);
         }
     }
