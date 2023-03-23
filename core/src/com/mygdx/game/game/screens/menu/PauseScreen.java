@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
+import com.mygdx.game.engine.collision.CollidableEntity;
+import com.mygdx.game.game.components.game.player.Player;
 import com.mygdx.game.game.components.ui.Button;
 import com.mygdx.game.game.screens.game.ControlScreen;
 import com.mygdx.game.game.screens.game.GameScreen;
@@ -136,7 +138,9 @@ public class PauseScreen implements Screen {
     }
 
     public void quit() {
-        this.game.entityManager.getPlayers().get(0).getObject().savePlayerData(game);
+        for (CollidableEntity<Player> player : this.game.entityManager.getPlayers()) {
+            player.getObject().savePlayerData(game);
+        }
         this.game.entityManager = new EntityManager(this.game);
         this.game.entityManager.setPlayers(1, this.game.WIDTH);
         this.game.entityManager.resetFailingObjects();

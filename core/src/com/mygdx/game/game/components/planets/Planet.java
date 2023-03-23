@@ -43,7 +43,7 @@ public class Planet implements BehaviourManager {
 
     @Override
     public void dropPlanet(CollidableEntity<Planet> planet) {
-        planet.setY(planet.getY() - 100 * Gdx.graphics.getDeltaTime());
+        planet.setY(planet.getY() - 50 * Gdx.graphics.getDeltaTime());
     }
 
     public String getPlanet() {

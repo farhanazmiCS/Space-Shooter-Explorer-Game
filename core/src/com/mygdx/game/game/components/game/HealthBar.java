@@ -36,7 +36,7 @@ public class HealthBar {
         for (int i = 0; i < players.size(); i++)
         {
             batch.begin();
-            font.draw(batch, "Player " + (i + 1), startingX, startingY - (i * (height + 15)));
+            font.draw(batch, "Hull Integrity: Player " + (i + 1), startingX, startingY - (i * (height + 15)));
             batch.end();
             shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
             CollidableEntity<Player> player = players.get(i);

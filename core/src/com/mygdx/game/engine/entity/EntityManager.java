@@ -1,7 +1,6 @@
 package com.mygdx.game.engine.entity;
 
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Preferences;
 import com.mygdx.game.engine.collision.CollidableEntity;
 import com.mygdx.game.engine.lifecycle.Main;
 
@@ -10,7 +9,6 @@ import com.mygdx.game.game.components.game.player.Player;
 import com.mygdx.game.game.components.game.enemy.UFO;
 import com.mygdx.game.game.components.planets.Planet;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -67,6 +65,8 @@ public class EntityManager {
             CollidableEntity<Player> player = new CollidableEntity<>(
                     WIDTH / 2 - 64 / 2 + (i * 64),
                     20,
+                    64,
+                    64,
                     new Player(
                             "spaceship.png", //<a href="https://www.flaticon.com/free-icons/spaceship" title="spaceship icons">Spaceship icons created by Skyclick - Flaticon</a>
                             200,
@@ -103,7 +103,13 @@ public class EntityManager {
             CollidableEntity<Asteroid> asteroidEntity = new CollidableEntity<Asteroid>(
                     possibleX[chance],
                     800,
+<<<<<<< HEAD
                     asteroid, 64, 64);
+=======
+                    64,
+                    64,
+                    asteroid);
+>>>>>>> 37cddaac771983e65461bc870a21849298ca3641
             asteroids.add(asteroidEntity);
             return asteroids;
         } else if (entityType.equals("UFO")) {
@@ -124,7 +130,13 @@ public class EntityManager {
                 CollidableEntity<UFO> ufoEntity = new CollidableEntity<UFO>(
                         x,
                         y,
+<<<<<<< HEAD
                         ufoObject, 64, 64);
+=======
+                        64,
+                        64,
+                        ufoObject);
+>>>>>>> 37cddaac771983e65461bc870a21849298ca3641
                 UFOs.add(ufoEntity);
             }
             return UFOs;
@@ -138,7 +150,11 @@ public class EntityManager {
         for (int i = 0; i < availablePlanets.length; i++) {
             int posX = random.nextInt(this.game.WIDTH - 125);
             Planet p = new Planet(availablePlanets[i], String.format("%s.png", availablePlanets[i]));
+<<<<<<< HEAD
             CollidableEntity<Planet> planet = new CollidableEntity<Planet>(posX, 600, p, 29, 63);
+=======
+            CollidableEntity<Planet> planet = new CollidableEntity<Planet>(posX, 600, 125, 125, p);
+>>>>>>> 37cddaac771983e65461bc870a21849298ca3641
             planets.add(planet);
         }
     }

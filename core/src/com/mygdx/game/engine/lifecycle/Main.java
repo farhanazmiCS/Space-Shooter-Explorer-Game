@@ -109,6 +109,7 @@ public class Main extends Game {
 		entityManager.setPlayers(1, WIDTH);
 
 		prefs = Gdx.app.getPreferences("Player Data");
+
 		batch = new SpriteBatch();
 
 		screenManager.instantiateScreens();
