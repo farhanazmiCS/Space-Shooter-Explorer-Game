@@ -3,13 +3,6 @@ package com.mygdx.game.engine.collision;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.engine.entity.Entity;
 
-import java.util.ArrayList;
-
-import com.mygdx.game.game.components.game.enemy.Asteroid;
-import com.mygdx.game.game.components.game.Laser;
-import com.mygdx.game.game.components.game.player.Player;
-import com.mygdx.game.game.components.planets.Planet;
-
 public class CollidableEntity<T> extends Entity<T> implements CollisionManager {
     private float prevX;
     private float prevY;

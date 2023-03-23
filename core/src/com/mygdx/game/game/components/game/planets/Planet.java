@@ -1,4 +1,4 @@
-package com.mygdx.game.game.components.planets;
+package com.mygdx.game.game.components.game.planets;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

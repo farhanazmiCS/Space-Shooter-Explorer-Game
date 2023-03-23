@@ -13,7 +13,7 @@ import com.mygdx.game.game.components.game.player.Player;
 import com.mygdx.game.game.components.game.enemy.UFO;
 
 import com.mygdx.game.game.components.game.Background;
-import com.mygdx.game.game.components.planets.Planet;
+import com.mygdx.game.game.components.game.planets.Planet;
 
 public class GamePlay extends Game {
     private Main game;

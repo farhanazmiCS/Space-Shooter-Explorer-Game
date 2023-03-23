@@ -7,7 +7,7 @@ import com.mygdx.game.engine.lifecycle.Main;
 import com.mygdx.game.game.components.game.enemy.Asteroid;
 import com.mygdx.game.game.components.game.player.Player;
 import com.mygdx.game.game.components.game.enemy.UFO;
-import com.mygdx.game.game.components.planets.Planet;
+import com.mygdx.game.game.components.game.planets.Planet;
 
 import java.util.ArrayList;
 import java.util.Arrays;

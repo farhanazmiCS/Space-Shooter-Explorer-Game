@@ -6,7 +6,7 @@ import com.mygdx.game.engine.behavior.BehaviourManager;
 import com.mygdx.game.engine.collision.CollidableEntity;
 import com.mygdx.game.engine.lifecycle.Main;
 
-import com.mygdx.game.game.components.planets.Planet;
+import com.mygdx.game.game.components.game.planets.Planet;
 
 public class Asteroid implements BehaviourManager {
     private Texture image;
