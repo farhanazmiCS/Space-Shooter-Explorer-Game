@@ -7,7 +7,6 @@ import com.mygdx.game.game.screens.game.GameOverScreen;
 import com.mygdx.game.game.screens.game.GameScreen;
 import com.mygdx.game.game.screens.game.ResultScreen;
 import com.mygdx.game.game.screens.game.StoryboardScreen;
-import com.mygdx.game.game.screens.game.TriviaScreen;
 import com.mygdx.game.game.screens.menu.MainMenuScreen;
 import com.mygdx.game.game.screens.menu.PauseScreen;
 import com.mygdx.game.game.screens.menu.ScoreboardScreen;
@@ -55,8 +54,6 @@ public class ScreenManager {
     private PauseScreen pauseScreen;
     private GameOverScreen gameOverScreen;
     private ScoreboardScreen scoreboardScreen;
-    private TriviaScreen triviaScreen;
-    private ResultScreen resultScreen;
     private ControlScreen controlScreen;
     private GameScreen gameScreen;
     private Main game;
@@ -80,14 +77,6 @@ public class ScreenManager {
         this.scoreboardScreen = scoreboardScreen;
     }
 
-    public void setTriviaScreen(TriviaScreen triviaScreen) {
-        this.triviaScreen = triviaScreen;
-    }
-
-    public void setResultScreen(ResultScreen resultScreen) {
-        this.resultScreen = resultScreen;
-    }
-
     public void setControlScreen(ControlScreen controlScreen) {
         this.controlScreen = controlScreen;
     }
@@ -102,8 +91,6 @@ public class ScreenManager {
         pauseScreen = new PauseScreen(this.game, this);
         gameOverScreen = new GameOverScreen(this.game);
         scoreboardScreen = new ScoreboardScreen(this.game);
-        triviaScreen = new TriviaScreen(this.game);
-        resultScreen = new ResultScreen(this.game);
         controlScreen = new ControlScreen(this.game, "controls.jpg");
         gameScreen = new GameScreen(this.game);
 
@@ -141,14 +128,6 @@ public class ScreenManager {
 
     public ScoreboardScreen getScoreboardScreen() {
         return scoreboardScreen;
-    }
-
-    public TriviaScreen getTriviaScreen() {
-        return triviaScreen;
-    }
-
-    public ResultScreen getResultScreen() {
-        return resultScreen;
     }
 
     public ControlScreen getControlScreen() {

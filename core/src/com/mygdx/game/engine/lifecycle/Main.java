@@ -8,17 +8,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.engine.screen.ScreenManager;
 import com.mygdx.game.engine.sound.SoundManager;
 import com.mygdx.game.engine.entity.EntityManager;
-import com.mygdx.game.game.screens.game.ControlScreen;
-import com.mygdx.game.game.screens.game.GameOverScreen;
-import com.mygdx.game.game.screens.game.GameScreen;
-import com.mygdx.game.game.screens.menu.MainMenuScreen;
-import com.mygdx.game.game.screens.menu.PauseScreen;
-import com.mygdx.game.game.screens.game.ResultScreen;
-import com.mygdx.game.game.screens.menu.ScoreboardScreen;
-import com.mygdx.game.game.screens.game.TriviaScreen;
-import com.mygdx.game.game.screens.game.StoryboardScreen;
-
-import java.util.ArrayList;
 
 public class Main extends Game {
 	private static Main instance = null;
@@ -132,8 +121,6 @@ public class Main extends Game {
 		screenManager.getGameScreen().dispose();
 		screenManager.getGameOverScreen().dispose();
 		screenManager.getScoreboardScreen().dispose();
-		screenManager.getTriviaScreen().dispose();
-		screenManager.getResultScreen().dispose();
 		screenManager.getControlScreen().dispose();
 
 		// Dispose Sound manager

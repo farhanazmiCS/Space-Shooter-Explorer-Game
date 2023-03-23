@@ -136,7 +136,7 @@ public class EntityManager {
         for (int i = 0; i < availablePlanets.length; i++) {
             int posX = random.nextInt(this.game.WIDTH - 125);
             Planet p = new Planet(availablePlanets[i], String.format("%s.png", availablePlanets[i]));
-            CollidableEntity<Planet> planet = new CollidableEntity<Planet>(posX, 600, p, 29, 63);
+            CollidableEntity<Planet> planet = new CollidableEntity<Planet>(posX, 600, p, 125, 125);
             planets.add(planet);
         }
     }

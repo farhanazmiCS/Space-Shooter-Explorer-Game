@@ -101,7 +101,7 @@ public class GamePlay extends Game {
         }
 
         for (int i = 0; i < this.game.entityManager.getPlayers().size(); i++) {
-            CollidableEntity<Player> player =this.game.entityManager.getPlayers().get(i);
+            CollidableEntity<Player> player = this.game.entityManager.getPlayers().get(i);
             if (nextPlanetIndex < this.game.entityManager.getPlanets().size() && distance >= (nextPlanetIndex + 1) * 1200) {
                 CollidableEntity<Planet> planet = this.game.entityManager.getPlanets().get(nextPlanetIndex);
                 planet.getObject().dropPlanet(planet);
