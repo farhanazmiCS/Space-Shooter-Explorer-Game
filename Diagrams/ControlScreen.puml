@@ -9,8 +9,9 @@ skinparam titleBorderRoundCorner 15
 skinparam titleBorderThickness 2
 skinparam titleBorderColor red
 skinparam titleBackgroundColor Aqua-CadetBlue
+skinparam TitleFontSize 40
 
-title ControlScreen Class Composition Relations
+title Appendix D - ControlScreen Class Composition Relations
 
 class com.mygdx.game.game.screens.game.ControlScreen {
 - String imgPath

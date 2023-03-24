@@ -9,8 +9,9 @@ skinparam titleBorderRoundCorner 15
 skinparam titleBorderThickness 2
 skinparam titleBorderColor red
 skinparam titleBackgroundColor Aqua-CadetBlue
+skinparam TitleFontSize 40
 
-title CollidableEntity Class Generic Typing Relations
+title Appendix C - CollidableEntity Class Generic Typing Relations
 
 class com.mygdx.game.engine.collision.CollidableEntity {
 - float prevX

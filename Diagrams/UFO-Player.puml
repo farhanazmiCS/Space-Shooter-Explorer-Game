@@ -9,8 +9,9 @@ skinparam titleBorderRoundCorner 15
 skinparam titleBorderThickness 2
 skinparam titleBorderColor red
 skinparam titleBackgroundColor Aqua-CadetBlue
+skinparam TitleFontSize 40
 
-title UFO / Player Class Composition Relations
+title Appendix P - UFO / Player Class Composition Relations
 
 class com.mygdx.game.game.components.game.enemy.UFO {
 - String imgPath

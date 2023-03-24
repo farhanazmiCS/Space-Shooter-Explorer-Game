@@ -9,8 +9,9 @@ skinparam titleBorderRoundCorner 15
 skinparam titleBorderThickness 2
 skinparam titleBorderColor red
 skinparam titleBackgroundColor Aqua-CadetBlue
+skinparam TitleFontSize 40
 
-title ResultScreen Class Composition Relations
+title Appendix L - ResultScreen Class Composition Relations
 
 class com.mygdx.game.game.screens.game.ResultScreen {
 - SpriteBatch batch
