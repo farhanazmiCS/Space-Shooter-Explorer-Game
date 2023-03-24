@@ -170,10 +170,11 @@ class com.mygdx.game.game.components.game.Laser {
 + void setSpeed(float)
 }
 
-com.mygdx.game.game.components.game.planets.Planet o------ com.mygdx.game.engine.collision.CollidableEntity : "has generic typing"
-com.mygdx.game.game.components.game.enemy.UFO o------ com.mygdx.game.engine.collision.CollidableEntity : "has generic typing"
-com.mygdx.game.game.components.game.enemy.Asteroid o------ com.mygdx.game.engine.collision.CollidableEntity : "has generic typing"
-com.mygdx.game.game.components.game.player.Player o------ com.mygdx.game.engine.collision.CollidableEntity : "has generic typing"
-com.mygdx.game.game.components.game.Laser o------ com.mygdx.game.engine.collision.CollidableEntity : "has generic typing"
+com.mygdx.game.engine.collision.CollidableEntity o------ com.mygdx.game.game.components.game.planets.Planet : "has generic typing"
+com.mygdx.game.engine.collision.CollidableEntity o------ com.mygdx.game.game.components.game.enemy.UFO : "has generic typing"
+com.mygdx.game.engine.collision.CollidableEntity o------ com.mygdx.game.game.components.game.enemy.Asteroid : "has generic typing"
+com.mygdx.game.engine.collision.CollidableEntity o------ com.mygdx.game.game.components.game.player.Player : "has generic typing"
+com.mygdx.game.engine.collision.CollidableEntity o------ com.mygdx.game.game.components.game.Laser : "has generic typing"
+
 
 @enduml
