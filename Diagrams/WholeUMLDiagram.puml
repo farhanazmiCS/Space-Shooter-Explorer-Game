@@ -1,0 +1,692 @@
+@startuml
+
+skinparam linetype polyline
+skinparam linetype ortho
+
+skinparam nodesep 100
+skinparam ranksep 100
+
+skinparam titleBorderRoundCorner 15
+skinparam titleBorderThickness 2
+skinparam titleBorderColor red
+skinparam titleBackgroundColor Aqua-CadetBlue
+
+title All Classes
+
+class com.mygdx.game.game.logic.GamePlay {
+- Main game
+- Background background
+- int backgroundOffset
+- CustomInputProcessor inputProcessor
+- HealthBar healthBar
+- int distance
+- long lastDropTime
+- long lastPlanetDropTime
+- long lastShootTime
+- long lastShootTimeUFO
+- float spawnRate
+- float spawnRateMultiplier
+- float lastTimeUFOSpawned
+- boolean isDrop
+- int nextPlanetIndex
+- String nextPlanet
++ void create()
++ void render()
+}
+class com.mygdx.game.engine.collision.CollidableEntity {
+- float prevX
+- float prevY
+- float width
+- float height
+- Rectangle rectangle
++ float getWidth()
++ void setWidth(float)
++ float getHeight()
++ void setHeight(float)
++ Rectangle getRectangle()
++ void setRectangle(Rectangle)
++ float getPrevX()
++ void setPrevX(float)
++ float getPrevY()
++ void setPrevY(float)
++ boolean checkCollision(CollidableEntity,CollidableEntity)
+}
+abstract class com.mygdx.game.engine.entity.Entity {
+- float x
+- float y
+- T object
++ float getX()
++ void setX(float)
++ float getY()
++ void setY(float)
++ T getObject()
++ void setObject(T)
+# Object clone()
++ boolean equals(Object)
++ int hashCode()
+}
+class com.mygdx.game.game.components.game.planets.Planet {
+- String planet
+- Texture texture
+- SpriteBatch batch
+- Sprite sprite
+- float width
+- float height
++ void moveUFO(CollidableEntity,int,int)
++ long fireWeapon(CollidableEntity,Main)
++ void dropAsteroid(CollidableEntity<Asteroid>)
++ void dropPlanet(CollidableEntity<Planet>)
++ String getPlanet()
++ void setPlanet(String)
++ Texture getTexture()
++ void setTexture(Texture)
++ SpriteBatch getBatch()
++ void setBatch(SpriteBatch)
++ float getWidth()
++ void setWidth(float)
++ float getHeight()
++ void setHeight(float)
++ Sprite getSprite()
++ void setSprite(Sprite)
+}
+class com.mygdx.game.engine.input.CustomInputProcessor {
++ boolean mouseClicked(int)
++ boolean keyDown(int)
++ boolean keyUp(int)
++ boolean keyTyped(char)
++ boolean touchDown(int,int,int,int)
++ boolean touchUp(int,int,int,int)
++ boolean touchDragged(int,int,int)
++ boolean mouseMoved(int,int)
++ boolean scrolled(float,float)
++ boolean mouseHoverOver(T)
+}
+class com.mygdx.game.game.components.game.player.Afterburner {
+- String imgPath
+- Texture texture
+- SpriteBatch batch
+- float x
+- float y
+- boolean visibility
++ String getImgPath()
++ void setImgPath(String)
++ Texture getTexture()
++ void setTexture(Texture)
++ SpriteBatch getBatch()
++ void setBatch(SpriteBatch)
++ float getX()
++ void setX(float)
++ float getY()
++ void setY(float)
++ boolean getVisibility()
++ void setVisibility(boolean)
+}
+class com.mygdx.game.game.components.game.enemy.UFO {
+- String imgPath
+- String dir
+- float speed
+- Texture texture
+- ArrayList<CollidableEntity<Laser>> lasers
+- Rectangle rectangle
+- int health
+- long lastShotTime
+- long shotDelay
++ float getSpeed()
++ void setSpeed(float)
++ Texture getTexture()
++ void setTexture(Texture)
++ int getHealth()
++ void setHealth(int)
++ void moveUFO(CollidableEntity,int,int)
++ void moveLeft(CollidableEntity)
++ void moveRight(CollidableEntity)
++ void moveDown(CollidableEntity)
++ long fireWeapon(CollidableEntity,Main)
++ void dropAsteroid(CollidableEntity<Asteroid>)
++ void dropPlanet(CollidableEntity<Planet>)
++ void moveLasers(CollidableEntity<UFO>)
++ ArrayList<CollidableEntity<Laser>> getLasers()
+}
+class com.mygdx.game.game.components.ui.Button {
+- Main game
+- Rectangle rectangle
+- float x
+- float y
+- float width
+- float height
+- String name
+- String imgPath
+- Texture texture
+- SpriteBatch batch
+- boolean visibility
+- Sprite sprite
+- boolean active
++ Texture getTexture()
++ void setTexture(Texture)
++ SpriteBatch getBatch()
++ void setBatch(SpriteBatch)
++ Sprite getSprite()
++ void setSprite(Sprite)
++ boolean getVisibility()
++ void setVisibility(boolean)
++ boolean isActive()
++ void setActive(boolean)
++ void setButtonColor(Color)
++ float getX()
++ void setX(float)
++ float getY()
++ void setY(float)
++ float getWidth()
++ void setWidth(float)
++ float getHeight()
++ void setHeight(float)
++ String getName()
++ void setName(String)
++ Rectangle getBound()
+}
+class com.mygdx.game.game.screens.game.ResultScreen {
+- SpriteBatch batch
+- Texture texture
+- CustomInputProcessor inputProcessor
+- Main game
+- float buttonShowDelay
+- Timer.Task buttonShowTask
+- Button nextButton
+- String resultBG
++ CustomInputProcessor getInputProcessor()
++ void setInputProcessor(CustomInputProcessor)
++ String getResultBG()
++ void setResultBG(String)
++ void show()
++ void render(float)
++ void resize(int,int)
++ void pause()
++ void resume()
++ void hide()
++ void dispose()
+}
+class com.mygdx.game.engine.screen.ScreenManager {
+- ArrayList<String> storyboardImgPath
+- ArrayList<String> planetVisitImgPath
+- ArrayList<StoryboardScreen> storyboards
+- ArrayList<StoryboardScreen> visitPlanetStoryboards
+- MainMenuScreen mainMenuScreen
+- PauseScreen pauseScreen
+- GameOverScreen gameOverScreen
+- ScoreboardScreen scoreboardScreen
+- ControlScreen controlScreen
+- GameScreen gameScreen
+- Main game
++ ArrayList<String> getStoryboardImgPath()
++ void setStoryboardImgPath(ArrayList<String>)
++ ArrayList<String> getPlanetVisitImgPath()
++ void setPlanetVisitImgPath(ArrayList<String>)
++ ArrayList<StoryboardScreen> getStoryboards()
++ void setStoryboards(ArrayList<StoryboardScreen>)
++ ArrayList<StoryboardScreen> getVisitPlanetStoryboards()
++ void setVisitPlanetStoryboards(ArrayList<StoryboardScreen>)
++ void setMainMenuScreen(MainMenuScreen)
++ void setPauseScreen(PauseScreen)
++ void setGameOverScreen(GameOverScreen)
++ void setScoreboardScreen(ScoreboardScreen)
++ void setControlScreen(ControlScreen)
++ void setGameScreen(GameScreen)
++ void instantiateScreens()
++ MainMenuScreen getMainMenuScreen()
++ PauseScreen getPauseScreen()
++ GameOverScreen getGameOverScreen()
++ ScoreboardScreen getScoreboardScreen()
++ ControlScreen getControlScreen()
++ GameScreen getGameScreen()
++ void createScreenButtons(int,ArrayList<Button>,float,ArrayList<String>)
++ ArrayList<StoryboardScreen> generateStoryboards(ArrayList<String>,String)
+}
+class com.mygdx.game.game.screens.game.GameScreen {
+- Main game
+- Button pauseButton
+- OrthographicCamera camera
+- CustomInputProcessor inputProcessor
+- Viewport viewport
+- GamePlay gamePlay
+- float buttonShowDelay
+- Timer.Task buttonShowTask
+- SpriteBatch batch
++ SpriteBatch getBatch()
++ void setBatch(SpriteBatch)
++ Button getPauseButton()
++ void setPauseButton(Button)
++ CustomInputProcessor getInputProcessor()
++ void setInputProcessor(CustomInputProcessor)
++ void show()
++ void render(float)
++ void resize(int,int)
++ void pause()
++ void resume()
++ void hide()
++ void quit()
++ void dispose()
+}
+class com.mygdx.game.engine.sound.SoundManager {
+- {static} Music menuMusic
+- {static} Music gameMusic
+- {static} Music controlMusic
+- {static} Music scoreMusic
+- {static} Music pauseMusic
+- {static} Music storyMusic
+- {static} Sound buttonHover
+- {static} Sound buttonClick
+- {static} Sound laserPew
+- {static} Sound enemyLaserPew
+- {static} boolean isPlaying
++ {static} void playMusic(ScreenType)
++ {static} void stopMusic()
++ {static} boolean isPlaying()
++ void playButtonHover()
++ void playButtonClick()
++ void playLaserSound()
++ void playEnemyLaserSound()
++ void dispose()
+}
+enum com.mygdx.game.engine.sound.ScreenType {
++  MAIN_MENU
++  GAME
++  CONTROL
++  SCORE
++  PAUSE
++  STORY
+}
+class com.mygdx.game.game.screens.game.ControlScreen {
+- String imgPath
+- Texture texture
+- SpriteBatch batch
+- Main game
+- CustomInputProcessor inputProcessor
+- OrthographicCamera camera
+- Button playButton
+- float buttonShowDelay
+- Timer.Task buttonShowTask
++ void show()
++ void render(float)
++ void resize(int,int)
++ void pause()
++ void resume()
++ void hide()
++ void dispose()
++ void play()
+}
+interface com.mygdx.game.engine.collision.CollisionManager {
+~ boolean checkCollision(CollidableEntity<Player>,CollidableEntity)
+}
+class com.mygdx.game.game.components.game.HealthBar {
+- ShapeRenderer shapeRenderer
+- SpriteBatch batch
+- BitmapFont font
+- int startingX
+- int startingY
+- int width
+- int height
++ void drawHealthBars(ArrayList<CollidableEntity<Player>>)
++ ShapeRenderer getShapeRenderer()
++ void setShapeRenderer(ShapeRenderer)
++ SpriteBatch getBatch()
++ void setBatch(SpriteBatch)
++ BitmapFont getFont()
++ void setFont(BitmapFont)
++ int getStartingX()
++ void setStartingX(int)
++ int getStartingY()
++ void setStartingY(int)
++ int getWidth()
++ void setWidth(int)
++ int getHeight()
++ void setHeight(int)
+}
+class com.mygdx.game.game.components.game.Laser {
+- String imgName
+- Sprite sprite
+- float width
+- float height
+- float speed
+- SpriteBatch batch
++ SpriteBatch getBatch()
++ void setBatch(SpriteBatch)
++ String getImgName()
++ void setImgName(String)
++ Sprite getSprite()
++ void setSprite(Sprite)
++ float getWidth()
++ void setWidth(float)
++ float getHeight()
++ void setHeight(float)
++ float getSpeed()
++ void setSpeed(float)
+}
+class com.mygdx.game.engine.entity.EntityManager {
+- ArrayList<CollidableEntity<Player>> players
+- ArrayList<CollidableEntity<Asteroid>> asteroids
+- ArrayList<CollidableEntity<UFO>> UFOs
+- ArrayList<CollidableEntity<Planet>> planets
+- String[] availablePlanets
+- Main game
++ ArrayList<CollidableEntity<Planet>> getPlanets()
++ void setPlanets(ArrayList<CollidableEntity<Planet>>)
++ String[] getAvailablePlanets()
++ void setAvailablePlanets(String[])
++ ArrayList<CollidableEntity<Asteroid>> getAsteroids()
++ void setAsteroids(ArrayList<CollidableEntity<Asteroid>>)
++ ArrayList<CollidableEntity<Player>> getPlayers()
++ void setPlayers(int,int)
++ ArrayList<CollidableEntity<UFO>> getUFOs()
++ void resetFailingObjects()
++ ArrayList spawnEnemy(String)
++ void spawnPlanets()
+}
+class com.mygdx.game.game.screens.menu.PauseScreen {
+- SpriteBatch batch
+- Texture texture
+- CustomInputProcessor inputProcessor
+- Main game
+- ArrayList<Button> buttons
+- ArrayList<String> buttonPath
++ CustomInputProcessor getInputProcessor()
++ void setInputProcessor(CustomInputProcessor)
++ ArrayList<Button> getButtons()
++ void setButtons(ArrayList<Button>)
++ void show()
++ void render(float)
++ void resize(int,int)
++ void pause()
++ void resume()
++ void hide()
++ void dispose()
++ void quit()
+}
+class com.mygdx.game.game.components.game.PlayerScore {
+- String startTime
+- int distanceTravelled
+- int aliensKilled
++ String getStartTime()
++ void setStartTime(String)
++ int getDistanceTravelled()
++ void setDistanceTravelled(int)
++ int getAliensKilled()
++ void setAliensKilled(int)
++ String toString()
++ int compareTo(PlayerScore)
+}
+class com.mygdx.game.game.screens.game.GameOverScreen {
+- SpriteBatch batch
+- Texture texture
+- CustomInputProcessor inputProcessor
+- Main game
+- ArrayList<Button> buttons
+- ArrayList<String> buttonPath
++ CustomInputProcessor getInputProcessor()
++ void setInputProcessor(CustomInputProcessor)
++ ArrayList<Button> getButtons()
++ void setButtons(ArrayList<Button>)
++ void show()
++ void render(float)
++ void resize(int,int)
++ void pause()
++ void resume()
++ void hide()
++ void dispose()
++ void quit()
+}
+interface com.mygdx.game.engine.behavior.BehaviourManager {
+~ void moveUFO(CollidableEntity,int,int)
+~ long fireWeapon(CollidableEntity,Main)
+~ void dropAsteroid(CollidableEntity<Asteroid>)
+~ void dropPlanet(CollidableEntity<Planet>)
+}
+class com.mygdx.game.engine.lifecycle.Main {
+- {static} Main instance
+- ScreenManager screenManager
+- Preferences prefs
+- SoundManager soundManager
++ EntityManager entityManager
+- SpriteBatch batch
+- BitmapFont font
++ int HEIGHT
++ int WIDTH
++ {static} Main getInstance()
++ ScreenManager getScreenManager()
++ void setScreenManager(ScreenManager)
++ SoundManager getSoundManager()
++ void setSoundManager(SoundManager)
++ SpriteBatch getBatch()
++ void setBatch(SpriteBatch)
++ BitmapFont getFont()
++ void setFont(BitmapFont)
++ Preferences getPrefs()
++ void setPrefs(Preferences)
++ void create()
++ void render()
++ void dispose()
+}
+class com.mygdx.game.game.components.game.Background {
+- Texture texture
+- SpriteBatch batch
++ Texture getTexture()
++ void setTexture(Texture)
++ SpriteBatch getBatch()
++ void setBatch(SpriteBatch)
+}
+class com.mygdx.game.game.screens.menu.MainMenuScreen {
+- CustomInputProcessor inputProcessor
+- Main game
+- OrthographicCamera camera
+- ArrayList<Button> buttons
+- SpriteBatch batch
+- Texture texture
+- ArrayList<String> buttonImagePath
+- boolean soundPlayed
+- ScoreboardScreen scoreboardScreen
++ void setInputProcessor(CustomInputProcessor)
++ void setButtons(ArrayList<Button>)
++ void show()
++ void render(float)
++ void resize(int,int)
++ void play()
++ void quit()
++ void pause()
++ void resume()
++ void hide()
++ void dispose()
+}
+class com.mygdx.game.game.screens.game.StoryboardScreen {
+- String imgPath
+- Texture texture
+- SpriteBatch batch
+- Main game
+- CustomInputProcessor inputProcessor
+- OrthographicCamera camera
+- Button nextButton
+- float buttonShowDelay
+- Timer.Task buttonShowTask
+- int current
+- String type
++ int getCurrent()
++ void setCurrent(int)
++ void show()
++ void render(float)
++ void resize(int,int)
++ void pause()
++ void resume()
++ void hide()
++ void dispose()
++ void next()
+}
+class com.mygdx.game.game.screens.menu.ScoreboardScreen {
+- CustomInputProcessor inputProcessor
+- Button backButton
+- SpriteBatch batch
+- Texture texture
+- Main game
+- Table table
+- ArrayList<PlayerScore> playerScores
++ CustomInputProcessor getInputProcessor()
++ void setInputProcessor(CustomInputProcessor)
++ void show()
++ void render(float)
++ void resize(int,int)
++ void pause()
++ void resume()
++ void hide()
++ void dispose()
+}
+class com.mygdx.game.game.components.game.player.Player {
+- String imgName
+- Sprite sprite
+- float width
+- float height
+- float speed
+- int[] mainKeyboardInputs
+- int[] altKeyboardInputs
+- int score
+- ArrayList<CollidableEntity<Laser>> lasers
+- int maxHealth
+- int currentHealth
+- int aliensKilled
+- Timestamp startTime
+- Afterburner afterburner
++ Afterburner getAfterburner()
++ void setAfterburner(Afterburner)
++ String getImgName()
++ void setImgName(String)
++ Sprite getSprite()
++ void setSprite(Sprite)
++ float getWidth()
++ void setWidth(float)
++ float getHeight()
++ void setHeight(float)
++ float getSpeed()
++ void setSpeed(float)
++ int[] getMainKeyboardInputs()
++ void setMainKeyboardInputs(int[])
++ int[] getAltKeyboardInputs()
++ void setAltKeyboardInputs(int[])
++ int getScore()
++ void setScore(int)
++ ArrayList<CollidableEntity<Laser>> getLasers()
++ void setLasers(ArrayList<CollidableEntity<Laser>>)
++ int getMaxHealth()
++ void setMaxHealth(int)
++ int getCurrentHealth()
++ void setCurrentHealth(int)
++ Timestamp getStartTime()
++ void setStartTime(Timestamp)
++ void limitPlayerMovement(CollidableEntity<Player>,Integer,Integer)
++ int movePlayer(CollidableEntity<Player>,CustomInputProcessor)
++ int getAliensKilled()
++ void setAliensKilled(int)
++ void moveLasers(CollidableEntity<Player>)
++ void spawnLasers(CustomInputProcessor,CollidableEntity<Player>,Main)
++ void savePlayerData(Main)
+}
+class com.mygdx.game.game.components.game.enemy.Asteroid {
+- Texture image
+- float width
+- float height
++ Texture getImage()
++ void setImage(Texture)
++ float getWidth()
++ void setWidth(float)
++ float getHeight()
++ void setHeight(float)
++ void moveUFO(CollidableEntity,int,int)
++ long fireWeapon(CollidableEntity,Main)
++ void dropAsteroid(CollidableEntity<Asteroid>)
++ void dropPlanet(CollidableEntity<Planet>)
+}
+
+com.badlogic.gdx.Game <|-- com.mygdx.game.game.logic.GamePlay : "inherits"
+com.mygdx.game.engine.collision.CollisionManager <|.. com.mygdx.game.engine.collision.CollidableEntity : "implements"
+com.mygdx.game.engine.entity.Entity <|-- com.mygdx.game.engine.collision.CollidableEntity : "inherits"
+com.mygdx.game.engine.entity.Cloneable <|.. com.mygdx.game.engine.entity.Entity : "implements"
+com.mygdx.game.engine.behavior.BehaviourManager <|.. com.mygdx.game.game.components.game.planets.Planet : "implements"
+com.badlogic.gdx.InputProcessor <|.. com.mygdx.game.engine.input.CustomInputProcessor : "implements"
+com.mygdx.game.engine.behavior.BehaviourManager <|.. com.mygdx.game.game.components.game.enemy.UFO : "implements"
+com.badlogic.gdx.Screen <|.. com.mygdx.game.game.screens.game.ResultScreen : "implements"
+com.mygdx.game.engine.screen.ScreenManager <|-- com.mygdx.game.game.screens.game.ResultScreen : "inherits"
+com.badlogic.gdx.Screen <|.. com.mygdx.game.game.screens.game.GameScreen : "implements"
+com.badlogic.gdx.Screen <|.. com.mygdx.game.game.screens.game.ControlScreen : "implements"
+com.badlogic.gdx.Screen <|.. com.mygdx.game.game.screens.menu.PauseScreen : "implements"
+com.mygdx.game.game.components.game.Comparable <|.. com.mygdx.game.game.components.game.PlayerScore : "implements"
+com.badlogic.gdx.Screen <|.. com.mygdx.game.game.screens.game.GameOverScreen : "implements"
+com.mygdx.game.engine.screen.ScreenManager <|-- com.mygdx.game.game.screens.game.GameOverScreen : "inherits"
+com.badlogic.gdx.Game <|-- com.mygdx.game.engine.lifecycle.Main : "inherits"
+com.badlogic.gdx.Screen <|.. com.mygdx.game.game.screens.menu.MainMenuScreen : "implements"
+com.badlogic.gdx.Screen <|.. com.mygdx.game.game.screens.game.StoryboardScreen : "implements"
+com.badlogic.gdx.Screen <|.. com.mygdx.game.game.screens.menu.ScoreboardScreen : "implements"
+com.mygdx.game.engine.behavior.BehaviourManager <|.. com.mygdx.game.game.components.game.enemy.Asteroid : "implements"
+
+com.mygdx.game.game.components.game.planets.Planet o------ com.mygdx.game.engine.collision.CollidableEntity : "has generic typing"
+com.mygdx.game.game.components.game.enemy.UFO o------ com.mygdx.game.engine.collision.CollidableEntity : "has generic typing"
+com.mygdx.game.game.components.game.enemy.Asteroid o------ com.mygdx.game.engine.collision.CollidableEntity : "has generic typing"
+com.mygdx.game.game.components.game.player.Player o------ com.mygdx.game.engine.collision.CollidableEntity : "has generic typing"
+com.mygdx.game.game.components.game.Laser o------ com.mygdx.game.engine.collision.CollidableEntity : "has generic typing"
+
+com.mygdx.game.engine.entity.EntityManager *------ com.mygdx.game.game.components.game.planets.Planet :has many
+com.mygdx.game.engine.entity.EntityManager *------ com.mygdx.game.game.components.game.enemy.UFO :has many
+com.mygdx.game.engine.entity.EntityManager *------ com.mygdx.game.game.components.game.enemy.Asteroid :has many
+com.mygdx.game.engine.entity.EntityManager *------ com.mygdx.game.game.components.game.player.Player :has many
+
+com.mygdx.game.game.logic.GamePlay *------ com.mygdx.game.engine.lifecycle.Main :has
+com.mygdx.game.game.logic.GamePlay *------ com.mygdx.game.game.components.game.Background :has
+com.mygdx.game.game.logic.GamePlay *------ com.mygdx.game.engine.input.CustomInputProcessor :has
+com.mygdx.game.game.logic.GamePlay *------ com.mygdx.game.game.components.game.HealthBar :has
+
+com.mygdx.game.engine.lifecycle.Main *------ com.mygdx.game.engine.screen.ScreenManager :has
+com.mygdx.game.engine.lifecycle.Main *------ com.mygdx.game.engine.sound.SoundManager :has
+com.mygdx.game.engine.lifecycle.Main *------ com.mygdx.game.engine.entity.EntityManager :has
+
+com.mygdx.game.engine.screen.ScreenManager *------ com.mygdx.game.game.screens.game.StoryboardScreen :has many
+com.mygdx.game.engine.screen.ScreenManager *------ com.mygdx.game.game.screens.menu.MainMenuScreen :has
+com.mygdx.game.engine.screen.ScreenManager *------ com.mygdx.game.game.screens.menu.PauseScreen :has
+com.mygdx.game.engine.screen.ScreenManager *------ com.mygdx.game.game.screens.game.GameOverScreen :has
+com.mygdx.game.engine.screen.ScreenManager *------ com.mygdx.game.game.screens.menu.ScoreboardScreen :has
+com.mygdx.game.engine.screen.ScreenManager *------ com.mygdx.game.game.screens.game.ControlScreen :has
+com.mygdx.game.engine.screen.ScreenManager *------ com.mygdx.game.game.screens.game.GameScreen :has
+com.mygdx.game.engine.screen.ScreenManager *------ com.mygdx.game.engine.lifecycle.Main :has
+
+com.mygdx.game.game.components.game.enemy.UFO *------ com.mygdx.game.game.components.game.Laser :has many
+
+com.mygdx.game.game.components.game.player.Player *------ com.mygdx.game.game.components.game.Laser :has many
+com.mygdx.game.game.components.game.player.Player *------ com.mygdx.game.game.components.game.player.Afterburner :has
+
+com.mygdx.game.game.screens.game.ControlScreen *------ com.mygdx.game.engine.input.CustomInputProcessor :has
+com.mygdx.game.game.screens.game.ControlScreen *------ com.mygdx.game.game.components.ui.Button :has
+
+com.mygdx.game.game.screens.game.GameOverScreen *------ com.mygdx.game.engine.input.CustomInputProcessor :has
+com.mygdx.game.game.screens.game.GameOverScreen *------ com.mygdx.game.engine.lifecycle.Main :has
+com.mygdx.game.game.screens.game.GameOverScreen *------ com.mygdx.game.game.components.ui.Button :has many
+
+com.mygdx.game.game.screens.game.GameScreen *------ com.mygdx.game.engine.lifecycle.Main :has
+com.mygdx.game.game.screens.game.GameScreen *------ com.mygdx.game.game.components.ui.Button :has
+com.mygdx.game.game.screens.game.GameScreen *------ com.mygdx.game.engine.input.CustomInputProcessor :has
+
+com.mygdx.game.game.screens.game.ResultScreen *------ com.mygdx.game.engine.input.CustomInputProcessor :has
+com.mygdx.game.game.screens.game.ResultScreen *------ com.mygdx.game.engine.lifecycle.Main :has
+com.mygdx.game.game.screens.game.ResultScreen *------ com.mygdx.game.game.components.ui.Button :has
+
+com.mygdx.game.game.screens.game.StoryboardScreen *------ com.mygdx.game.engine.input.CustomInputProcessor :has
+com.mygdx.game.game.screens.game.StoryboardScreen *------ com.mygdx.game.engine.lifecycle.Main :has
+com.mygdx.game.game.screens.game.StoryboardScreen *------ com.mygdx.game.game.components.ui.Button :has
+
+com.mygdx.game.game.screens.menu.MainMenuScreen *------ com.mygdx.game.engine.input.CustomInputProcessor :has
+com.mygdx.game.game.screens.menu.MainMenuScreen *------ com.mygdx.game.engine.lifecycle.Main :has
+com.mygdx.game.game.screens.menu.MainMenuScreen *------ com.mygdx.game.game.components.ui.Button :has many
+
+com.mygdx.game.game.screens.menu.PauseScreen *------ com.mygdx.game.engine.input.CustomInputProcessor :has
+com.mygdx.game.game.screens.menu.PauseScreen *------ com.mygdx.game.engine.lifecycle.Main :has
+com.mygdx.game.game.screens.menu.PauseScreen *------ com.mygdx.game.game.components.ui.Button :has many
+
+com.mygdx.game.game.screens.menu.ScoreboardScreen *------ com.mygdx.game.engine.input.CustomInputProcessor :has
+com.mygdx.game.game.screens.menu.ScoreboardScreen *------ com.mygdx.game.engine.lifecycle.Main :has
+com.mygdx.game.game.screens.menu.ScoreboardScreen *------ com.mygdx.game.game.components.ui.Button :has
+com.mygdx.game.game.screens.menu.ScoreboardScreen *------ com.mygdx.game.game.components.game.PlayerScore :has many
+
+
+@enduml

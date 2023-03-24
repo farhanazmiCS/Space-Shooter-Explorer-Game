@@ -1,0 +1,113 @@
+@startuml
+skinparam linetype polyline
+skinparam linetype ortho
+
+skinparam nodesep 100
+skinparam ranksep 100
+
+skinparam titleBorderRoundCorner 15
+skinparam titleBorderThickness 2
+skinparam titleBorderColor red
+skinparam titleBackgroundColor Aqua-CadetBlue
+
+title GamePlay Class Composition Relations
+
+class com.mygdx.game.game.logic.GamePlay {
+- Main game
+- Background background
+- int backgroundOffset
+- CustomInputProcessor inputProcessor
+- HealthBar healthBar
+- int distance
+- long lastDropTime
+- long lastPlanetDropTime
+- long lastShootTime
+- long lastShootTimeUFO
+- float spawnRate
+- float spawnRateMultiplier
+- float lastTimeUFOSpawned
+- boolean isDrop
+- int nextPlanetIndex
+- String nextPlanet
++ void create()
++ void render()
+}
+
+class com.mygdx.game.engine.lifecycle.Main {
+- {static} Main instance
+- ScreenManager screenManager
+- Preferences prefs
+- SoundManager soundManager
++ EntityManager entityManager
+- SpriteBatch batch
+- BitmapFont font
++ int HEIGHT
++ int WIDTH
++ {static} Main getInstance()
++ ScreenManager getScreenManager()
++ void setScreenManager(ScreenManager)
++ SoundManager getSoundManager()
++ void setSoundManager(SoundManager)
++ SpriteBatch getBatch()
++ void setBatch(SpriteBatch)
++ BitmapFont getFont()
++ void setFont(BitmapFont)
++ Preferences getPrefs()
++ void setPrefs(Preferences)
++ void create()
++ void render()
++ void dispose()
+}
+
+class com.mygdx.game.game.components.game.Background {
+- Texture texture
+- SpriteBatch batch
++ Texture getTexture()
++ void setTexture(Texture)
++ SpriteBatch getBatch()
++ void setBatch(SpriteBatch)
+}
+
+class com.mygdx.game.engine.input.CustomInputProcessor {
++ boolean mouseClicked(int)
++ boolean keyDown(int)
++ boolean keyUp(int)
++ boolean keyTyped(char)
++ boolean touchDown(int,int,int,int)
++ boolean touchUp(int,int,int,int)
++ boolean touchDragged(int,int,int)
++ boolean mouseMoved(int,int)
++ boolean scrolled(float,float)
++ boolean mouseHoverOver(T)
+}
+
+class com.mygdx.game.game.components.game.HealthBar {
+- ShapeRenderer shapeRenderer
+- SpriteBatch batch
+- BitmapFont font
+- int startingX
+- int startingY
+- int width
+- int height
++ void drawHealthBars(ArrayList<CollidableEntity<Player>>)
++ ShapeRenderer getShapeRenderer()
++ void setShapeRenderer(ShapeRenderer)
++ SpriteBatch getBatch()
++ void setBatch(SpriteBatch)
++ BitmapFont getFont()
++ void setFont(BitmapFont)
++ int getStartingX()
++ void setStartingX(int)
++ int getStartingY()
++ void setStartingY(int)
++ int getWidth()
++ void setWidth(int)
++ int getHeight()
++ void setHeight(int)
+}
+
+com.mygdx.game.game.logic.GamePlay *------ com.mygdx.game.engine.lifecycle.Main :has
+com.mygdx.game.game.logic.GamePlay *------ com.mygdx.game.game.components.game.Background :has
+com.mygdx.game.game.logic.GamePlay *------ com.mygdx.game.engine.input.CustomInputProcessor :has
+com.mygdx.game.game.logic.GamePlay *------ com.mygdx.game.game.components.game.HealthBar :has
+@enduml

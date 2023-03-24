@@ -1,0 +1,124 @@
+@startuml
+skinparam linetype polyline
+skinparam linetype ortho
+
+skinparam nodesep 100
+skinparam ranksep 100
+
+skinparam titleBorderRoundCorner 15
+skinparam titleBorderThickness 2
+skinparam titleBorderColor red
+skinparam titleBackgroundColor Aqua-CadetBlue
+
+title Main Class Composition Relations
+
+class com.mygdx.game.engine.lifecycle.Main {
+- {static} Main instance
+- ScreenManager screenManager
+- Preferences prefs
+- SoundManager soundManager
++ EntityManager entityManager
+- SpriteBatch batch
+- BitmapFont font
++ int HEIGHT
++ int WIDTH
++ {static} Main getInstance()
++ ScreenManager getScreenManager()
++ void setScreenManager(ScreenManager)
++ SoundManager getSoundManager()
++ void setSoundManager(SoundManager)
++ SpriteBatch getBatch()
++ void setBatch(SpriteBatch)
++ BitmapFont getFont()
++ void setFont(BitmapFont)
++ Preferences getPrefs()
++ void setPrefs(Preferences)
++ void create()
++ void render()
++ void dispose()
+}
+
+class com.mygdx.game.engine.entity.EntityManager {
+- ArrayList<CollidableEntity<Player>> players
+- ArrayList<CollidableEntity<Asteroid>> asteroids
+- ArrayList<CollidableEntity<UFO>> UFOs
+- ArrayList<CollidableEntity<Planet>> planets
+- String[] availablePlanets
+- Main game
++ ArrayList<CollidableEntity<Planet>> getPlanets()
++ void setPlanets(ArrayList<CollidableEntity<Planet>>)
++ String[] getAvailablePlanets()
++ void setAvailablePlanets(String[])
++ ArrayList<CollidableEntity<Asteroid>> getAsteroids()
++ void setAsteroids(ArrayList<CollidableEntity<Asteroid>>)
++ ArrayList<CollidableEntity<Player>> getPlayers()
++ void setPlayers(int,int)
++ ArrayList<CollidableEntity<UFO>> getUFOs()
++ void resetFailingObjects()
++ ArrayList spawnEnemy(String)
++ void spawnPlanets()
+}
+
+class com.mygdx.game.engine.screen.ScreenManager {
+- ArrayList<String> storyboardImgPath
+- ArrayList<String> planetVisitImgPath
+- ArrayList<StoryboardScreen> storyboards
+- ArrayList<StoryboardScreen> visitPlanetStoryboards
+- MainMenuScreen mainMenuScreen
+- PauseScreen pauseScreen
+- GameOverScreen gameOverScreen
+- ScoreboardScreen scoreboardScreen
+- ControlScreen controlScreen
+- GameScreen gameScreen
+- Main game
++ ArrayList<String> getStoryboardImgPath()
++ void setStoryboardImgPath(ArrayList<String>)
++ ArrayList<String> getPlanetVisitImgPath()
++ void setPlanetVisitImgPath(ArrayList<String>)
++ ArrayList<StoryboardScreen> getStoryboards()
++ void setStoryboards(ArrayList<StoryboardScreen>)
++ ArrayList<StoryboardScreen> getVisitPlanetStoryboards()
++ void setVisitPlanetStoryboards(ArrayList<StoryboardScreen>)
++ void setMainMenuScreen(MainMenuScreen)
++ void setPauseScreen(PauseScreen)
++ void setGameOverScreen(GameOverScreen)
++ void setScoreboardScreen(ScoreboardScreen)
++ void setControlScreen(ControlScreen)
++ void setGameScreen(GameScreen)
++ void instantiateScreens()
++ MainMenuScreen getMainMenuScreen()
++ PauseScreen getPauseScreen()
++ GameOverScreen getGameOverScreen()
++ ScoreboardScreen getScoreboardScreen()
++ ControlScreen getControlScreen()
++ GameScreen getGameScreen()
++ void createScreenButtons(int,ArrayList<Button>,float,ArrayList<String>)
++ ArrayList<StoryboardScreen> generateStoryboards(ArrayList<String>,String)
+}
+
+class com.mygdx.game.engine.sound.SoundManager {
+- {static} Music menuMusic
+- {static} Music gameMusic
+- {static} Music controlMusic
+- {static} Music scoreMusic
+- {static} Music pauseMusic
+- {static} Music storyMusic
+- {static} Sound buttonHover
+- {static} Sound buttonClick
+- {static} Sound laserPew
+- {static} Sound enemyLaserPew
+- {static} boolean isPlaying
++ {static} void playMusic(ScreenType)
++ {static} void stopMusic()
++ {static} boolean isPlaying()
++ void playButtonHover()
++ void playButtonClick()
++ void playLaserSound()
++ void playEnemyLaserSound()
++ void dispose()
+}
+
+com.mygdx.game.engine.lifecycle.Main *------ com.mygdx.game.engine.screen.ScreenManager :has
+com.mygdx.game.engine.lifecycle.Main *------ com.mygdx.game.engine.sound.SoundManager :has
+com.mygdx.game.engine.lifecycle.Main *------ com.mygdx.game.engine.entity.EntityManager :has
+@enduml

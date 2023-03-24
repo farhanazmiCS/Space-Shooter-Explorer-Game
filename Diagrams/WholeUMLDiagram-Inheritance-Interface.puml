@@ -1,10 +1,16 @@
 @startuml
-
 skinparam linetype polyline
 skinparam linetype ortho
 
 skinparam nodesep 100
 skinparam ranksep 100
+
+skinparam titleBorderRoundCorner 15
+skinparam titleBorderThickness 2
+skinparam titleBorderColor red
+skinparam titleBackgroundColor Aqua-CadetBlue
+
+title All Classes (Just Inheritance and Interfaces)
 
 class com.mygdx.game.game.logic.GamePlay {
 - Main game
@@ -594,7 +600,6 @@ class com.mygdx.game.game.components.game.enemy.Asteroid {
 + void dropPlanet(CollidableEntity<Planet>)
 }
 
-
 com.badlogic.gdx.Game <|-- com.mygdx.game.game.logic.GamePlay : "inherits"
 com.mygdx.game.engine.collision.CollisionManager <|.. com.mygdx.game.engine.collision.CollidableEntity : "implements"
 com.mygdx.game.engine.entity.Entity <|-- com.mygdx.game.engine.collision.CollidableEntity : "inherits"
@@ -615,72 +620,4 @@ com.badlogic.gdx.Screen <|.. com.mygdx.game.game.screens.menu.MainMenuScreen : "
 com.badlogic.gdx.Screen <|.. com.mygdx.game.game.screens.game.StoryboardScreen : "implements"
 com.badlogic.gdx.Screen <|.. com.mygdx.game.game.screens.menu.ScoreboardScreen : "implements"
 com.mygdx.game.engine.behavior.BehaviourManager <|.. com.mygdx.game.game.components.game.enemy.Asteroid : "implements"
-
-com.mygdx.game.game.components.game.planets.Planet o------ com.mygdx.game.engine.collision.CollidableEntity : "has generic typing"
-com.mygdx.game.game.components.game.enemy.UFO o------ com.mygdx.game.engine.collision.CollidableEntity : "has generic typing"
-com.mygdx.game.game.components.game.enemy.Asteroid o------ com.mygdx.game.engine.collision.CollidableEntity : "has generic typing"
-com.mygdx.game.game.components.game.player.Player o------ com.mygdx.game.engine.collision.CollidableEntity : "has generic typing"
-com.mygdx.game.game.components.game.Laser o------ com.mygdx.game.engine.collision.CollidableEntity : "has generic typing"
-
-com.mygdx.game.engine.entity.EntityManager *------ com.mygdx.game.game.components.game.planets.Planet :has many
-com.mygdx.game.engine.entity.EntityManager *------ com.mygdx.game.game.components.game.enemy.UFO :has many
-com.mygdx.game.engine.entity.EntityManager *------ com.mygdx.game.game.components.game.enemy.Asteroid :has many
-com.mygdx.game.engine.entity.EntityManager *------ com.mygdx.game.game.components.game.player.Player :has many
-
-com.mygdx.game.game.logic.GamePlay *------ com.mygdx.game.engine.lifecycle.Main :has
-com.mygdx.game.game.logic.GamePlay *------ com.mygdx.game.game.components.game.Background :has
-com.mygdx.game.game.logic.GamePlay *------ com.mygdx.game.engine.input.CustomInputProcessor :has
-com.mygdx.game.game.logic.GamePlay *------ com.mygdx.game.game.components.game.HealthBar :has
-
-com.mygdx.game.engine.lifecycle.Main *------ com.mygdx.game.engine.screen.ScreenManager :has
-com.mygdx.game.engine.lifecycle.Main *------ com.mygdx.game.engine.sound.SoundManager :has
-com.mygdx.game.engine.lifecycle.Main *------ com.mygdx.game.engine.entity.EntityManager :has
-
-com.mygdx.game.engine.screen.ScreenManager *------ com.mygdx.game.game.screens.game.StoryboardScreen :has many
-com.mygdx.game.engine.screen.ScreenManager *------ com.mygdx.game.game.screens.menu.MainMenuScreen :has
-com.mygdx.game.engine.screen.ScreenManager *------ com.mygdx.game.game.screens.menu.PauseScreen :has
-com.mygdx.game.engine.screen.ScreenManager *------ com.mygdx.game.game.screens.game.GameOverScreen :has
-com.mygdx.game.engine.screen.ScreenManager *------ com.mygdx.game.game.screens.menu.ScoreboardScreen :has
-com.mygdx.game.engine.screen.ScreenManager *------ com.mygdx.game.game.screens.game.ControlScreen :has
-com.mygdx.game.engine.screen.ScreenManager *------ com.mygdx.game.game.screens.game.GameScreen :has
-com.mygdx.game.engine.screen.ScreenManager *------ com.mygdx.game.engine.lifecycle.Main :has
-
-com.mygdx.game.game.components.game.enemy.UFO *------ com.mygdx.game.game.components.game.Laser :has many
-
-com.mygdx.game.game.components.game.player.Player *------ com.mygdx.game.game.components.game.Laser :has many
-com.mygdx.game.game.components.game.player.Player *------ com.mygdx.game.game.components.game.player.Afterburner :has
-
-com.mygdx.game.game.screens.game.ControlScreen *------ com.mygdx.game.engine.input.CustomInputProcessor :has
-com.mygdx.game.game.screens.game.ControlScreen *------ com.mygdx.game.game.components.ui.Button :has
-
-com.mygdx.game.game.screens.game.GameOverScreen *------ com.mygdx.game.engine.input.CustomInputProcessor :has
-com.mygdx.game.game.screens.game.GameOverScreen *------ com.mygdx.game.engine.lifecycle.Main :has
-com.mygdx.game.game.screens.game.GameOverScreen *------ com.mygdx.game.game.components.ui.Button :has many
-
-com.mygdx.game.game.screens.game.GameScreen *------ com.mygdx.game.engine.lifecycle.Main :has
-com.mygdx.game.game.screens.game.GameScreen *------ com.mygdx.game.game.components.ui.Button :has
-com.mygdx.game.game.screens.game.GameScreen *------ com.mygdx.game.engine.input.CustomInputProcessor :has
-
-com.mygdx.game.game.screens.game.ResultScreen *------ com.mygdx.game.engine.input.CustomInputProcessor :has
-com.mygdx.game.game.screens.game.ResultScreen *------ com.mygdx.game.engine.lifecycle.Main :has
-com.mygdx.game.game.screens.game.ResultScreen *------ com.mygdx.game.game.components.ui.Button :has
-
-com.mygdx.game.game.screens.game.StoryboardScreen *------ com.mygdx.game.engine.input.CustomInputProcessor :has
-com.mygdx.game.game.screens.game.StoryboardScreen *------ com.mygdx.game.engine.lifecycle.Main :has
-com.mygdx.game.game.screens.game.StoryboardScreen *------ com.mygdx.game.game.components.ui.Button :has
-
-com.mygdx.game.game.screens.menu.MainMenuScreen *------ com.mygdx.game.engine.input.CustomInputProcessor :has
-com.mygdx.game.game.screens.menu.MainMenuScreen *------ com.mygdx.game.engine.lifecycle.Main :has
-com.mygdx.game.game.screens.menu.MainMenuScreen *------ com.mygdx.game.game.components.ui.Button :has many
-
-com.mygdx.game.game.screens.menu.PauseScreen *------ com.mygdx.game.engine.input.CustomInputProcessor :has
-com.mygdx.game.game.screens.menu.PauseScreen *------ com.mygdx.game.engine.lifecycle.Main :has
-com.mygdx.game.game.screens.menu.PauseScreen *------ com.mygdx.game.game.components.ui.Button :has many
-
-com.mygdx.game.game.screens.menu.ScoreboardScreen *------ com.mygdx.game.engine.input.CustomInputProcessor :has
-com.mygdx.game.game.screens.menu.ScoreboardScreen *------ com.mygdx.game.engine.lifecycle.Main :has
-com.mygdx.game.game.screens.menu.ScoreboardScreen *------ com.mygdx.game.game.components.ui.Button :has
-com.mygdx.game.game.screens.menu.ScoreboardScreen *------ com.mygdx.game.game.components.game.PlayerScore :has many
-
-
 @enduml

@@ -1,0 +1,158 @@
+@startuml
+skinparam linetype polyline
+skinparam linetype ortho
+
+skinparam nodesep 100
+skinparam ranksep 100
+
+skinparam titleBorderRoundCorner 15
+skinparam titleBorderThickness 2
+skinparam titleBorderColor red
+skinparam titleBackgroundColor Aqua-CadetBlue
+
+title EntityManager Class Composition Relations
+
+class com.mygdx.game.engine.entity.EntityManager {
+- ArrayList<CollidableEntity<Player>> players
+- ArrayList<CollidableEntity<Asteroid>> asteroids
+- ArrayList<CollidableEntity<UFO>> UFOs
+- ArrayList<CollidableEntity<Planet>> planets
+- String[] availablePlanets
+- Main game
++ ArrayList<CollidableEntity<Planet>> getPlanets()
++ void setPlanets(ArrayList<CollidableEntity<Planet>>)
++ String[] getAvailablePlanets()
++ void setAvailablePlanets(String[])
++ ArrayList<CollidableEntity<Asteroid>> getAsteroids()
++ void setAsteroids(ArrayList<CollidableEntity<Asteroid>>)
++ ArrayList<CollidableEntity<Player>> getPlayers()
++ void setPlayers(int,int)
++ ArrayList<CollidableEntity<UFO>> getUFOs()
++ void resetFailingObjects()
++ ArrayList spawnEnemy(String)
++ void spawnPlanets()
+}
+
+class com.mygdx.game.game.components.game.planets.Planet {
+- String planet
+- Texture texture
+- SpriteBatch batch
+- Sprite sprite
+- float width
+- float height
++ void moveUFO(CollidableEntity,int,int)
++ long fireWeapon(CollidableEntity,Main)
++ void dropAsteroid(CollidableEntity<Asteroid>)
++ void dropPlanet(CollidableEntity<Planet>)
++ String getPlanet()
++ void setPlanet(String)
++ Texture getTexture()
++ void setTexture(Texture)
++ SpriteBatch getBatch()
++ void setBatch(SpriteBatch)
++ float getWidth()
++ void setWidth(float)
++ float getHeight()
++ void setHeight(float)
++ Sprite getSprite()
++ void setSprite(Sprite)
+}
+
+class com.mygdx.game.game.components.game.enemy.UFO {
+- String imgPath
+- String dir
+- float speed
+- Texture texture
+- ArrayList<CollidableEntity<Laser>> lasers
+- Rectangle rectangle
+- int health
+- long lastShotTime
+- long shotDelay
++ float getSpeed()
++ void setSpeed(float)
++ Texture getTexture()
++ void setTexture(Texture)
++ int getHealth()
++ void setHealth(int)
++ void moveUFO(CollidableEntity,int,int)
++ void moveLeft(CollidableEntity)
++ void moveRight(CollidableEntity)
++ void moveDown(CollidableEntity)
++ long fireWeapon(CollidableEntity,Main)
++ void dropAsteroid(CollidableEntity<Asteroid>)
++ void dropPlanet(CollidableEntity<Planet>)
++ void moveLasers(CollidableEntity<UFO>)
++ ArrayList<CollidableEntity<Laser>> getLasers()
+}
+
+class com.mygdx.game.game.components.game.enemy.Asteroid {
+- Texture image
+- float width
+- float height
++ Texture getImage()
++ void setImage(Texture)
++ float getWidth()
++ void setWidth(float)
++ float getHeight()
++ void setHeight(float)
++ void moveUFO(CollidableEntity,int,int)
++ long fireWeapon(CollidableEntity,Main)
++ void dropAsteroid(CollidableEntity<Asteroid>)
++ void dropPlanet(CollidableEntity<Planet>)
+}
+
+class com.mygdx.game.game.components.game.player.Player {
+- String imgName
+- Sprite sprite
+- float width
+- float height
+- float speed
+- int[] mainKeyboardInputs
+- int[] altKeyboardInputs
+- int score
+- ArrayList<CollidableEntity<Laser>> lasers
+- int maxHealth
+- int currentHealth
+- int aliensKilled
+- Timestamp startTime
+- Afterburner afterburner
++ Afterburner getAfterburner()
++ void setAfterburner(Afterburner)
++ String getImgName()
++ void setImgName(String)
++ Sprite getSprite()
++ void setSprite(Sprite)
++ float getWidth()
++ void setWidth(float)
++ float getHeight()
++ void setHeight(float)
++ float getSpeed()
++ void setSpeed(float)
++ int[] getMainKeyboardInputs()
++ void setMainKeyboardInputs(int[])
++ int[] getAltKeyboardInputs()
++ void setAltKeyboardInputs(int[])
++ int getScore()
++ void setScore(int)
++ ArrayList<CollidableEntity<Laser>> getLasers()
++ void setLasers(ArrayList<CollidableEntity<Laser>>)
++ int getMaxHealth()
++ void setMaxHealth(int)
++ int getCurrentHealth()
++ void setCurrentHealth(int)
++ Timestamp getStartTime()
++ void setStartTime(Timestamp)
++ void limitPlayerMovement(CollidableEntity<Player>,Integer,Integer)
++ int movePlayer(CollidableEntity<Player>,CustomInputProcessor)
++ int getAliensKilled()
++ void setAliensKilled(int)
++ void moveLasers(CollidableEntity<Player>)
++ void spawnLasers(CustomInputProcessor,CollidableEntity<Player>,Main)
++ void savePlayerData(Main)
+}
+
+com.mygdx.game.engine.entity.EntityManager *------ com.mygdx.game.game.components.game.planets.Planet :has many
+com.mygdx.game.engine.entity.EntityManager *------ com.mygdx.game.game.components.game.enemy.UFO :has many
+com.mygdx.game.engine.entity.EntityManager *------ com.mygdx.game.game.components.game.enemy.Asteroid :has many
+com.mygdx.game.engine.entity.EntityManager *------ com.mygdx.game.game.components.game.player.Player :has many
+@enduml
